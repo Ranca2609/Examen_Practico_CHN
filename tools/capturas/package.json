@@ -1,0 +1,13 @@
+{
+  "name": "chn-capturas-manual",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Genera las capturas anotadas del Manual de Usuario recorriendo el sistema real con Playwright.",
+  "scripts": {
+    "capturar": "node capturar.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.49.1"
+  }
+}

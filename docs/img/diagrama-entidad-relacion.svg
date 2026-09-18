@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  Sistema de Gestión de Préstamos Bancarios - Crédito Hipotecario Nacional de Guatemala
+  Diagrama Entidad-Relación del esquema dbo (SQL Server 2022 / Transact-SQL).
+
+  SVG escrito a mano: no depende de ninguna librería, tipografía externa ni
+  generador de diagramas. Cada elemento lleva sus coordenadas explícitas.
+  Retícula: recuadro de 340 px de ancho, cabecera de 26 px, fila de 18 px;
+  por eso el alto de cada tabla es 26 + 18 * (número de columnas).
+  Se mantiene a mano junto con database/migration/V1__esquema_tablas.sql.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" role="img"
+     viewBox="0 0 1420 1070" width="1420" height="1070"
+     preserveAspectRatio="xMidYMid meet"
+     aria-labelledby="tituloDiagrama descripcionDiagrama"
+     font-family="system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+
+  <title id="tituloDiagrama">Diagrama entidad-relación del sistema de gestión de préstamos del Crédito Hipotecario Nacional</title>
+  <desc id="descripcionDiagrama">Modelo de datos del esquema dbo en SQL Server 2022. Cuatro entidades transaccionales: clientes, solicitudes_prestamo, prestamos y pagos. Un cliente presenta muchas solicitudes y puede tener muchos préstamos; cada solicitud aprobada genera un único préstamo; cada préstamo acumula muchos pagos. Tres tablas de soporte sin llaves foráneas: usuarios, auditoria y parametros.</desc>
+
+  <rect x="0" y="0" width="1420" height="1070" fill="#FFFFFF"/>
+
+  <!-- ======================== Título ======================== -->
+  <g>
+    <text x="710" y="58" font-size="25" font-weight="700" fill="#000000" text-anchor="middle">Sistema de Gestión de Préstamos - CHN</text>
+    <text x="710" y="81" font-size="14" fill="#5A6472" text-anchor="middle">Diagrama Entidad-Relación - SQL Server 2022</text>
+    <line x1="70" y1="104" x2="1350" y2="104" stroke="#D8DEE6" stroke-width="1"/>
+  </g>
+
+  <!-- ============== Grupo: tablas de soporte ============== -->
+  <g>
+    <rect x="50" y="770" width="1320" height="268" rx="8" fill="#FCFDFE" stroke="#D8DEE6" stroke-width="1" stroke-dasharray="6 4"/>
+    <text x="70" y="796" font-size="14" font-weight="700" fill="#5A6472">Tablas de soporte (sin llaves foráneas)</text>
+    <text x="430" y="796" font-size="11.5" fill="#8A93A0">no participan en ninguna relación del modelo transaccional</text>
+  </g>
+
+  <!-- ======================== Entidades ======================== -->
+  <!-- ===== clientes : 11 columnas, alto 224 = 26 + 18 * 11 ===== -->
+  <g>
+    <rect x="70" y="240" width="340" height="224" rx="6" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1.2"/>
+    <path d="M 70 246 a 6 6 0 0 1 6 -6 h 328 a 6 6 0 0 1 6 6 v 20 h -340 Z" fill="#0B4F8A"/>
+    <text x="82" y="258" font-size="13" font-weight="700" fill="#FFFFFF">clientes</text>
+    <text x="398" y="258" font-size="10.5" fill="#FFFFFF" opacity="0.8" text-anchor="end">titular del crédito</text>
+    <text x="82" y="279" font-size="11" fill="#1A1D21" font-weight="600">id</text>
+    <text x="248" y="279" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">BIGINT IDENTITY</text>
+    <text x="350" y="279" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#0B4F8A">PK</text>
+    <rect x="71" y="284" width="338" height="18" fill="#F7F9FC"/>
+    <text x="82" y="297" font-size="11" fill="#1A1D21">nombre</text>
+    <text x="248" y="297" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(60)</text>
+    <text x="350" y="297" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <text x="82" y="315" font-size="11" fill="#1A1D21">apellido</text>
+    <text x="248" y="315" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(60)</text>
+    <text x="350" y="315" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <rect x="71" y="320" width="338" height="18" fill="#F7F9FC"/>
+    <text x="82" y="333" font-size="11" fill="#1A1D21">numero_identificacion</text>
+    <text x="248" y="333" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(13)</text>
+    <text x="350" y="333" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#0B4F8A">UK NN</text>
+    <text x="82" y="351" font-size="11" fill="#1A1D21">fecha_nacimiento</text>
+    <text x="248" y="351" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DATE</text>
+    <text x="350" y="351" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <rect x="71" y="356" width="338" height="18" fill="#F7F9FC"/>
+    <text x="82" y="369" font-size="11" fill="#1A1D21">direccion</text>
+    <text x="248" y="369" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(200)</text>
+    <text x="350" y="369" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <text x="82" y="387" font-size="11" fill="#1A1D21">correo_electronico</text>
+    <text x="248" y="387" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(120)</text>
+    <text x="350" y="387" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#0B4F8A">UK NN</text>
+    <rect x="71" y="392" width="338" height="18" fill="#F7F9FC"/>
+    <text x="82" y="405" font-size="11" fill="#1A1D21">telefono</text>
+    <text x="248" y="405" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(8)</text>
+    <text x="350" y="405" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <text x="82" y="423" font-size="11" fill="#1A1D21">activo</text>
+    <text x="248" y="423" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">BIT</text>
+    <text x="350" y="423" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <rect x="71" y="428" width="338" height="18" fill="#F7F9FC"/>
+    <text x="82" y="441" font-size="11" fill="#1A1D21">fecha_creacion</text>
+    <text x="248" y="441" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DATETIME2(0)</text>
+    <text x="350" y="441" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <text x="82" y="459" font-size="11" fill="#1A1D21">fecha_modificacion</text>
+    <text x="248" y="459" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DATETIME2(0)</text>
+  </g>
+
+  <!-- ===== solicitudes_prestamo : 18 columnas, alto 350 = 26 + 18 * 18 ===== -->
+  <g>
+    <rect x="520" y="140" width="340" height="350" rx="6" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1.2"/>
+    <path d="M 520 146 a 6 6 0 0 1 6 -6 h 328 a 6 6 0 0 1 6 6 v 20 h -340 Z" fill="#0B4F8A"/>
+    <text x="532" y="158" font-size="13" font-weight="700" fill="#FFFFFF">solicitudes_prestamo</text>
+    <text x="848" y="158" font-size="10.5" fill="#FFFFFF" opacity="0.8" text-anchor="end">solicitud y su resolución</text>
+    <text x="532" y="179" font-size="11" fill="#1A1D21" font-weight="600">id</text>
+    <text x="698" y="179" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">BIGINT IDENTITY</text>
+    <text x="800" y="179" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#0B4F8A">PK</text>
+    <rect x="521" y="184" width="338" height="18" fill="#F7F9FC"/>
+    <text x="532" y="197" font-size="11" fill="#1A1D21">numero_solicitud</text>
+    <text x="698" y="197" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(25)</text>
+    <text x="800" y="197" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#0B4F8A">UK NN</text>
+    <text x="532" y="215" font-size="11" fill="#1A1D21" font-weight="600">cliente_id</text>
+    <text x="698" y="215" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">BIGINT</text>
+    <text x="800" y="215" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#0B4F8A">FK NN</text>
+    <rect x="521" y="220" width="338" height="18" fill="#F7F9FC"/>
+    <text x="532" y="233" font-size="11" fill="#1A1D21">monto_solicitado</text>
+    <text x="698" y="233" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DECIMAL(15,2)</text>
+    <text x="800" y="233" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <text x="532" y="251" font-size="11" fill="#1A1D21">plazo_meses</text>
+    <text x="698" y="251" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">INT</text>
+    <text x="800" y="251" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <rect x="521" y="256" width="338" height="18" fill="#F7F9FC"/>
+    <text x="532" y="269" font-size="11" fill="#1A1D21">tasa_interes_anual</text>
+    <text x="698" y="269" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DECIMAL(5,2)</text>
+    <text x="800" y="269" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <text x="532" y="287" font-size="11" fill="#1A1D21">tipo_prestamo</text>
+    <text x="698" y="287" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(20)</text>
+    <text x="800" y="287" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <rect x="521" y="292" width="338" height="18" fill="#F7F9FC"/>
+    <text x="532" y="305" font-size="11" fill="#1A1D21">destino</text>
+    <text x="698" y="305" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(200)</text>
+    <text x="800" y="305" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <text x="532" y="323" font-size="11" fill="#1A1D21">ingreso_mensual_declarado</text>
+    <text x="698" y="323" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DECIMAL(15,2)</text>
+    <text x="800" y="323" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <rect x="521" y="328" width="338" height="18" fill="#F7F9FC"/>
+    <text x="532" y="341" font-size="11" fill="#1A1D21">estado</text>
+    <text x="698" y="341" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(15)</text>
+    <text x="800" y="341" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <text x="532" y="359" font-size="11" fill="#1A1D21">fecha_solicitud</text>
+    <text x="698" y="359" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DATETIME2(0)</text>
+    <text x="800" y="359" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <rect x="521" y="364" width="338" height="18" fill="#F7F9FC"/>
+    <text x="532" y="377" font-size="11" fill="#1A1D21">observaciones</text>
+    <text x="698" y="377" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(500)</text>
+    <text x="532" y="395" font-size="11" fill="#1A1D21">fecha_resolucion</text>
+    <text x="698" y="395" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DATETIME2(0)</text>
+    <rect x="521" y="400" width="338" height="18" fill="#F7F9FC"/>
+    <text x="532" y="413" font-size="11" fill="#1A1D21">usuario_resolucion</text>
+    <text x="698" y="413" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(50)</text>
+    <text x="532" y="431" font-size="11" fill="#1A1D21">monto_aprobado</text>
+    <text x="698" y="431" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DECIMAL(15,2)</text>
+    <rect x="521" y="436" width="338" height="18" fill="#F7F9FC"/>
+    <text x="532" y="449" font-size="11" fill="#1A1D21">plazo_aprobado_meses</text>
+    <text x="698" y="449" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">INT</text>
+    <text x="532" y="467" font-size="11" fill="#1A1D21">tasa_aprobada</text>
+    <text x="698" y="467" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DECIMAL(5,2)</text>
+    <rect x="521" y="472" width="338" height="18" fill="#F7F9FC"/>
+    <text x="532" y="485" font-size="11" fill="#1A1D21">motivo_resolucion</text>
+    <text x="698" y="485" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(500)</text>
+  </g>
+
+  <!-- ===== prestamos : 15 columnas, alto 296 = 26 + 18 * 15 ===== -->
+  <g>
+    <rect x="970" y="140" width="340" height="296" rx="6" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1.2"/>
+    <path d="M 970 146 a 6 6 0 0 1 6 -6 h 328 a 6 6 0 0 1 6 6 v 20 h -340 Z" fill="#0B4F8A"/>
+    <text x="982" y="158" font-size="13" font-weight="700" fill="#FFFFFF">prestamos</text>
+    <text x="1298" y="158" font-size="10.5" fill="#FFFFFF" opacity="0.8" text-anchor="end">préstamo desembolsado</text>
+    <text x="982" y="179" font-size="11" fill="#1A1D21" font-weight="600">id</text>
+    <text x="1148" y="179" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">BIGINT IDENTITY</text>
+    <text x="1250" y="179" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#0B4F8A">PK</text>
+    <rect x="971" y="184" width="338" height="18" fill="#F7F9FC"/>
+    <text x="982" y="197" font-size="11" fill="#1A1D21">numero_prestamo</text>
+    <text x="1148" y="197" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(25)</text>
+    <text x="1250" y="197" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#0B4F8A">UK NN</text>
+    <text x="982" y="215" font-size="11" fill="#1A1D21" font-weight="600">solicitud_id</text>
+    <text x="1148" y="215" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">BIGINT</text>
+    <text x="1250" y="215" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#0B4F8A">FK UK NN</text>
+    <rect x="971" y="220" width="338" height="18" fill="#F7F9FC"/>
+    <text x="982" y="233" font-size="11" fill="#1A1D21" font-weight="600">cliente_id</text>
+    <text x="1148" y="233" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">BIGINT</text>
+    <text x="1250" y="233" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#0B4F8A">FK NN</text>
+    <text x="982" y="251" font-size="11" fill="#1A1D21">monto_aprobado</text>
+    <text x="1148" y="251" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DECIMAL(15,2)</text>
+    <text x="1250" y="251" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <rect x="971" y="256" width="338" height="18" fill="#F7F9FC"/>
+    <text x="982" y="269" font-size="11" fill="#1A1D21">plazo_meses</text>
+    <text x="1148" y="269" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">INT</text>
+    <text x="1250" y="269" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <text x="982" y="287" font-size="11" fill="#1A1D21">tasa_interes_anual</text>
+    <text x="1148" y="287" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DECIMAL(5,2)</text>
+    <text x="1250" y="287" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <rect x="971" y="292" width="338" height="18" fill="#F7F9FC"/>
+    <text x="982" y="305" font-size="11" fill="#1A1D21">cuota_mensual</text>
+    <text x="1148" y="305" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DECIMAL(15,2)</text>
+    <text x="1250" y="305" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <text x="982" y="323" font-size="11" fill="#1A1D21">monto_total_a_pagar</text>
+    <text x="1148" y="323" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DECIMAL(15,2)</text>
+    <text x="1250" y="323" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <rect x="971" y="328" width="338" height="18" fill="#F7F9FC"/>
+    <text x="982" y="341" font-size="11" fill="#1A1D21">total_pagado</text>
+    <text x="1148" y="341" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DECIMAL(15,2)</text>
+    <text x="1250" y="341" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <text x="982" y="359" font-size="11" fill="#1A1D21">saldo_pendiente</text>
+    <text x="1148" y="359" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DECIMAL(15,2)</text>
+    <text x="1250" y="359" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#0B4F8A">CALC NN</text>
+    <rect x="971" y="364" width="338" height="18" fill="#F7F9FC"/>
+    <text x="982" y="377" font-size="11" fill="#1A1D21">estado</text>
+    <text x="1148" y="377" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(15)</text>
+    <text x="1250" y="377" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <text x="982" y="395" font-size="11" fill="#1A1D21">fecha_desembolso</text>
+    <text x="1148" y="395" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DATE</text>
+    <text x="1250" y="395" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <rect x="971" y="400" width="338" height="18" fill="#F7F9FC"/>
+    <text x="982" y="413" font-size="11" fill="#1A1D21">fecha_vencimiento</text>
+    <text x="1148" y="413" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DATE</text>
+    <text x="1250" y="413" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <text x="982" y="431" font-size="11" fill="#1A1D21">fecha_creacion</text>
+    <text x="1148" y="431" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DATETIME2(0)</text>
+    <text x="1250" y="431" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+  </g>
+
+  <!-- ===== pagos : 10 columnas, alto 206 = 26 + 18 * 10 ===== -->
+  <g>
+    <rect x="970" y="530" width="340" height="206" rx="6" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1.2"/>
+    <path d="M 970 536 a 6 6 0 0 1 6 -6 h 328 a 6 6 0 0 1 6 6 v 20 h -340 Z" fill="#0B4F8A"/>
+    <text x="982" y="548" font-size="13" font-weight="700" fill="#FFFFFF">pagos</text>
+    <text x="1298" y="548" font-size="10.5" fill="#FFFFFF" opacity="0.8" text-anchor="end">recibos aplicados</text>
+    <text x="982" y="569" font-size="11" fill="#1A1D21" font-weight="600">id</text>
+    <text x="1148" y="569" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">BIGINT IDENTITY</text>
+    <text x="1250" y="569" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#0B4F8A">PK</text>
+    <rect x="971" y="574" width="338" height="18" fill="#F7F9FC"/>
+    <text x="982" y="587" font-size="11" fill="#1A1D21">numero_recibo</text>
+    <text x="1148" y="587" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(25)</text>
+    <text x="1250" y="587" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#0B4F8A">UK NN</text>
+    <text x="982" y="605" font-size="11" fill="#1A1D21" font-weight="600">prestamo_id</text>
+    <text x="1148" y="605" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">BIGINT</text>
+    <text x="1250" y="605" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#0B4F8A">FK NN</text>
+    <rect x="971" y="610" width="338" height="18" fill="#F7F9FC"/>
+    <text x="982" y="623" font-size="11" fill="#1A1D21">monto</text>
+    <text x="1148" y="623" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DECIMAL(15,2)</text>
+    <text x="1250" y="623" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <text x="982" y="641" font-size="11" fill="#1A1D21">fecha_pago</text>
+    <text x="1148" y="641" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DATETIME2(0)</text>
+    <text x="1250" y="641" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <rect x="971" y="646" width="338" height="18" fill="#F7F9FC"/>
+    <text x="982" y="659" font-size="11" fill="#1A1D21">forma_pago</text>
+    <text x="1148" y="659" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(15)</text>
+    <text x="1250" y="659" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <text x="982" y="677" font-size="11" fill="#1A1D21">saldo_anterior</text>
+    <text x="1148" y="677" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DECIMAL(15,2)</text>
+    <text x="1250" y="677" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <rect x="971" y="682" width="338" height="18" fill="#F7F9FC"/>
+    <text x="982" y="695" font-size="11" fill="#1A1D21">saldo_posterior</text>
+    <text x="1148" y="695" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DECIMAL(15,2)</text>
+    <text x="1250" y="695" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <text x="982" y="713" font-size="11" fill="#1A1D21">usuario_registro</text>
+    <text x="1148" y="713" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(50)</text>
+    <text x="1250" y="713" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <rect x="971" y="718" width="338" height="18" fill="#F7F9FC"/>
+    <text x="982" y="731" font-size="11" fill="#1A1D21">observaciones</text>
+    <text x="1148" y="731" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(300)</text>
+  </g>
+
+  <!-- ===== usuarios : 10 columnas, alto 206 = 26 + 18 * 10 ===== -->
+  <g>
+    <rect x="70" y="812" width="340" height="206" rx="6" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1.2"/>
+    <path d="M 70 818 a 6 6 0 0 1 6 -6 h 328 a 6 6 0 0 1 6 6 v 20 h -340 Z" fill="#5A6472"/>
+    <text x="82" y="830" font-size="13" font-weight="700" fill="#FFFFFF">usuarios</text>
+    <text x="398" y="830" font-size="10.5" fill="#FFFFFF" opacity="0.8" text-anchor="end">operadores del sistema</text>
+    <text x="82" y="851" font-size="11" fill="#1A1D21" font-weight="600">id</text>
+    <text x="248" y="851" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">BIGINT IDENTITY</text>
+    <text x="350" y="851" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#0B4F8A">PK</text>
+    <rect x="71" y="856" width="338" height="18" fill="#F7F9FC"/>
+    <text x="82" y="869" font-size="11" fill="#1A1D21">username</text>
+    <text x="248" y="869" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(50)</text>
+    <text x="350" y="869" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#0B4F8A">UK NN</text>
+    <text x="82" y="887" font-size="11" fill="#1A1D21">password_hash</text>
+    <text x="248" y="887" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(100)</text>
+    <text x="350" y="887" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <rect x="71" y="892" width="338" height="18" fill="#F7F9FC"/>
+    <text x="82" y="905" font-size="11" fill="#1A1D21">nombre_completo</text>
+    <text x="248" y="905" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(120)</text>
+    <text x="350" y="905" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <text x="82" y="923" font-size="11" fill="#1A1D21">correo</text>
+    <text x="248" y="923" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(120)</text>
+    <text x="350" y="923" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <rect x="71" y="928" width="338" height="18" fill="#F7F9FC"/>
+    <text x="82" y="941" font-size="11" fill="#1A1D21">rol</text>
+    <text x="248" y="941" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(15)</text>
+    <text x="350" y="941" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <text x="82" y="959" font-size="11" fill="#1A1D21">activo</text>
+    <text x="248" y="959" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">BIT</text>
+    <text x="350" y="959" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <rect x="71" y="964" width="338" height="18" fill="#F7F9FC"/>
+    <text x="82" y="977" font-size="11" fill="#1A1D21">intentos_fallidos</text>
+    <text x="248" y="977" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">INT</text>
+    <text x="350" y="977" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <text x="82" y="995" font-size="11" fill="#1A1D21">bloqueado_hasta</text>
+    <text x="248" y="995" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DATETIME2(0)</text>
+    <rect x="71" y="1000" width="338" height="18" fill="#F7F9FC"/>
+    <text x="82" y="1013" font-size="11" fill="#1A1D21">ultimo_acceso</text>
+    <text x="248" y="1013" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DATETIME2(0)</text>
+  </g>
+
+  <!-- ===== auditoria : 8 columnas, alto 170 = 26 + 18 * 8 ===== -->
+  <g>
+    <rect x="520" y="812" width="340" height="170" rx="6" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1.2"/>
+    <path d="M 520 818 a 6 6 0 0 1 6 -6 h 328 a 6 6 0 0 1 6 6 v 20 h -340 Z" fill="#5A6472"/>
+    <text x="532" y="830" font-size="13" font-weight="700" fill="#FFFFFF">auditoria</text>
+    <text x="848" y="830" font-size="10.5" fill="#FFFFFF" opacity="0.8" text-anchor="end">bitácora de solo inserción</text>
+    <text x="532" y="851" font-size="11" fill="#1A1D21" font-weight="600">id</text>
+    <text x="698" y="851" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">BIGINT IDENTITY</text>
+    <text x="800" y="851" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#0B4F8A">PK</text>
+    <rect x="521" y="856" width="338" height="18" fill="#F7F9FC"/>
+    <text x="532" y="869" font-size="11" fill="#1A1D21">usuario</text>
+    <text x="698" y="869" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(50)</text>
+    <text x="800" y="869" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <text x="532" y="887" font-size="11" fill="#1A1D21">accion</text>
+    <text x="698" y="887" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(50)</text>
+    <text x="800" y="887" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <rect x="521" y="892" width="338" height="18" fill="#F7F9FC"/>
+    <text x="532" y="905" font-size="11" fill="#1A1D21">entidad</text>
+    <text x="698" y="905" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(50)</text>
+    <text x="800" y="905" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <text x="532" y="923" font-size="11" fill="#1A1D21">entidad_id</text>
+    <text x="698" y="923" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(50)</text>
+    <rect x="521" y="928" width="338" height="18" fill="#F7F9FC"/>
+    <text x="532" y="941" font-size="11" fill="#1A1D21">detalle</text>
+    <text x="698" y="941" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(1000)</text>
+    <text x="532" y="959" font-size="11" fill="#1A1D21">direccion_ip</text>
+    <text x="698" y="959" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(45)</text>
+    <rect x="521" y="964" width="338" height="18" fill="#F7F9FC"/>
+    <text x="532" y="977" font-size="11" fill="#1A1D21">fecha</text>
+    <text x="698" y="977" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">DATETIME2(0)</text>
+    <text x="800" y="977" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+  </g>
+
+  <!-- ===== parametros : 3 columnas, alto 80 = 26 + 18 * 3 ===== -->
+  <g>
+    <rect x="970" y="812" width="340" height="80" rx="6" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1.2"/>
+    <path d="M 970 818 a 6 6 0 0 1 6 -6 h 328 a 6 6 0 0 1 6 6 v 20 h -340 Z" fill="#5A6472"/>
+    <text x="982" y="830" font-size="13" font-weight="700" fill="#FFFFFF">parametros</text>
+    <text x="1298" y="830" font-size="10.5" fill="#FFFFFF" opacity="0.8" text-anchor="end">parámetros de negocio</text>
+    <text x="982" y="851" font-size="11" fill="#1A1D21" font-weight="600">clave</text>
+    <text x="1148" y="851" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(50)</text>
+    <text x="1250" y="851" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#0B4F8A">PK</text>
+    <rect x="971" y="856" width="338" height="18" fill="#F7F9FC"/>
+    <text x="982" y="869" font-size="11" fill="#1A1D21">valor</text>
+    <text x="1148" y="869" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(200)</text>
+    <text x="1250" y="869" font-size="9" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" font-weight="700" letter-spacing="0.3" fill="#8A93A0">NN</text>
+    <text x="982" y="887" font-size="11" fill="#1A1D21">descripcion</text>
+    <text x="1148" y="887" font-size="10" font-family="ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace" fill="#5A6472">NVARCHAR(200)</text>
+  </g>
+
+  <!-- ============ Relaciones con notación de pata de gallo ============ -->
+  <!-- El extremo "1" lleva un trazo perpendicular; el extremo "N" abre en tres  -->
+  <g fill="none" stroke="#0B4F8A" stroke-width="1.6" stroke-linecap="round">
+
+    <!-- R1  clientes.id  1 a N  solicitudes_prestamo.cliente_id -->
+    <path d="M 410 275 H 465 V 211 H 508"/>
+    <path d="M 420 268 V 282"/>
+    <path d="M 508 211 L 520 204 M 508 211 L 520 211 M 508 211 L 520 218"/>
+
+    <!-- R2  solicitudes_prestamo.id  1 a 1  prestamos.solicitud_id (UNIQUE) -->
+    <path d="M 860 175 H 930 V 211 H 970"/>
+    <path d="M 870 168 V 182"/>
+    <!-- trazo algo mas corto: la fila de abajo recibe la pata de gallo de R4 -->
+    <path d="M 958 205 V 216"/>
+
+    <!-- R3  prestamos.id  1 a N  pagos.prestamo_id -->
+    <path d="M 1140 436 V 518"/>
+    <path d="M 1133 446 H 1147"/>
+    <path d="M 1140 518 L 1133 530 M 1140 518 L 1140 530 M 1140 518 L 1147 530"/>
+
+    <!-- R4  clientes.id  1 a N  prestamos.cliente_id (ruta por debajo del modelo) -->
+    <path d="M 240 464 V 620 H 900 V 229 H 958"/>
+    <path d="M 233 474 H 247"/>
+    <path d="M 958 229 L 970 222 M 958 229 L 970 229 M 958 229 L 970 236"/>
+  </g>
+
+  <!-- Etiquetas de cardinalidad sobre recuadro blanco: legibles sobre la línea -->
+  <g>
+    <rect x="446.0" y="233.0" width="38" height="20" rx="4" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+    <text x="465" y="247.0" font-size="11.5" font-weight="700" fill="#0B4F8A" text-anchor="middle">1:N</text>
+    <rect x="911.0" y="183.0" width="38" height="20" rx="4" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+    <text x="930" y="197.0" font-size="11.5" font-weight="700" fill="#0B4F8A" text-anchor="middle">1:1</text>
+    <rect x="1121.0" y="473.0" width="38" height="20" rx="4" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+    <text x="1140" y="487.0" font-size="11.5" font-weight="700" fill="#0B4F8A" text-anchor="middle">1:N</text>
+    <rect x="881.0" y="340.0" width="38" height="20" rx="4" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+    <text x="900" y="354.0" font-size="11.5" font-weight="700" fill="#0B4F8A" text-anchor="middle">1:N</text>
+  </g>
+
+</svg>

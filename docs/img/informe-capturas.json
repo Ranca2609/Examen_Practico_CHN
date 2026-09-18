@@ -1,0 +1,32 @@
+{
+  "generado": "2026-09-18T19:56:21.467Z",
+  "baseUrl": "http://frontend:80",
+  "capturas": [
+    "01-inicio-sesion.png",
+    "02-tablero.png",
+    "25-tablero-graficas.png",
+    "03-clientes-listado.png",
+    "22-selector-fecha.png",
+    "04-cliente-nuevo.png",
+    "23-aviso-exito.png",
+    "05-cliente-ficha.png",
+    "06-cliente-eliminar.png",
+    "07-solicitudes-listado.png",
+    "08-solicitud-nueva.png",
+    "09-solicitud-detalle.png",
+    "10-solicitud-rechazo.png",
+    "11-solicitud-aprobacion.png",
+    "12-solicitud-resuelta.png",
+    "13-prestamos-listado.png",
+    "14-prestamo-detalle.png",
+    "15-prestamo-amortizacion.png",
+    "16-pago-registrar.png",
+    "17-pago-comprobante.png",
+    "18-pagos-listado.png",
+    "19-prestamo-historial.png",
+    "20-auditoria.png",
+    "24-filtros-busqueda.png",
+    "21-vista-movil.png"
+  ],
+  "avisos": []
+}
