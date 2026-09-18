@@ -1,0 +1,99 @@
+.chn-grafica {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+  min-width: 0;
+  margin: 0;
+  transition: opacity var(--transicion-base);
+}
+
+/* Al recargar se conserva la gráfica anterior atenuada: sin saltos ni parpadeos. */
+.chn-grafica--recargando {
+  opacity: 0.6;
+}
+
+.chn-grafica__herramientas {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: calc(-1 * var(--esp-2));
+}
+
+.chn-grafica__contenido {
+  min-width: 0;
+}
+
+/* La altura la fija cada gráfica (incluye los rótulos del eje X) para que la tarjeta no tenga scroll interno. */
+.chn-grafica__lienzo {
+  position: relative;
+  width: 100%;
+}
+
+.chn-grafica__svg {
+  display: block;
+  overflow: visible;
+}
+
+/* SVG aparte con las zonas enfocables: el dibujo es role="img" y sus hijos no llegan al lector. */
+.chn-grafica__interaccion {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: visible;
+}
+
+/* Texto */
+.chn-grafica__texto {
+  font-family: var(--fuente-base);
+  font-size: var(--texto-xs);
+  fill: var(--color-texto-suave);
+}
+
+.chn-grafica__texto--fuerte {
+  font-weight: var(--peso-fuerte);
+  fill: var(--color-texto);
+}
+
+.chn-grafica__texto--cifra {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Cuadrícula, ejes y realce */
+.chn-grafica__cuadricula {
+  stroke: var(--color-grafica-cuadricula);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.chn-grafica__eje {
+  stroke: var(--color-grafica-eje);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.chn-grafica__realce {
+  fill: var(--color-grafica-realce);
+}
+
+/* Zonas interactivas. Sin outline: en SVG rodearía la caja entera.
+   El prefijo .chn-grafica__interaccion gana a las reglas de foco de global.css, que cargan después. */
+.chn-grafica__zona {
+  fill: transparent;
+  stroke: transparent;
+  stroke-width: 2px;
+  cursor: default;
+}
+
+.chn-grafica__interaccion .chn-grafica__zona:focus,
+.chn-grafica__interaccion .chn-grafica__zona:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.chn-grafica__interaccion .chn-grafica__zona:focus-visible {
+  stroke: var(--color-primario);
+}
+
+/* Doble clase para no depender del orden de carga de las hojas. */
+.chn-tabla-envoltorio.chn-grafica__tabla {
+  max-height: none;
+}

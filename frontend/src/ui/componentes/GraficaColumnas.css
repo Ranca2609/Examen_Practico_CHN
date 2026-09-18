@@ -1,0 +1,8 @@
+.chn-grafica-columnas__columna {
+  fill: var(--color-grafica-serie-suave);
+  transition: fill var(--transicion-rapida);
+}
+
+.chn-grafica-columnas__columna--enfasis {
+  fill: var(--color-grafica-serie);
+}

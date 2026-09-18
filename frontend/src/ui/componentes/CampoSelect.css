@@ -1,0 +1,168 @@
+/* Solo lo que un <button> no hereda de .chn-control. */
+.chn-select {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-2);
+  /* Menos relleno que .chn-control: el hueco derecho lo ocupa el chevron. */
+  padding-right: var(--esp-1);
+  font-weight: var(--peso-normal);
+  text-align: left;
+  appearance: none;
+  cursor: pointer;
+}
+
+.chn-select__texto {
+  /* min-width: 0 es lo que permite recortar el texto dentro de un flex. */
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chn-select__flecha {
+  flex: 0 0 auto;
+  color: var(--color-texto-suave);
+  transition: color var(--transicion-rapida), transform var(--transicion-rapida);
+}
+
+.chn-select[aria-expanded='true'] .chn-select__flecha {
+  color: var(--color-primario);
+  transform: rotate(180deg);
+}
+
+.chn-select:disabled {
+  cursor: not-allowed;
+}
+
+.chn-select:disabled .chn-select__flecha {
+  color: var(--color-borde-fuerte);
+}
+
+/* Panel de opciones: se monta en un portal, por eso es fixed y el componente fija sus coordenadas. */
+.chn-select__panel {
+  position: fixed;
+  z-index: var(--capa-popover, 70);
+  box-sizing: border-box;
+  /* El minimo (ancho del disparador) lo fija el componente. */
+  max-width: min(480px, calc(100vw - 2 * var(--esp-2)));
+  max-height: 320px;
+  padding: var(--esp-1);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  font-family: var(--fuente-base);
+  font-size: var(--texto-md);
+  color: var(--color-texto);
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-lg);
+  box-shadow: var(--sombra-xl);
+  /* --transicion-lenta ya trae curva: otra funcion de tiempo invalidaria la forma abreviada. */
+  animation: chn-bajar var(--transicion-lenta) both;
+}
+
+/* Cuando el panel se coloca encima del campo la entrada llega desde abajo. */
+.chn-select__panel--arriba {
+  animation-name: chn-subir;
+}
+
+/* Margenes negativos hasta el borde del relleno: ninguna opcion se asoma por encima al desplazar. */
+.chn-select__busqueda {
+  position: sticky;
+  top: calc(-1 * var(--esp-1));
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  margin: calc(-1 * var(--esp-1)) calc(-1 * var(--esp-1)) var(--esp-1);
+  padding: var(--esp-1);
+  background-color: var(--color-superficie);
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.chn-select__lupa {
+  position: absolute;
+  left: var(--esp-3);
+  display: inline-flex;
+  color: var(--color-texto-suave);
+  pointer-events: none;
+  transition: color var(--transicion-rapida);
+}
+
+.chn-select__busqueda:focus-within .chn-select__lupa {
+  color: var(--color-primario);
+}
+
+.chn-select__buscador {
+  /* Hueco para la lupa; el resto del aspecto lo da .chn-control. */
+  padding-left: var(--esp-8);
+}
+
+.chn-select__buscador:focus {
+  border-color: var(--color-primario);
+  box-shadow: var(--anillo-foco);
+}
+
+/* Opciones */
+.chn-select__opcion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-2);
+  padding: var(--esp-2) var(--esp-3);
+  font-size: var(--texto-md);
+  line-height: var(--linea-base);
+  border-radius: var(--radio-sm);
+  cursor: pointer;
+  transition: background-color var(--transicion-rapida);
+}
+
+.chn-select__etiqueta {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Hueco fijo para que el ancho del panel no cambie segun la opcion elegida. */
+.chn-select__marca {
+  display: inline-flex;
+  flex: 0 0 16px;
+  align-items: center;
+  justify-content: center;
+  height: 16px;
+  color: var(--color-primario);
+}
+
+.chn-select__opcion:hover {
+  background-color: var(--color-primario-suave);
+}
+
+/* Activa por teclado: el realce interior la distingue de la fila bajo el raton. */
+.chn-select__opcion--activa {
+  background-color: var(--color-primario-suave);
+  box-shadow: inset 0 0 0 2px var(--color-primario);
+}
+
+.chn-select__opcion--elegida {
+  font-weight: var(--peso-semi);
+  color: var(--color-primario);
+}
+
+.chn-select__opcion--vacia {
+  color: var(--color-texto-suave);
+}
+
+.chn-select__opcion--vacia.chn-select__opcion--elegida {
+  color: var(--color-primario);
+}
+
+/* Sin resultados */
+.chn-select__vacio {
+  margin: 0;
+  padding: var(--esp-4);
+  font-size: var(--texto-sm);
+  color: var(--color-texto-suave);
+  text-align: center;
+}

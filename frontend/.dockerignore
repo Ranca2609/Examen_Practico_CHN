@@ -1,0 +1,16 @@
+# Archivos que no deben entrar al contexto de construcción de la imagen.
+# Reduce el tamaño de la imagen y evita filtrar configuración local.
+node_modules
+dist
+.env
+.env.*
+!.env.example
+.git
+.gitignore
+*.log
+npm-debug.log*
+.vscode
+.idea
+.DS_Store
+Dockerfile
+.dockerignore

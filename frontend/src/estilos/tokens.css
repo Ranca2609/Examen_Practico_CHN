@@ -1,0 +1,152 @@
+:root {
+  /* Colores institucionales */
+  --color-primario: #0B4F8A;
+  --color-primario-oscuro: #073963;
+  --color-primario-claro: #E8F1F9;
+  --color-acento: #C8A24A;
+
+  /* Estados */
+  --color-exito: #1B7F4B;
+  --color-exito-claro: #E6F4EC;
+  --color-peligro: #B3261E;
+  --color-peligro-claro: #FBEAE8;
+  --color-advertencia: #9A6700;
+  --color-advertencia-claro: #FFF6E0;
+  --color-info: #0B5FA5;
+  --color-info-claro: #E8F1F9;
+
+  /* Texto, bordes y superficies */
+  --color-texto: #1A1D21;
+  --color-texto-suave: #5A6472;
+  --color-texto-inverso: #FFFFFF;
+  --color-borde: #D8DEE6;
+  --color-borde-fuerte: #B6BFCB;
+  --color-fondo: #F4F6F9;
+  --color-superficie: #FFFFFF;
+  --color-superficie-alterna: #FAFBFD;
+  --color-neutro-claro: #EEF1F5;
+
+  /* Radios según el tamaño del elemento: sm internos, md controles, lg superficies, xl modales. */
+  --radio-sm: 8px;
+  --radio-md: 14px;
+  --radio-lg: 20px;
+  --radio-completo: 999px;
+
+  /* Sombras */
+  --sombra-sm: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.10);
+  --sombra-md: 0 4px 8px -2px rgba(16, 24, 40, 0.10), 0 2px 4px -2px rgba(16, 24, 40, 0.06);
+  --sombra-lg: 0 12px 16px -4px rgba(16, 24, 40, 0.08), 0 4px 6px -2px rgba(16, 24, 40, 0.03);
+
+  /* Espaciado */
+  --esp-1: 4px;
+  --esp-2: 8px;
+  --esp-3: 12px;
+  --esp-4: 16px;
+  --esp-5: 20px;
+  --esp-6: 24px;
+  --esp-7: 28px;
+  --esp-8: 32px;
+
+  /* Tipografía */
+  --fuente-base: system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --fuente-mono: ui-monospace, "Cascadia Mono", Consolas, "Courier New", monospace;
+
+  --texto-xs: 12px;
+  --texto-sm: 13px;
+  --texto-md: 14px;
+  --texto-lg: 16px;
+  --texto-xl: 20px;
+  --texto-2xl: 24px;
+
+  --peso-normal: 400;
+  --peso-medio: 500;
+  --peso-semi: 600;
+  --peso-fuerte: 700;
+
+  --linea-apretada: 1.25;
+  --linea-base: 1.5;
+
+  /* Layout */
+  --ancho-lateral: 248px;
+  --alto-superior: 60px;
+  --ancho-contenido-max: 1400px;
+
+  /* Transiciones */
+  --transicion-rapida: 120ms ease-in-out;
+  --transicion-base: 200ms ease-in-out;
+
+  /* Capas */
+  --capa-lateral: 30;
+  --capa-superior: 40;
+  --capa-modal: 60;
+  --capa-notificacion: 80;
+}
+
+:root {
+  --color-primario-hover: #0A4478;
+  --color-primario-suave: #F2F7FC;
+
+  /* Cada estado: oscuro para texto, claro para fondo, borde para contorno. */
+  --color-exito-oscuro: #14603A;
+  --color-exito-borde: #A7D8BE;
+  --color-peligro-oscuro: #8C1C16;
+  --color-peligro-borde: #F0B4AF;
+  --color-advertencia-oscuro: #7A5200;
+  --color-advertencia-borde: #E8CE8A;
+  --color-info-oscuro: #084A80;
+  --color-info-borde: #A9CDE8;
+
+  /* Neutro: acciones sin consecuencia (cancelar, imprimir, limpiar). */
+  --color-neutro: #5A6472;
+  --color-neutro-oscuro: #3F4753;
+  --color-neutro-borde: #CBD3DD;
+
+  /* Valores literales: no todos los navegadores soportados admiten var() dentro de funciones de color. */
+  --degradado-primario: linear-gradient(135deg, #0B4F8A 0%, #0A4478 55%, #073963 100%);
+  --degradado-lateral: linear-gradient(180deg, #0B4F8A 0%, #083C6B 100%);
+  --degradado-exito: linear-gradient(135deg, #1F8E55 0%, #14603A 100%);
+  --degradado-peligro: linear-gradient(135deg, #C62E25 0%, #8C1C16 100%);
+  --degradado-advertencia: linear-gradient(135deg, #B07A00 0%, #7A5200 100%);
+  --degradado-info: linear-gradient(135deg, #0F6BB5 0%, #084A80 100%);
+  --degradado-superficie: linear-gradient(180deg, #FFFFFF 0%, #FAFBFD 100%);
+
+  --radio-xl: 28px;
+  --esp-9: 36px;
+  --esp-10: 48px;
+
+  --sombra-xs: 0 1px 2px rgba(16, 24, 40, 0.05);
+  --sombra-xl: 0 24px 48px -12px rgba(16, 24, 40, 0.24);
+  --sombra-color-exito: 0 8px 24px -6px rgba(27, 127, 75, 0.45);
+  --sombra-color-peligro: 0 8px 24px -6px rgba(179, 38, 30, 0.45);
+  --sombra-color-advertencia: 0 8px 24px -6px rgba(154, 103, 0, 0.45);
+  --sombra-color-info: 0 8px 24px -6px rgba(11, 95, 165, 0.45);
+  --sombra-color-primario: 0 8px 20px -6px rgba(11, 79, 138, 0.40);
+
+  /* La variante de peligro existe porque el anillo azul no contrasta sobre fondo rojo. */
+  --anillo-foco: 0 0 0 3px rgba(11, 79, 138, 0.28);
+  --anillo-foco-peligro: 0 0 0 3px rgba(179, 38, 30, 0.28);
+
+  --transicion-lenta: 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  /* Solo duración: "animation" no admite dos curvas y con --transicion-lenta el navegador la descarta. */
+  --duracion-lenta: 320ms;
+  --curva-suave: cubic-bezier(0.16, 1, 0.3, 1);
+  --curva-rebote: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Sobre la barra superior, debajo de modales y notificaciones. */
+  --capa-popover: 70;
+}
+
+/* Paleta de gráficas: un solo tono con luminosidad creciente, validada por contraste.
+   Los estados de la dona separan luminosidad porque ámbar y rojo se confunden con deuteranopía. */
+:root {
+  --color-grafica-serie: var(--color-primario);
+  --color-grafica-serie-suave: #6A98C8;
+  --color-grafica-pista: #8AAFD6;
+  --color-grafica-cuadricula: #E4E8EE;
+  --color-grafica-eje: var(--color-borde-fuerte);
+  --color-grafica-realce: var(--color-primario-claro);
+  --color-grafica-estado-exito: #549F70;
+  --color-grafica-estado-advertencia: var(--color-advertencia);
+  --color-grafica-estado-peligro: #9E0405;
+  --radio-grafica: 4px;
+}

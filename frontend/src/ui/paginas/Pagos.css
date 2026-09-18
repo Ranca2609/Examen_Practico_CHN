@@ -1,0 +1,183 @@
+.chn-pagos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-5);
+}
+
+.chn-pagos__filtro {
+  min-width: 0;
+}
+
+.chn-pagos__filtro--ancho {
+  min-width: 0;
+}
+
+.chn-pagos__recibo,
+.chn-pagos__enlace {
+  font-family: var(--fuente-mono);
+  font-size: var(--texto-sm);
+}
+
+.chn-pagos__recibo {
+  font-weight: var(--peso-semi);
+  color: var(--color-texto);
+}
+
+.chn-pagos__enlace {
+  color: var(--color-primario);
+  font-weight: var(--peso-semi);
+}
+
+.chn-pagos__monto {
+  color: var(--color-exito);
+  white-space: nowrap;
+}
+
+.chn-pagos__reintento {
+  margin-top: var(--esp-3);
+}
+
+.chn-pagos__pie-modal {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--esp-3);
+}
+
+/* Comprobante */
+
+.chn-comprobante {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+  padding: var(--esp-5);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-md);
+  background: var(--color-superficie);
+}
+
+.chn-comprobante__encabezado {
+  text-align: center;
+  padding-bottom: var(--esp-4);
+  border-bottom: 2px solid var(--color-primario);
+}
+
+.chn-comprobante__institucion {
+  margin: 0;
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-fuerte);
+  color: var(--color-primario);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.chn-comprobante__titulo {
+  margin: var(--esp-2) 0 0;
+  font-size: var(--texto-lg);
+  color: var(--color-texto);
+}
+
+.chn-comprobante__recibo {
+  margin: var(--esp-1) 0 0;
+  font-family: var(--fuente-mono);
+  font-size: var(--texto-sm);
+  color: var(--color-texto-suave);
+}
+
+.chn-comprobante__datos {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+}
+
+.chn-comprobante__fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--esp-4);
+  padding-bottom: var(--esp-2);
+  border-bottom: 1px dotted var(--color-borde);
+}
+
+.chn-comprobante__fila dt {
+  font-size: var(--texto-sm);
+  color: var(--color-texto-suave);
+}
+
+.chn-comprobante__fila dd {
+  margin: 0;
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-medio);
+  text-align: right;
+  color: var(--color-texto);
+}
+
+.chn-comprobante__fila--destacada dd {
+  font-weight: var(--peso-fuerte);
+  color: var(--color-primario-oscuro);
+}
+
+.chn-comprobante__monto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--esp-1);
+  margin: 0;
+  padding: var(--esp-4);
+  border-radius: var(--radio-md);
+  background: var(--color-exito-claro);
+}
+
+.chn-comprobante__monto-etiqueta {
+  font-size: var(--texto-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-texto-suave);
+}
+
+.chn-comprobante__monto-valor {
+  font-size: var(--texto-2xl);
+  font-weight: var(--peso-fuerte);
+  color: var(--color-exito);
+}
+
+.chn-comprobante__pie {
+  padding-top: var(--esp-3);
+  border-top: 1px solid var(--color-borde);
+}
+
+.chn-comprobante__pie p {
+  margin: 0;
+  font-size: var(--texto-xs);
+  color: var(--color-texto-suave);
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+}
+
+/* Acotado con :has() para no alterar la impresión de otras pantallas (p. ej. el plan
+   de pagos); visibility conserva el flujo del documento. */
+
+@media print {
+  body:has(.chn-comprobante) * {
+    visibility: hidden !important;
+  }
+
+  body:has(.chn-comprobante) .chn-comprobante,
+  body:has(.chn-comprobante) .chn-comprobante * {
+    visibility: visible !important;
+  }
+
+  body:has(.chn-comprobante) .chn-comprobante {
+    position: fixed;
+    inset: 0;
+    margin: 0;
+    max-width: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    /* Hoja blanca: el papel no tiene tema claro ni oscuro. */
+    background: var(--color-texto-inverso);
+  }
+}

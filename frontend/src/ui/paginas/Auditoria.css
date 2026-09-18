@@ -1,0 +1,41 @@
+.chn-auditoria {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-5);
+}
+
+.chn-auditoria__filtro {
+  min-width: 0;
+}
+
+.chn-auditoria__filtro--ancho {
+  min-width: 0;
+}
+
+.chn-auditoria__usuario,
+.chn-auditoria__ip {
+  font-family: var(--fuente-mono);
+  font-size: var(--texto-xs);
+  color: var(--color-texto-suave);
+}
+
+.chn-auditoria__usuario {
+  font-weight: var(--peso-semi);
+  color: var(--color-texto);
+}
+
+/* El detalle completo se consulta con el title del elemento; aquí se recorta. */
+.chn-auditoria__detalle {
+  display: block;
+  max-width: 34rem;
+  font-size: var(--texto-sm);
+  color: var(--color-texto-suave);
+  cursor: help;
+}
+
+@media (max-width: 900px) {
+
+  .chn-auditoria__detalle {
+    max-width: none;
+  }
+}

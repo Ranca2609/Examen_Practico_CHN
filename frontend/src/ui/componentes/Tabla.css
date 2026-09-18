@@ -1,0 +1,132 @@
+.chn-tabla-envoltorio {
+  width: 100%;
+  max-height: 70vh;
+  overflow: auto;
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-lg);
+}
+
+.chn-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--texto-md);
+  color: var(--color-texto);
+}
+
+.chn-tabla__encabezado th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: var(--esp-3);
+  text-align: left;
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-fuerte);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-texto-suave);
+  background-color: var(--color-superficie-alterna);
+  border-bottom: 2px solid var(--color-borde-fuerte);
+  /* Se permite partir el encabezado en dos líneas: si no, fija el ancho mínimo de su
+     columna y todo el recorte cae sobre la del nombre del cliente. */
+  white-space: normal;
+}
+
+/* 12px por lado: con nueve o diez columnas cada píxel de relleno cuenta. */
+.chn-tabla td {
+  padding: var(--esp-3);
+  border-bottom: 1px solid var(--color-borde);
+  vertical-align: middle;
+  transition: background-color var(--transicion-rapida);
+}
+
+.chn-tabla__fila:hover td {
+  background-color: var(--color-primario-suave);
+}
+
+.chn-tabla__fila--activa td {
+  background-color: var(--color-primario-claro);
+}
+
+.chn-tabla__fila--activa td:first-child {
+  box-shadow: inset 3px 0 0 0 var(--color-primario);
+}
+
+.chn-tabla__celda--derecha {
+  text-align: right;
+}
+
+.chn-tabla__celda--centro {
+  text-align: center;
+}
+
+/* nowrap: un importe nunca debe dejar la «Q» sola sobre la cifra. */
+.chn-tabla__celda--numerica {
+  white-space: nowrap;
+  font-family: var(--fuente-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+/* nowrap: un número oficial cortado en un guion se lee como dos. */
+.chn-tabla__celda--codigo {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+.chn-tabla__columna-acciones {
+  white-space: nowrap;
+}
+
+.chn-tabla__acciones {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--esp-1);
+}
+
+.chn-tabla__vacio,
+.chn-tabla__vacio:hover {
+  padding: 0;
+  background-color: var(--color-superficie);
+}
+
+.chn-esqueleto {
+  display: block;
+  height: 12px;
+  border-radius: var(--radio-sm);
+  background-color: var(--color-neutro-claro);
+  background-image: linear-gradient(
+    90deg,
+    var(--color-neutro-claro) 0%,
+    var(--color-superficie-alterna) 50%,
+    var(--color-neutro-claro) 100%
+  );
+  background-size: 200% 100%;
+  animation: chn-brillo 1.4s ease-in-out infinite;
+}
+
+.chn-tabla__esqueleto {
+  width: 80%;
+}
+
+@media (max-width: 900px) {
+  .chn-tabla {
+    min-width: 720px;
+  }
+}
+
+/* Propiedades sueltas: la abreviada pisaría el animation-delay de .chn-anim-escalonado
+   y --transicion-lenta ya trae su propia curva. */
+.chn-tabla__fila.chn-anim-escalonado {
+  animation-name: chn-aparecer;
+  animation-duration: 320ms;
+  animation-timing-function: var(--curva-suave);
+  animation-fill-mode: both;
+}
+
+/* El radio del envoltorio cortaría esta línea a media curva; su borde ya cierra la tabla. */
+.chn-tabla tbody tr:last-child td {
+  border-bottom: 0;
+}

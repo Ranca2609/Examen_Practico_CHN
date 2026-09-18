@@ -1,0 +1,130 @@
+.chn-paginador {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-4);
+  padding: var(--esp-3) var(--esp-4);
+  border-top: 1px solid var(--color-borde);
+  background-color: var(--color-superficie-alterna);
+}
+
+.chn-paginador__resumen {
+  margin: 0;
+  font-size: var(--texto-xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-texto-suave);
+}
+
+.chn-paginador__controles {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-1);
+}
+
+.chn-paginador__numeros {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chn-paginador__boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  font-family: inherit;
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-semi);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-texto);
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-md);
+  cursor: pointer;
+  transition: background-color var(--transicion-rapida), border-color var(--transicion-rapida),
+    color var(--transicion-rapida), transform var(--transicion-rapida), box-shadow var(--transicion-rapida);
+}
+
+.chn-paginador__boton:hover:not(:disabled) {
+  color: var(--color-primario-oscuro);
+  background-color: var(--color-primario-claro);
+  border-color: var(--color-primario);
+  transform: translateY(-1px);
+}
+
+.chn-paginador__boton:active:not(:disabled) {
+  transform: translateY(0) scale(0.96);
+}
+
+.chn-paginador__boton:focus-visible {
+  outline: none;
+  box-shadow: var(--anillo-foco);
+  border-color: var(--color-primario);
+}
+
+.chn-paginador__boton:disabled {
+  color: var(--color-texto-suave);
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.chn-paginador__boton--activo,
+.chn-paginador__boton--activo:hover:not(:disabled) {
+  color: var(--color-texto-inverso);
+  background-color: var(--color-primario);
+  border-color: var(--color-primario);
+  transform: none;
+}
+
+.chn-paginador__elipsis {
+  padding: 0 var(--esp-1);
+  color: var(--color-texto-suave);
+}
+
+.chn-paginador__tamano {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  margin-left: auto;
+}
+
+.chn-paginador__etiqueta {
+  font-size: var(--texto-xs);
+  color: var(--color-texto-suave);
+  white-space: nowrap;
+}
+
+.chn-paginador__select {
+  width: auto;
+  min-height: 34px;
+  padding: 0 var(--esp-2);
+  font-size: var(--texto-xs);
+  border-radius: var(--radio-md);
+}
+
+/* focus-visible y no focus: el anillo solo ayuda al navegar con teclado. */
+.chn-paginador__select:focus-visible {
+  box-shadow: var(--anillo-foco);
+}
+
+@media (max-width: 640px) {
+  .chn-paginador {
+    justify-content: center;
+    gap: var(--esp-3);
+    text-align: center;
+  }
+
+  .chn-paginador__resumen,
+  .chn-paginador__controles,
+  .chn-paginador__tamano {
+    flex: 1 1 100%;
+    justify-content: center;
+    margin-left: 0;
+  }
+}

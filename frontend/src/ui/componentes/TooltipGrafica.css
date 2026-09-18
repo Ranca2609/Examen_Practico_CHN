@@ -1,0 +1,65 @@
+.chn-tooltip-grafica {
+  position: absolute;
+  z-index: 2;
+  min-width: 150px;
+  max-width: 260px;
+  padding: var(--esp-2) var(--esp-3);
+  font-size: var(--texto-xs);
+  line-height: var(--linea-apretada);
+  color: var(--color-texto-suave);
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-sm);
+  box-shadow: var(--sombra-lg);
+  pointer-events: none;
+}
+
+.chn-tooltip-grafica__titulo {
+  margin: 0 0 var(--esp-1);
+  font-weight: var(--peso-semi);
+}
+
+.chn-tooltip-grafica__principal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--esp-1) var(--esp-2);
+  margin: 0;
+}
+
+.chn-tooltip-grafica__clave {
+  flex: 0 0 auto;
+  width: 12px;
+  height: 3px;
+  border-radius: var(--radio-completo);
+}
+
+.chn-tooltip-grafica__valor {
+  font-size: var(--texto-md);
+  font-weight: var(--peso-fuerte);
+  color: var(--color-texto);
+  white-space: nowrap;
+}
+
+.chn-tooltip-grafica__detalles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: var(--esp-2) 0 0;
+  padding-top: var(--esp-2);
+  border-top: 1px solid var(--color-borde);
+}
+
+.chn-tooltip-grafica__detalle {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--esp-3);
+}
+
+.chn-tooltip-grafica__detalle dd {
+  margin: 0;
+  font-weight: var(--peso-semi);
+  color: var(--color-texto);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}

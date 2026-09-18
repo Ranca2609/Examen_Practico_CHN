@@ -1,0 +1,142 @@
+.chn-notificaciones {
+  position: fixed;
+  top: var(--esp-4);
+  right: var(--esp-4);
+  z-index: var(--capa-notificacion);
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+  width: min(420px, calc(100vw - var(--esp-8)));
+  pointer-events: none;
+}
+
+.chn-notificacion {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--esp-3);
+  padding: var(--esp-4);
+  overflow: hidden;
+  pointer-events: auto;
+  color: var(--color-texto-inverso);
+  /* El velo del 18% no es decorativo: sin el, exito (4,15:1) y advertencia (3,74:1)
+     no llegan al 4,5:1 de AA contra el texto blanco. */
+  background-image: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-texto) 18%, transparent),
+      color-mix(in srgb, var(--color-texto) 18%, transparent)
+    ),
+    var(--av-degradado);
+  border: 1px solid transparent;
+  border-radius: var(--radio-lg);
+  box-shadow: var(--av-sombra);
+  animation: chn-entrar-derecha var(--duracion-lenta) var(--curva-suave) both;
+}
+
+/* Debe coincidir con DURACION_SALIDA de Notificaciones.jsx. */
+.chn-notificacion--saliendo {
+  animation: chn-salir-derecha 180ms var(--curva-suave) both;
+}
+
+.chn-notificacion__icono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  color: var(--color-texto-inverso);
+  background-color: color-mix(in srgb, var(--color-texto-inverso) 22%, transparent);
+  border-radius: var(--radio-completo);
+}
+
+.chn-notificacion__cuerpo {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.chn-notificacion__titulo {
+  margin: 0 0 2px;
+  font-size: var(--texto-md);
+  font-weight: var(--peso-semi);
+  line-height: var(--linea-apretada);
+  color: var(--color-texto-inverso);
+}
+
+.chn-notificacion__mensaje {
+  margin: 0;
+  font-size: var(--texto-md);
+  line-height: var(--linea-base);
+  color: var(--color-texto-inverso);
+  overflow-wrap: anywhere;
+}
+
+.chn-notificacion__cerrar {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  color: var(--color-texto-inverso);
+  background-color: color-mix(in srgb, var(--color-texto-inverso) 14%, transparent);
+  border: 0;
+  border-radius: var(--radio-completo);
+  cursor: pointer;
+  transition: background-color var(--transicion-rapida), transform var(--transicion-rapida);
+}
+
+.chn-notificacion__cerrar:hover {
+  background-color: color-mix(in srgb, var(--color-texto-inverso) 30%, transparent);
+  transform: scale(1.08);
+}
+
+.chn-notificacion__cerrar:active {
+  transform: scale(0.94);
+}
+
+.chn-notificacion__cerrar:focus-visible {
+  outline: 2px solid var(--color-texto-inverso);
+  outline-offset: 2px;
+}
+
+.chn-notificacion__vida {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background-color: color-mix(in srgb, var(--color-texto-inverso) 65%, transparent);
+  animation: chn-vaciar-barra var(--duracion, 5000ms) linear both;
+}
+
+.chn-notificacion--exito {
+  --av-degradado: var(--degradado-exito);
+  --av-sombra: var(--sombra-color-exito);
+}
+
+.chn-notificacion--peligro {
+  --av-degradado: var(--degradado-peligro);
+  --av-sombra: var(--sombra-color-peligro);
+}
+
+.chn-notificacion--advertencia {
+  --av-degradado: var(--degradado-advertencia);
+  --av-sombra: var(--sombra-color-advertencia);
+}
+
+.chn-notificacion--info {
+  --av-degradado: var(--degradado-info);
+  --av-sombra: var(--sombra-color-info);
+}
+
+@media (max-width: 640px) {
+  .chn-notificaciones {
+    top: var(--esp-2);
+    right: var(--esp-4);
+    left: var(--esp-4);
+    width: auto;
+  }
+}

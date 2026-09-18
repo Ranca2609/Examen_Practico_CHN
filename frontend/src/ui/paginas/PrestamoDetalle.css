@@ -1,0 +1,243 @@
+.chn-prestamo-detalle {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-5);
+}
+
+.chn-prestamo-detalle__subtitulo {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--esp-3);
+}
+
+.chn-prestamo-detalle__reintento {
+  display: flex;
+  gap: var(--esp-3);
+  margin-top: var(--esp-4);
+}
+
+.chn-prestamo-detalle__superior {
+  display: grid;
+  grid-template-columns: minmax(17rem, 22rem) 1fr;
+  gap: var(--esp-4);
+  align-items: start;
+}
+
+.chn-prestamo-detalle__saldo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+  padding: var(--esp-5);
+  border-radius: var(--radio-lg);
+  border: 1px solid var(--color-primario);
+  background: var(--color-primario-claro);
+  box-shadow: var(--sombra-sm);
+}
+
+.chn-prestamo-detalle__saldo-etiqueta {
+  margin: 0;
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-semi);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-primario-oscuro);
+}
+
+.chn-prestamo-detalle__saldo-valor {
+  margin: 0;
+  font-size: calc(var(--texto-2xl) * 1.35);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--linea-apretada);
+  letter-spacing: -0.01em;
+  color: var(--color-primario-oscuro);
+  font-variant-numeric: tabular-nums;
+}
+
+.chn-prestamo-detalle__saldo-avance {
+  margin-top: var(--esp-1);
+}
+
+.chn-prestamo-detalle__saldo-datos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--esp-3);
+  margin: 0;
+  padding-top: var(--esp-3);
+  border-top: 1px solid var(--color-borde);
+}
+
+.chn-prestamo-detalle__saldo-datos dt {
+  font-size: var(--texto-xs);
+  color: var(--color-texto-suave);
+}
+
+.chn-prestamo-detalle__saldo-datos dd {
+  margin: 2px 0 0;
+  font-size: var(--texto-md);
+  font-weight: var(--peso-semi);
+  color: var(--color-texto);
+  font-variant-numeric: tabular-nums;
+}
+
+.chn-prestamo-detalle__fichas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+}
+
+.chn-prestamo-detalle__tablist {
+  position: relative;
+  display: flex;
+  gap: var(--esp-1);
+  padding: 0 var(--esp-4);
+  border-bottom: 1px solid var(--color-borde);
+  background: var(--color-superficie-alterna);
+  overflow-x: auto;
+}
+
+/* La página mide posición y ancho de la pestaña activa y los pasa por style;
+   aquí solo vive el movimiento. */
+.chn-prestamo-detalle__indicador {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  border-radius: var(--radio-completo) var(--radio-completo) 0 0;
+  background: var(--degradado-primario);
+  pointer-events: none;
+  transition: transform var(--transicion-base), width var(--transicion-base),
+    opacity var(--transicion-base);
+}
+
+.chn-prestamo-detalle__pestana {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: var(--esp-4) var(--esp-4);
+  font-family: inherit;
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-medio);
+  color: var(--color-texto-suave);
+  /* El borde transparente reserva el alto de la barra del indicador. */
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  transition: color var(--transicion-rapida), background-color var(--transicion-rapida);
+}
+
+.chn-prestamo-detalle__pestana:hover {
+  color: var(--color-primario);
+  background-color: var(--color-primario-suave);
+}
+
+.chn-prestamo-detalle__pestana:focus-visible {
+  outline: 2px solid var(--color-primario);
+  outline-offset: -3px;
+}
+
+/* El subrayado de la pestaña activa lo pinta el indicador deslizante. */
+.chn-prestamo-detalle__pestana--activa {
+  color: var(--color-primario-oscuro);
+  font-weight: var(--peso-semi);
+}
+
+.chn-prestamo-detalle__panel {
+  padding: var(--esp-4) 0 0;
+}
+
+.chn-prestamo-detalle__panel:focus-visible {
+  outline: 2px solid var(--color-primario);
+  outline-offset: -2px;
+}
+
+.chn-prestamo-detalle__panel-encabezado {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--esp-4);
+  padding: 0 var(--esp-5) var(--esp-4);
+}
+
+.chn-prestamo-detalle__panel-titulo {
+  margin: 0;
+  font-size: var(--texto-lg);
+  color: var(--color-texto);
+}
+
+.chn-prestamo-detalle__panel-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--esp-2);
+  flex-shrink: 0;
+}
+
+.chn-prestamo-detalle__panel-nota {
+  margin: var(--esp-1) 0 0;
+  font-size: var(--texto-sm);
+  color: var(--color-texto-suave);
+  max-width: 52ch;
+}
+
+.chn-prestamo-detalle__recibo {
+  font-family: var(--fuente-mono);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+}
+
+.chn-prestamo-detalle__abono {
+  color: var(--color-exito);
+  white-space: nowrap;
+}
+
+/* La observación se recorta con puntos suspensivos; el texto completo va en el title. */
+.chn-prestamo-detalle__observacion {
+  display: block;
+  max-width: 16rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--color-texto-suave);
+  cursor: help;
+}
+
+@media (max-width: 900px) {
+  .chn-prestamo-detalle__superior {
+    grid-template-columns: 1fr;
+  }
+
+  .chn-prestamo-detalle__panel-encabezado {
+    flex-direction: column;
+    padding: 0 var(--esp-4) var(--esp-4);
+  }
+}
+
+/* global.css ya oculta navegación, avisos y botones; aquí se compacta la hoja
+   y se evita cortar la tabla a media fila. */
+
+@media print {
+  .chn-prestamo-detalle__tablist,
+  .chn-prestamo-detalle__panel-nota {
+    display: none !important;
+  }
+
+  .chn-prestamo-detalle__saldo {
+    border: 1px solid var(--color-borde-fuerte);
+    background: var(--color-superficie);
+    box-shadow: none;
+    break-inside: avoid;
+  }
+
+  .chn-prestamo-detalle__saldo-valor {
+    font-size: var(--texto-2xl);
+  }
+
+  .chn-prestamo-detalle__panel {
+    padding: 0;
+  }
+
+  .chn-prestamo-detalle__panel-titulo {
+    margin-bottom: var(--esp-2);
+  }
+}

@@ -1,0 +1,39 @@
+.chn-rango-fechas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--esp-2);
+}
+
+.chn-rango-fechas__campo {
+  flex: 1 1 148px;
+  min-width: 138px;
+}
+
+.chn-rango-fechas__union {
+  flex: 0 0 auto;
+  font-size: var(--texto-sm);
+  color: var(--color-texto-suave);
+  user-select: none;
+}
+
+.chn-rango-fechas__buscar {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 640px) {
+  .chn-rango-fechas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .chn-rango-fechas__campo {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .chn-rango-fechas__union {
+    text-align: left;
+  }
+}

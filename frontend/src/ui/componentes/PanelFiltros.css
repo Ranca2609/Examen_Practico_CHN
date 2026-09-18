@@ -1,0 +1,216 @@
+.chn-panel-filtros {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: var(--degradado-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-lg);
+  box-shadow: var(--sombra-xs);
+  overflow: hidden;
+  transition: box-shadow var(--transicion-base), border-color var(--transicion-base);
+}
+
+.chn-panel-filtros--abierto {
+  border-color: var(--color-borde-fuerte);
+  box-shadow: var(--sombra-sm);
+}
+
+.chn-panel-filtros__barra {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  padding-right: var(--esp-4);
+}
+
+.chn-panel-filtros__cabecera {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: var(--esp-3);
+  min-width: 0;
+  padding: var(--esp-4);
+  font-family: inherit;
+  font-size: var(--texto-md);
+  text-align: left;
+  color: var(--color-texto);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: background-color var(--transicion-rapida);
+}
+
+.chn-panel-filtros__cabecera:hover {
+  background-color: var(--color-primario-suave);
+}
+
+.chn-panel-filtros__cabecera:focus-visible {
+  /* La tarjeta recorta el desborde, asi que el anillo se dibuja hacia dentro. */
+  outline: 2px solid var(--color-primario);
+  outline-offset: -3px;
+}
+
+.chn-panel-filtros__icono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  color: var(--color-primario);
+  background-color: var(--color-primario-claro);
+  border-radius: var(--radio-md);
+  transition: transform var(--transicion-rapida);
+}
+
+.chn-panel-filtros__cabecera:hover .chn-panel-filtros__icono {
+  transform: scale(1.06);
+}
+
+.chn-panel-filtros__titulo {
+  font-weight: var(--peso-semi);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chn-panel-filtros__distintivo {
+  flex: 0 0 auto;
+}
+
+.chn-panel-filtros__chevron {
+  display: inline-flex;
+  flex: 0 0 auto;
+  color: var(--color-texto-suave);
+  transition: transform var(--transicion-base), color var(--transicion-rapida);
+}
+
+.chn-panel-filtros__cabecera:hover .chn-panel-filtros__chevron {
+  color: var(--color-primario);
+}
+
+.chn-panel-filtros--abierto .chn-panel-filtros__chevron {
+  transform: rotate(180deg);
+  color: var(--color-primario);
+}
+
+.chn-panel-filtros__extras {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: var(--esp-3);
+}
+
+.chn-panel-filtros__resumen {
+  font-size: var(--texto-xs);
+  color: var(--color-texto-suave);
+  white-space: nowrap;
+}
+
+.chn-panel-filtros__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-2);
+  margin: 0;
+  padding: 0 var(--esp-4) var(--esp-3);
+  list-style: none;
+}
+
+.chn-panel-filtros__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-1);
+  padding: 2px 2px 2px var(--esp-3);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+  color: var(--color-primario-oscuro);
+  background-color: var(--color-primario-claro);
+  border: 1px solid var(--color-info-borde);
+  border-radius: var(--radio-completo);
+  animation: chn-escalar var(--transicion-lenta);
+}
+
+.chn-panel-filtros__chip-texto {
+  white-space: nowrap;
+}
+
+.chn-panel-filtros__chip-quitar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  color: var(--color-primario-oscuro);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radio-completo);
+  cursor: pointer;
+  transition: background-color var(--transicion-rapida), color var(--transicion-rapida);
+}
+
+.chn-panel-filtros__chip-quitar:hover {
+  color: var(--color-texto-inverso);
+  background-color: var(--color-peligro);
+}
+
+.chn-panel-filtros__chip-quitar:focus-visible {
+  outline: none;
+  box-shadow: var(--anillo-foco);
+}
+
+/* Cerrado usa visibility: hidden para que los campos no reciban el foco con Tab. */
+.chn-panel-filtros__cuerpo {
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  border-top: 1px solid transparent;
+  transition: max-height var(--transicion-lenta), opacity var(--transicion-base),
+    visibility var(--transicion-base), border-color var(--transicion-base);
+}
+
+.chn-panel-filtros--abierto .chn-panel-filtros__cuerpo {
+  /* max-height fijo para poder animar la apertura; holgado para la rejilla mas alta. */
+  max-height: 1400px;
+  opacity: 1;
+  visibility: visible;
+  border-top-color: var(--color-borde);
+}
+
+/* Celdas iguales y anchas para un rango de fechas (~300px): mezclar anchos deja huecos.
+   align-items: start alinea rótulos y campos aunque solo algunos lleven ayuda. */
+
+.chn-panel-filtros__rejilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--esp-5) var(--esp-5);
+  align-items: start;
+  padding: var(--esp-5) var(--esp-4);
+  background-color: var(--color-superficie-alterna);
+}
+
+.chn-panel-filtros__rejilla > * {
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .chn-panel-filtros__barra {
+    flex-wrap: wrap;
+    padding-right: 0;
+  }
+
+  .chn-panel-filtros__cabecera {
+    flex: 1 1 100%;
+  }
+
+  .chn-panel-filtros__extras {
+    flex: 1 1 100%;
+    justify-content: space-between;
+    padding: 0 var(--esp-4) var(--esp-3);
+  }
+
+  .chn-panel-filtros__rejilla {
+    grid-template-columns: minmax(0, 1fr);
+    padding: var(--esp-4);
+  }
+}

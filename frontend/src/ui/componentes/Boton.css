@@ -1,0 +1,258 @@
+.chn-boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-2);
+  box-sizing: border-box;
+  position: relative;
+  font-family: inherit;
+  font-weight: var(--peso-semi);
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  border-radius: var(--radio-md);
+  cursor: pointer;
+  transition: background-color var(--transicion-rapida), background-image var(--transicion-rapida),
+    border-color var(--transicion-rapida), color var(--transicion-rapida),
+    box-shadow var(--transicion-rapida), transform var(--transicion-rapida);
+}
+
+.chn-boton:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.chn-boton:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+.chn-boton:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Tamanos */
+.chn-boton--sm {
+  min-height: 32px;
+  padding: 0 var(--esp-3);
+  font-size: var(--texto-xs);
+}
+
+.chn-boton--md {
+  min-height: 40px;
+  padding: 0 var(--esp-4);
+  font-size: var(--texto-md);
+}
+
+.chn-boton--lg {
+  min-height: 48px;
+  padding: 0 var(--esp-6);
+  font-size: var(--texto-lg);
+}
+
+.chn-boton--completo {
+  width: 100%;
+}
+
+/* Solo icono */
+.chn-boton--solo-icono {
+  padding: 0;
+  gap: 0;
+}
+
+.chn-boton--solo-icono.chn-boton--sm {
+  width: 32px;
+}
+
+.chn-boton--solo-icono.chn-boton--md {
+  width: 40px;
+}
+
+.chn-boton--solo-icono.chn-boton--lg {
+  width: 48px;
+}
+
+/* Colores por variante: los tonos solo consumen las --bt-*. */
+.chn-boton--primario {
+  --bt-color: var(--color-primario);
+  --bt-claro: var(--color-primario-claro);
+  --bt-oscuro: var(--color-primario-oscuro);
+  --bt-borde: var(--color-info-borde);
+  --bt-degradado: var(--degradado-primario);
+  --bt-sombra: var(--sombra-color-primario);
+}
+
+.chn-boton--exito {
+  --bt-color: var(--color-exito);
+  --bt-claro: var(--color-exito-claro);
+  --bt-oscuro: var(--color-exito-oscuro);
+  --bt-borde: var(--color-exito-borde);
+  --bt-degradado: var(--degradado-exito);
+  --bt-sombra: var(--sombra-color-exito);
+}
+
+.chn-boton--peligro {
+  --bt-color: var(--color-peligro);
+  --bt-claro: var(--color-peligro-claro);
+  --bt-oscuro: var(--color-peligro-oscuro);
+  --bt-borde: var(--color-peligro-borde);
+  --bt-degradado: var(--degradado-peligro);
+  --bt-sombra: var(--sombra-color-peligro);
+}
+
+.chn-boton--advertencia {
+  --bt-color: var(--color-advertencia);
+  --bt-claro: var(--color-advertencia-claro);
+  --bt-oscuro: var(--color-advertencia-oscuro);
+  --bt-borde: var(--color-advertencia-borde);
+  --bt-degradado: var(--degradado-advertencia);
+  --bt-sombra: var(--sombra-color-advertencia);
+}
+
+.chn-boton--info {
+  --bt-color: var(--color-info);
+  --bt-claro: var(--color-info-claro);
+  --bt-oscuro: var(--color-info-oscuro);
+  --bt-borde: var(--color-info-borde);
+  --bt-degradado: var(--degradado-info);
+  --bt-sombra: var(--sombra-color-info);
+}
+
+.chn-boton--neutro {
+  --bt-color: var(--color-neutro);
+  --bt-claro: var(--color-neutro-claro);
+  --bt-oscuro: var(--color-neutro-oscuro);
+  --bt-borde: var(--color-neutro-borde);
+  --bt-degradado: linear-gradient(135deg, var(--color-neutro) 0%, var(--color-neutro-oscuro) 100%);
+  --bt-sombra: var(--sombra-md);
+}
+
+.chn-boton--secundario,
+.chn-boton--texto,
+.chn-boton--enlace {
+  --bt-color: var(--color-primario);
+  --bt-claro: var(--color-primario-claro);
+  --bt-oscuro: var(--color-primario-oscuro);
+  --bt-borde: var(--color-borde);
+  --bt-sombra: var(--sombra-md);
+}
+
+/* Tonos */
+.chn-boton--solido {
+  color: var(--color-texto-inverso);
+  /* Velo del 18%: sin el, los degradados de exito y advertencia no llegan a 4,5:1 con texto blanco. */
+  background-image: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-texto) 18%, transparent),
+      color-mix(in srgb, var(--color-texto) 18%, transparent)
+    ),
+    var(--bt-degradado);
+}
+
+.chn-boton--solido:hover:not(:disabled) {
+  box-shadow: var(--bt-sombra);
+}
+
+.chn-boton--suave {
+  color: var(--bt-oscuro);
+  background-color: var(--bt-claro);
+  border-color: var(--bt-borde);
+}
+
+.chn-boton--suave:hover:not(:disabled) {
+  border-color: var(--bt-color);
+  box-shadow: var(--sombra-xs);
+}
+
+.chn-boton--contorno {
+  color: var(--bt-color);
+  background-color: transparent;
+  border-color: var(--bt-color);
+}
+
+.chn-boton--contorno:hover:not(:disabled) {
+  color: var(--bt-oscuro);
+  background-color: var(--bt-claro);
+}
+
+/* Chasis: van despues de los tonos para ganarles por orden con la misma especificidad. */
+.chn-boton--secundario {
+  color: var(--color-texto);
+  background-color: var(--color-superficie);
+  background-image: var(--degradado-superficie);
+  border-color: var(--color-borde);
+}
+
+.chn-boton--secundario:hover:not(:disabled) {
+  color: var(--color-primario-oscuro);
+  background-image: none;
+  background-color: var(--color-primario-suave);
+  border-color: var(--color-primario);
+  box-shadow: var(--sombra-xs);
+}
+
+.chn-boton--texto {
+  color: var(--color-primario);
+  background-color: transparent;
+  background-image: none;
+  border-color: transparent;
+  padding-left: var(--esp-2);
+  padding-right: var(--esp-2);
+}
+
+.chn-boton--texto:hover:not(:disabled) {
+  color: var(--color-primario-oscuro);
+  background-color: var(--color-primario-claro);
+  box-shadow: none;
+}
+
+.chn-boton--enlace {
+  color: var(--color-primario);
+  background-color: transparent;
+  background-image: none;
+  border-color: transparent;
+  padding-left: 0;
+  padding-right: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.chn-boton--enlace:hover:not(:disabled) {
+  color: var(--color-primario-oscuro);
+  background-color: transparent;
+  box-shadow: none;
+}
+
+/* El boton de solo icono no necesita el relleno lateral de texto/enlace. */
+.chn-boton--solo-icono.chn-boton--texto,
+.chn-boton--solo-icono.chn-boton--enlace {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.chn-boton--solo-icono.chn-boton--enlace {
+  text-decoration: none;
+}
+
+/* Foco al final para que el anillo gane a cualquier sombra de estado. */
+.chn-boton:focus-visible:not(:disabled) {
+  outline: none;
+  box-shadow: var(--anillo-foco);
+}
+
+.chn-boton--peligro:focus-visible:not(:disabled) {
+  box-shadow: var(--anillo-foco-peligro);
+}
+
+/* Spinner de carga */
+.chn-boton__spinner {
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: var(--radio-completo);
+  animation: chn-girar 0.7s linear infinite;
+}

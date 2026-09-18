@@ -1,0 +1,88 @@
+.chn-prestamos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-5);
+}
+
+.chn-prestamos__indicadores {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--esp-4);
+}
+
+/* Ambos extremos comparten una celda para leerse como un solo criterio; min-width: 0
+   evita que el ancho mínimo de los <input type="number"> desborde la celda. */
+
+.chn-prestamos__pareja {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+}
+
+.chn-prestamos__pareja > * {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.chn-prestamos__pareja-union {
+  flex: 0 0 auto;
+  font-size: var(--texto-xs);
+  color: var(--color-texto-suave);
+}
+
+.chn-prestamos__enlace {
+  font-weight: var(--peso-semi);
+  color: var(--color-primario);
+  font-family: var(--fuente-mono);
+  font-size: var(--texto-sm);
+}
+
+.chn-prestamos__cliente {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.chn-prestamos__cliente-nombre {
+  font-weight: var(--peso-medio);
+  line-height: var(--linea-apretada);
+}
+
+.chn-prestamos__cliente-dpi {
+  font-size: var(--texto-xs);
+  color: var(--color-texto-suave);
+}
+
+.chn-prestamos__saldo {
+  color: var(--color-primario-oscuro);
+  font-weight: var(--peso-fuerte);
+  white-space: nowrap;
+}
+
+.chn-prestamos__acciones {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  gap: var(--esp-2);
+  justify-content: flex-end;
+}
+
+.chn-prestamos__reintento {
+  margin-top: var(--esp-3);
+}
+
+@media (max-width: 640px) {
+  /* En una columna no caben los dos importes sin recortar las cifras. */
+  .chn-prestamos__pareja {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .chn-prestamos__pareja-union {
+    align-self: center;
+  }
+}
+
+.chn-prestamos__filtro-ancho {
+  min-width: 0;
+}
+

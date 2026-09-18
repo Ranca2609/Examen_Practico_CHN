@@ -1,0 +1,187 @@
+.chn-solicitud-nueva {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: var(--esp-5);
+  align-items: start;
+}
+
+.chn-solicitud-nueva__panel {
+  position: sticky;
+  top: var(--esp-4);
+}
+
+.chn-solicitud-nueva__rejilla {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--esp-3) var(--esp-4);
+}
+
+.chn-solicitud-nueva__ancho-completo {
+  grid-column: 1 / -1;
+}
+
+.chn-solicitud-nueva__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-3);
+  justify-content: flex-end;
+  padding-top: var(--esp-4);
+  margin-top: var(--esp-4);
+  border-top: 1px solid var(--color-borde);
+}
+
+.chn-simulacion-cuota {
+  padding: var(--esp-5) var(--esp-4);
+  text-align: center;
+  color: var(--color-texto-inverso);
+  background: var(--degradado-primario);
+  border-radius: var(--radio-lg);
+  box-shadow: var(--sombra-color-primario);
+}
+
+.chn-simulacion-cuota__rotulo {
+  margin: 0 0 var(--esp-2);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-semi);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-texto-inverso);
+  opacity: 0.82;
+}
+
+.chn-simulacion-cuota__valor {
+  display: block;
+  /* Por encima del mayor tamano del catalogo: es el dato que el analista busca primero. */
+  font-size: calc(var(--texto-2xl) * 1.55);
+  font-weight: var(--peso-fuerte);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-texto-inverso);
+}
+
+.chn-simulacion-cuota__origen {
+  display: inline-block;
+  margin-top: var(--esp-3);
+  padding: 2px var(--esp-3);
+  font-size: var(--texto-xs);
+  color: var(--color-texto-inverso);
+  background-color: var(--color-primario-oscuro);
+  border-radius: var(--radio-completo);
+}
+
+.chn-simulacion-totales {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--esp-3);
+  margin-top: var(--esp-4);
+}
+
+.chn-simulacion-totales__item {
+  padding: var(--esp-3);
+  background-color: var(--color-fondo);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-sm);
+}
+
+.chn-simulacion-totales__etiqueta {
+  display: block;
+  font-size: var(--texto-xs);
+  color: var(--color-texto-suave);
+}
+
+.chn-simulacion-totales__valor {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--texto-md);
+  font-weight: var(--peso-semi);
+  color: var(--color-texto);
+}
+
+.chn-simulacion-evaluacion {
+  margin-top: var(--esp-4);
+  padding-top: var(--esp-4);
+  border-top: 1px solid var(--color-borde);
+}
+
+.chn-simulacion-evaluacion__encabezado {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-2);
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--esp-3);
+}
+
+.chn-simulacion-evaluacion__titulo {
+  margin: 0;
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  color: var(--color-texto);
+}
+
+.chn-simulacion-evaluacion__observacion {
+  margin: var(--esp-3) 0 0;
+  font-size: var(--texto-sm);
+  line-height: 1.5;
+  color: var(--color-texto-suave);
+}
+
+.chn-simulacion-evaluacion__vigentes {
+  margin: var(--esp-2) 0 0;
+  font-size: var(--texto-sm);
+  color: var(--color-texto);
+}
+
+.chn-simulacion-plan {
+  margin-top: var(--esp-4);
+  padding-top: var(--esp-4);
+  border-top: 1px solid var(--color-borde);
+}
+
+.chn-simulacion-plan__encabezado {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-2);
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--esp-2);
+}
+
+.chn-simulacion-plan__titulo {
+  margin: 0;
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  color: var(--color-texto);
+}
+
+.chn-simulacion-plan__nota {
+  margin: var(--esp-2) 0 0;
+  font-size: var(--texto-xs);
+  color: var(--color-texto-suave);
+}
+
+.chn-simulacion-plan-completo {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+@media (max-width: 1100px) {
+  .chn-solicitud-nueva {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .chn-solicitud-nueva__panel {
+    position: static;
+  }
+}
+
+@media (max-width: 700px) {
+  .chn-solicitud-nueva__rejilla,
+  .chn-simulacion-totales {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .chn-solicitud-nueva__acciones {
+    justify-content: stretch;
+  }
+}

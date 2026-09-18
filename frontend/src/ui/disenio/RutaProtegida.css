@@ -1,0 +1,11 @@
+.chn-acceso-denegado {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--esp-6) 0;
+}
+
+.chn-acceso-denegado > * {
+  width: 100%;
+  max-width: 640px;
+}

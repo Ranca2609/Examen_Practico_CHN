@@ -1,0 +1,97 @@
+.chn-grafica-dona__cuerpo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-4) var(--esp-6);
+}
+
+.chn-grafica-dona__lienzo {
+  flex: 0 0 auto;
+}
+
+.chn-grafica-dona__segmento {
+  transition: stroke-width var(--transicion-rapida);
+}
+
+.chn-grafica-dona__total {
+  font-family: var(--fuente-base);
+  font-weight: var(--peso-fuerte);
+  fill: var(--color-texto);
+  letter-spacing: -0.01em;
+}
+
+/* Zona de impacto: trazo ancho y transparente que responde solo sobre el trazo. */
+.chn-grafica-dona__zona {
+  stroke: transparent;
+  pointer-events: stroke;
+  cursor: default;
+}
+
+/* Con el prefijo del lienzo para ganar a las reglas de foco de global.css. */
+.chn-grafica__interaccion .chn-grafica-dona__zona:focus,
+.chn-grafica__interaccion .chn-grafica-dona__zona:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.chn-grafica-dona__foco {
+  stroke: transparent;
+  pointer-events: none;
+}
+
+.chn-grafica-dona__zona:focus-visible + .chn-grafica-dona__foco {
+  stroke: var(--color-primario);
+}
+
+/* Leyenda */
+.chn-grafica-dona__leyenda {
+  flex: 1 1 200px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-1);
+  min-width: 0;
+  max-width: 320px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chn-grafica-dona__elemento {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto 5.5ch;
+  align-items: center;
+  gap: var(--esp-2);
+  padding: var(--esp-2) var(--esp-2);
+  font-size: var(--texto-sm);
+  border-radius: var(--radio-sm);
+  transition: background-color var(--transicion-rapida);
+}
+
+.chn-grafica-dona__elemento--activo {
+  background-color: var(--color-grafica-realce);
+}
+
+.chn-grafica-dona__muestra {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radio-grafica);
+}
+
+.chn-grafica-dona__nombre {
+  overflow-wrap: anywhere;
+  color: var(--color-texto);
+}
+
+.chn-grafica-dona__cantidad {
+  font-weight: var(--peso-fuerte);
+  color: var(--color-texto);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.chn-grafica-dona__porcentaje {
+  color: var(--color-texto-suave);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}

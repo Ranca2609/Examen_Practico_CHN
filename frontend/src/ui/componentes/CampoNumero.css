@@ -1,0 +1,60 @@
+.chn-campo-numero {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-md);
+  transition: border-color var(--transicion-rapida), box-shadow var(--transicion-rapida);
+}
+
+.chn-campo-numero:hover {
+  border-color: var(--color-texto-suave);
+}
+
+.chn-campo-numero:focus-within {
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 3px var(--color-primario-claro);
+}
+
+.chn-campo-numero--error {
+  border-color: var(--color-peligro);
+}
+
+.chn-campo-numero--error:focus-within {
+  box-shadow: 0 0 0 3px var(--color-peligro-claro);
+}
+
+.chn-campo-numero--deshabilitado {
+  background-color: var(--color-fondo);
+}
+
+.chn-campo-numero__adorno {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--esp-3);
+  font-size: var(--texto-md);
+  font-weight: var(--peso-semi);
+  color: var(--color-texto-suave);
+  background-color: var(--color-fondo);
+  border-right: 1px solid var(--color-borde);
+  border-radius: var(--radio-md) 0 0 var(--radio-md);
+}
+
+.chn-campo-numero__adorno--derecha {
+  border-right: 0;
+  border-left: 1px solid var(--color-borde);
+  border-radius: 0 var(--radio-md) var(--radio-md) 0;
+}
+
+/* El input pierde su propio borde porque el grupo ya lo dibuja. */
+.chn-campo-numero__control {
+  border: 0;
+  border-radius: var(--radio-md);
+  background-color: transparent;
+  text-align: right;
+}
+
+.chn-campo-numero__control:focus {
+  box-shadow: none;
+}

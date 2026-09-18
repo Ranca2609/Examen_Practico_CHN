@@ -1,0 +1,281 @@
+.chn-login {
+  --login-velo: rgba(255, 255, 255, 0.12);
+  --login-velo-borde: rgba(255, 255, 255, 0.24);
+  --login-texto-suave: rgba(255, 255, 255, 0.82);
+
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  min-height: 100vh;
+  background-color: var(--color-fondo);
+}
+
+/* Panel institucional */
+
+.chn-login__marca {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--esp-7);
+  padding: var(--esp-8);
+  color: var(--color-texto-inverso);
+  background-image: linear-gradient(160deg, var(--color-primario) 0%, var(--color-primario-oscuro) 100%);
+}
+
+.chn-login__logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border: 2px solid var(--color-acento);
+  border-radius: var(--radio-md);
+  background-color: var(--login-velo);
+  color: var(--color-acento);
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-fuerte);
+  letter-spacing: 1px;
+}
+
+.chn-login__institucion {
+  margin: 0 0 var(--esp-2);
+  color: var(--color-acento);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.chn-login__titulo {
+  margin: 0 0 var(--esp-3);
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+.chn-login__bajada {
+  max-width: 44ch;
+  margin: 0;
+  color: var(--login-texto-suave);
+  font-size: var(--texto-md);
+  line-height: 1.6;
+}
+
+.chn-login__ventajas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+  max-width: 46ch;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chn-login__ventaja {
+  display: flex;
+  gap: var(--esp-3);
+  align-items: flex-start;
+}
+
+.chn-login__ventaja-icono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--login-velo-borde);
+  border-radius: var(--radio-md);
+  background-color: var(--login-velo);
+  color: var(--color-texto-inverso);
+}
+
+.chn-login__ventaja strong {
+  display: block;
+  font-size: var(--texto-md);
+}
+
+.chn-login__ventaja-texto {
+  display: block;
+  color: var(--login-texto-suave);
+  font-size: var(--texto-sm);
+  line-height: 1.5;
+}
+
+/* Panel de acceso */
+
+.chn-login__acceso {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-5);
+  padding: var(--esp-7) var(--esp-5);
+}
+
+.chn-login__tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-5);
+  width: 100%;
+  max-width: 420px;
+  padding: var(--esp-7);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-lg);
+  background-color: var(--color-superficie);
+  box-shadow: var(--sombra-md);
+}
+
+.chn-login__tarjeta-encabezado h2 {
+  margin: 0 0 var(--esp-2);
+  color: var(--color-texto);
+  font-size: var(--texto-2xl);
+}
+
+.chn-login__tarjeta-encabezado p {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-sm);
+  line-height: 1.5;
+}
+
+.chn-login__formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+}
+
+.chn-login__campo-contrasena {
+  position: relative;
+}
+
+.chn-login__campo-contrasena input {
+  padding-right: 2.75rem;
+}
+
+.chn-login__ojo {
+  position: absolute;
+  top: 50%;
+  right: var(--esp-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  transform: translateY(-50%);
+  border: 0;
+  border-radius: var(--radio-sm);
+  background-color: transparent;
+  color: var(--color-texto-suave);
+  cursor: pointer;
+}
+
+.chn-login__ojo:hover {
+  background-color: var(--color-primario-claro);
+  color: var(--color-primario);
+}
+
+.chn-login__ojo[aria-pressed='true'] {
+  color: var(--color-primario);
+}
+
+/* Credenciales de demostración */
+
+.chn-login__demo {
+  padding: var(--esp-4);
+  border: 1px dashed var(--color-borde);
+  border-radius: var(--radio-md);
+  background-color: var(--color-fondo);
+}
+
+.chn-login__demo-titulo {
+  display: flex;
+  gap: var(--esp-2);
+  align-items: center;
+  margin: 0 0 var(--esp-3);
+  color: var(--color-info);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+}
+
+.chn-login__demo-lista {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--esp-2) var(--esp-3);
+  margin: 0 0 var(--esp-3);
+  padding: 0;
+  list-style: none;
+}
+
+.chn-login__demo-lista li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: var(--texto-xs);
+}
+
+.chn-login__demo-lista code,
+.chn-login__demo-clave code {
+  align-self: flex-start;
+  padding: 1px 6px;
+  border-radius: var(--radio-sm);
+  background-color: var(--color-primario-claro);
+  color: var(--color-primario-oscuro);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-semi);
+}
+
+.chn-login__demo-lista span {
+  color: var(--color-texto-suave);
+}
+
+.chn-login__demo-clave {
+  margin: 0 0 var(--esp-2);
+  color: var(--color-texto);
+  font-size: var(--texto-xs);
+}
+
+.chn-login__demo-nota {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  line-height: 1.5;
+}
+
+.chn-login__pie {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .chn-login {
+    grid-template-columns: 1fr;
+  }
+
+  .chn-login__marca {
+    gap: var(--esp-5);
+    padding: var(--esp-6) var(--esp-5);
+  }
+
+  .chn-login__titulo {
+    font-size: 1.5rem;
+  }
+
+  .chn-login__ventajas {
+    display: none;
+  }
+
+  .chn-login__acceso {
+    padding: var(--esp-6) var(--esp-4);
+  }
+
+  .chn-login__tarjeta {
+    padding: var(--esp-5);
+  }
+}
+
+@media (max-width: 480px) {
+  .chn-login__demo-lista {
+    grid-template-columns: 1fr;
+  }
+}

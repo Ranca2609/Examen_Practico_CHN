@@ -1,0 +1,121 @@
+.chn-clientes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-5);
+}
+
+.chn-clientes__barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-4);
+  flex-wrap: wrap;
+}
+
+.chn-clientes__buscador {
+  flex: 1 1 320px;
+}
+
+.chn-clientes__reintento {
+  margin-top: var(--esp-3);
+}
+
+.chn-clientes__filtro-ancho {
+  min-width: 0;
+}
+
+.chn-clientes__identidad {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.chn-clientes__nombre {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  color: var(--color-texto);
+  font-weight: var(--peso-semi);
+}
+
+.chn-clientes__dpi {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.chn-clientes__nacimiento {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.chn-clientes__edad {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.chn-clientes__direccion {
+  display: block;
+  max-width: 22ch;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  cursor: help;
+}
+
+.chn-clientes__acciones {
+  display: flex;
+  gap: var(--esp-1);
+  justify-content: flex-end;
+}
+
+.chn-clientes__enlace {
+  color: var(--color-primario);
+  font-weight: var(--peso-semi);
+  text-decoration: none;
+}
+
+.chn-clientes__enlace:hover,
+.chn-clientes__enlace:focus-visible {
+  text-decoration: underline;
+}
+
+.chn-clientes__historial {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-5);
+  margin-top: var(--esp-5);
+}
+
+.chn-clientes__historial-titulo {
+  margin: 0 0 var(--esp-3);
+  color: var(--color-texto);
+  font-size: var(--texto-md);
+}
+
+.chn-form-cliente {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+}
+
+.chn-form-cliente__rejilla {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--esp-4);
+}
+
+@media (max-width: 720px) {
+  .chn-clientes__buscador {
+    max-width: none;
+  }
+
+  .chn-clientes__direccion {
+    max-width: 16ch;
+  }
+
+  .chn-form-cliente__rejilla {
+    grid-template-columns: 1fr;
+  }
+}

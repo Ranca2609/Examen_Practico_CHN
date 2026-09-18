@@ -1,0 +1,17 @@
+.chn-campo-textarea {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-1);
+  min-width: 0;
+}
+
+.chn-campo-textarea__control {
+  resize: vertical;
+  min-height: 72px;
+}
+
+.chn-campo-textarea__contador {
+  align-self: flex-end;
+  font-size: var(--texto-xs);
+  color: var(--color-texto-suave);
+}

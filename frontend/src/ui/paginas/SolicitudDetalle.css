@@ -1,0 +1,127 @@
+.chn-solicitud-detalle__rejilla {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: var(--esp-5);
+  align-items: start;
+}
+
+.chn-solicitud-detalle__columna {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+}
+
+.chn-solicitud-detalle__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-2);
+}
+
+.chn-solicitud-detalle__enlace {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-1);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  color: var(--color-primario);
+  text-decoration: none;
+  border-radius: var(--radio-sm);
+}
+
+.chn-solicitud-detalle__enlace:hover,
+.chn-solicitud-detalle__enlace:focus-visible {
+  color: var(--color-primario-oscuro);
+  text-decoration: underline;
+}
+
+.chn-solicitud-detalle__resolucion-datos {
+  margin-top: var(--esp-4);
+}
+
+.chn-solicitud-detalle__prestamo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-3);
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--esp-4);
+  padding: var(--esp-3);
+  background-color: var(--color-exito-claro);
+  border: 1px solid var(--color-exito);
+  border-radius: var(--radio-sm);
+}
+
+.chn-solicitud-detalle__prestamo-texto {
+  margin: 0;
+  font-size: var(--texto-sm);
+  color: var(--color-texto);
+}
+
+.chn-solicitud-detalle__prestamo-numero {
+  font-family: var(--fuente-mono);
+  font-weight: var(--peso-fuerte);
+  color: var(--color-primario-oscuro);
+}
+
+.chn-resolucion-formulario {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--esp-3) var(--esp-4);
+}
+
+.chn-resolucion-formulario__ancho-completo {
+  grid-column: 1 / -1;
+}
+
+.chn-resolucion-previa {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-2);
+  align-items: baseline;
+  justify-content: space-between;
+  padding: var(--esp-3);
+  background-color: var(--color-primario-claro);
+  border: 1px solid var(--color-primario);
+  border-radius: var(--radio-sm);
+}
+
+.chn-resolucion-previa__rotulo {
+  margin: 0;
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-semi);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-primario-oscuro);
+}
+
+.chn-resolucion-previa__valor {
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-fuerte);
+  color: var(--color-primario-oscuro);
+}
+
+.chn-resolucion-contador {
+  display: block;
+  margin-top: var(--esp-1);
+  font-size: var(--texto-xs);
+  text-align: right;
+  color: var(--color-texto-suave);
+}
+
+.chn-resolucion-contador--insuficiente {
+  color: var(--color-peligro);
+  font-weight: var(--peso-semi);
+}
+
+@media (max-width: 1000px) {
+  .chn-solicitud-detalle__rejilla {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .chn-resolucion-formulario {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

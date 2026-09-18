@@ -1,0 +1,7 @@
+.chn-campo-texto {
+  text-overflow: ellipsis;
+}
+
+.chn-campo-texto[type='password'] {
+  letter-spacing: 0.08em;
+}

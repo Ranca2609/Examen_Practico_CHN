@@ -1,0 +1,209 @@
+/* Keyframes */
+
+@keyframes chn-aparecer {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes chn-subir {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes chn-bajar {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes chn-entrar-derecha {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes chn-salir-derecha {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+}
+
+@keyframes chn-escalar {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes chn-girar {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes chn-pulso {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+@keyframes chn-brillo {
+  from { background-position: -200% 0; }
+  to { background-position: 200% 0; }
+}
+
+@keyframes chn-vaciar-barra {
+  from { width: 100%; }
+  to { width: 0%; }
+}
+
+@keyframes chn-marcar {
+  from { stroke-dashoffset: 48; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes chn-crecer-vertical {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+@keyframes chn-crecer-horizontal {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* Requiere pathLength="100" en el trazo para que el recorrido no dependa del radio. */
+@keyframes chn-dibujar-trazo {
+  from { stroke-dashoffset: 101; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes chn-revelar {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+/* Clases utilitarias */
+
+.chn-anim-aparecer {
+  animation: chn-aparecer var(--duracion-lenta) var(--curva-suave) both;
+}
+
+.chn-anim-subir {
+  animation: chn-subir var(--duracion-lenta) var(--curva-suave) both;
+}
+
+.chn-anim-bajar {
+  animation: chn-bajar var(--duracion-lenta) var(--curva-suave) both;
+}
+
+.chn-anim-escalar {
+  animation: chn-escalar var(--duracion-lenta) var(--curva-suave) both;
+}
+
+.chn-anim-entrar-derecha {
+  animation: chn-entrar-derecha var(--duracion-lenta) var(--curva-suave) both;
+}
+
+.chn-anim-girar {
+  animation: chn-girar 900ms linear infinite;
+}
+
+.chn-anim-pulso {
+  animation: chn-pulso var(--duracion-lenta) var(--curva-rebote) both;
+}
+
+/* Propiedades sueltas: --transicion-lenta ya trae curva y la forma abreviada quedaría inválida.
+   480ms porque la marca recorre toda su longitud; más rápido se percibe como un salto. */
+.chn-anim-crecer-vertical,
+.chn-anim-crecer-horizontal,
+.chn-anim-dibujar-trazo,
+.chn-anim-revelar {
+  animation-duration: 480ms;
+  animation-timing-function: var(--curva-suave);
+  animation-fill-mode: both;
+}
+
+/* transform-box ancla el origen a la marca SVG y no al lienzo entero. */
+.chn-anim-crecer-vertical {
+  animation-name: chn-crecer-vertical;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.chn-anim-crecer-horizontal {
+  animation-name: chn-crecer-horizontal;
+  transform-box: fill-box;
+  transform-origin: 0 50%;
+}
+
+.chn-anim-dibujar-trazo {
+  animation-name: chn-dibujar-trazo;
+  animation-duration: 640ms;
+}
+
+.chn-anim-revelar {
+  animation-name: chn-revelar;
+}
+
+/* Quien la usa limita --indice a 10 para que el retardo no pase de 400ms. */
+.chn-anim-escalonado {
+  animation-delay: calc(var(--indice, 0) * 40ms);
+}
+
+/* Debe quedar al final del archivo para anular cualquier animación declarada antes. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .chn-anim-aparecer,
+  .chn-anim-subir,
+  .chn-anim-bajar,
+  .chn-anim-escalar,
+  .chn-anim-entrar-derecha,
+  .chn-anim-pulso,
+  .chn-anim-escalonado,
+  .chn-anim-crecer-vertical,
+  .chn-anim-crecer-horizontal,
+  .chn-anim-dibujar-trazo,
+  .chn-anim-revelar {
+    animation: none !important;
+  }
+
+  .chn-esqueleto {
+    animation: none !important;
+    background: var(--color-neutro-claro) !important;
+  }
+}

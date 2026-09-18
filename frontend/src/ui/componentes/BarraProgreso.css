@@ -1,0 +1,56 @@
+.chn-progreso {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+  width: 100%;
+}
+
+.chn-progreso__cabecera {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--esp-2);
+  font-size: var(--texto-xs);
+}
+
+.chn-progreso__etiqueta {
+  color: var(--color-texto-suave);
+}
+
+.chn-progreso__valor {
+  font-weight: var(--peso-fuerte);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-texto);
+}
+
+.chn-progreso__pista {
+  height: 10px;
+  width: 100%;
+  background-color: var(--color-neutro-claro);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-completo);
+  overflow: hidden;
+}
+
+.chn-progreso__relleno {
+  height: 100%;
+  background: var(--degradado-primario);
+  border-radius: var(--radio-completo);
+  transition: width 600ms var(--curva-suave);
+}
+
+.chn-progreso__pista--exito .chn-progreso__relleno {
+  background: var(--degradado-exito);
+}
+
+.chn-progreso__pista--peligro .chn-progreso__relleno {
+  background: var(--degradado-peligro);
+}
+
+.chn-progreso__pista--advertencia .chn-progreso__relleno {
+  background: var(--degradado-advertencia);
+}
+
+.chn-progreso__pista--info .chn-progreso__relleno {
+  background: var(--degradado-info);
+}

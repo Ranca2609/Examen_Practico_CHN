@@ -1,0 +1,54 @@
+.chn-dialogo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--esp-4);
+  text-align: center;
+  animation: chn-escalar var(--duracion-lenta) var(--curva-suave) both;
+}
+
+.chn-dialogo__icono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  color: var(--dl-color);
+  background-color: var(--dl-claro);
+  border: 1px solid var(--dl-borde);
+  border-radius: var(--radio-completo);
+}
+
+.chn-dialogo__mensaje {
+  margin: 0;
+  font-size: var(--texto-md);
+  line-height: 1.6;
+  color: var(--color-texto);
+}
+
+.chn-dialogo--peligro {
+  --dl-color: var(--color-peligro);
+  --dl-claro: var(--color-peligro-claro);
+  --dl-borde: var(--color-peligro-borde);
+}
+
+.chn-dialogo--advertencia {
+  --dl-color: var(--color-advertencia);
+  --dl-claro: var(--color-advertencia-claro);
+  --dl-borde: var(--color-advertencia-borde);
+}
+
+.chn-dialogo--exito {
+  --dl-color: var(--color-exito);
+  --dl-claro: var(--color-exito-claro);
+  --dl-borde: var(--color-exito-borde);
+}
+
+.chn-dialogo--info,
+.chn-dialogo--primario,
+.chn-dialogo--secundario,
+.chn-dialogo--neutro {
+  --dl-color: var(--color-info);
+  --dl-claro: var(--color-info-claro);
+  --dl-borde: var(--color-info-borde);
+}

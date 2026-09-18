@@ -1,0 +1,15 @@
+.chn-grafica-barras__barra {
+  fill: var(--color-grafica-serie);
+}
+
+/* Doble clase: gana a .chn-grafica__texto sin depender del orden de las hojas.
+   El tamaño debe coincidir con FUENTE_ROTULO y FUENTE_VALOR, que el JSX usa para medir. */
+.chn-grafica__texto.chn-grafica-barras__rotulo {
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  fill: var(--color-texto);
+}
+
+.chn-grafica__texto.chn-grafica-barras__valor {
+  font-size: var(--texto-sm);
+}

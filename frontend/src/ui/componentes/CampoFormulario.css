@@ -1,0 +1,33 @@
+.chn-campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-1);
+  min-width: 0;
+}
+
+.chn-campo__etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-1);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  color: var(--color-texto);
+}
+
+.chn-campo__requerido {
+  color: var(--color-peligro);
+  font-weight: var(--peso-fuerte);
+}
+
+.chn-campo__ayuda {
+  margin: 0;
+  font-size: var(--texto-xs);
+  color: var(--color-texto-suave);
+}
+
+.chn-campo__error {
+  margin: 0;
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-semi);
+  color: var(--color-peligro);
+}
