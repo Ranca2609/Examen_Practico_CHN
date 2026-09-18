@@ -1,0 +1,42 @@
+# --- Secretos y configuración local ---
+.env
+.env.local
+*.pem
+*.key
+
+# --- Java / Maven ---
+target/
+!.mvn/wrapper/maven-wrapper.jar
+*.class
+*.jar
+*.war
+hs_err_pid*
+replay_pid*
+
+# --- Node / Vite ---
+node_modules/
+dist/
+dist-ssr/
+.vite/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# --- Entornos de desarrollo ---
+.idea/
+*.iml
+.vscode/
+!.vscode/extensions.json
+.settings/
+.classpath
+.project
+
+# --- Sistema operativo ---
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# --- Salidas temporales ---
+*.log
+logs/
+tmp/

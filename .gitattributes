@@ -1,0 +1,10 @@
+# Normalización de fin de línea: los scripts que se ejecutan dentro de
+# contenedores Linux deben conservar LF aunque se clone el repositorio
+# en Windows, de lo contrario el intérprete falla con "bad interpreter".
+* text=auto eol=lf
+*.sh text eol=lf
+*.sql text eol=lf
+Dockerfile text eol=lf
+*.png binary
+*.jpg binary
+*.ico binary

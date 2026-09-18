@@ -1,0 +1,71 @@
+# =============================================================================
+#  Exclusiones del contexto de construcción de Docker.
+#  Mantener este archivo corto y estricto: cada archivo enviado al daemon
+#  ralentiza el build e invalida cachés de capas sin necesidad.
+# =============================================================================
+
+# --- Control de versiones e historial ---
+.git
+.gitignore
+.gitattributes
+
+# --- Artefactos de compilación (se generan dentro de la imagen) ---
+backend/target/
+target/
+**/target/
+*.jar
+*.war
+
+# --- Dependencias y compilados del frontend ---
+frontend/node_modules/
+node_modules/
+**/node_modules/
+frontend/dist/
+dist/
+build/
+.vite/
+frontend/.vite/
+
+# --- Secretos y configuración local: NUNCA deben viajar a una imagen ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+
+# --- Documentación e imágenes de los manuales (no las necesita el runtime) ---
+docs/img/
+docs/imagenes/
+*.pdf
+README.md
+CHANGELOG.md
+CONTRIBUTING.md
+
+# --- Entornos de desarrollo ---
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.settings/
+.project
+.classpath
+.mvn/
+mvnw
+mvnw.cmd
+
+# --- Sistema operativo y temporales ---
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+logs/
+tmp/
+.claude/
+
+# --- Colecciones de pruebas de API y datos de escritorio ---
+postman/
+insomnia/
