@@ -1,0 +1,184 @@
+# Archivo versionado: credenciales y orígenes llegan solo por variables de entorno.
+
+spring:
+  application:
+    name: chn-prestamos
+
+  datasource:
+    # trustServerCertificate=true solo por el certificado autofirmado del contenedor de desarrollo;
+    # en producción usar un certificado de CA y false, o el cifrado no autentica al servidor.
+    url: jdbc:sqlserver://${DB_HOST:sqlserver}:${DB_PORT:1433};databaseName=${DB_NAME:CHN_Prestamos};encrypt=true;trustServerCertificate=true
+    username: ${DB_USER:chn_app}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    hikari:
+      pool-name: chn-pool
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  jpa:
+    # El esquema lo gobierna Flyway; Hibernate solo valida el mapeo.
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        jdbc:
+          time_zone: America/Guatemala
+          # Sin batching: las tablas usan IDENTITY y Hibernate recupera la llave fila por fila de todos modos.
+          batch_size: 0
+        order_inserts: true
+        order_updates: true
+
+  flyway:
+    enabled: true
+    # Conexión propia, no la del pool: compartida, Flyway dejaba un resultado sin consumir y el
+    # primer INSERT de Hibernate fallaba con "A result set was generated for update.".
+    url: jdbc:sqlserver://${DB_HOST:sqlserver}:${DB_PORT:1433};databaseName=${DB_NAME:CHN_Prestamos};encrypt=true;trustServerCertificate=true
+    user: ${DB_USER:chn_app}
+    password: ${DB_PASSWORD}
+    # APP_DATOS_DEMO forma parte del nombre de la clave: debe ir en minúsculas (true/false).
+    locations: ${migraciones.locations-${app.datos-demo}:classpath:db/migration}
+    baseline-on-migrate: true
+    ignore-migration-patterns: "*:missing"
+    # Los datos demo son V900: sin out-of-order, una V4/V5 posterior quedaría "ignored" y no arrancaría.
+    out-of-order: true
+    validate-on-migrate: true
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    default-property-inclusion: non_null
+    time-zone: America/Guatemala
+
+  mvc:
+    problemdetails:
+      enabled: false
+
+server:
+  port: ${SERVER_PORT:8081}
+  error:
+    # Los errores los formatea el manejador global; nunca se exponen trazas ni mensajes internos.
+    include-stacktrace: never
+    include-message: never
+    include-exception: false
+  servlet:
+    application-display-name: chn-prestamos
+  tomcat:
+    max-http-form-post-size: 256KB
+  shutdown: graceful
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+      show-components: never
+  info:
+    env:
+      enabled: false
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+    disable-swagger-default-url: true
+
+logging:
+  level:
+    root: INFO
+    gt.gob.chn.prestamos: INFO
+    # Las sentencias y sus parámetros pueden llevar datos personales de clientes.
+    org.hibernate.SQL: WARN
+    org.hibernate.orm.jdbc.bind: WARN
+    org.springframework.security: WARN
+    org.springframework.web: WARN
+    org.flywaydb: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n"
+
+app:
+  seguridad:
+    jwt:
+      # Obligatorio, mínimo 32 caracteres: sin él la aplicación no arranca.
+      secreto: ${JWT_SECRET}
+      expiracion-minutos: ${JWT_EXPIRACION_MINUTOS:480}
+      emisor: chn-prestamos
+    max-intentos-fallidos: 5
+    minutos-bloqueo: 15
+    login:
+      max-peticiones: 10
+      ventana-minutos: 5
+  cors:
+    origenes: ${CORS_ORIGENES:http://localhost:8080}
+  datos-demo: ${APP_DATOS_DEMO:true}
+  usuarios-iniciales:
+    # Vacías: CargadorUsuariosIniciales usa la clave demo y lo advierte en el log.
+    admin-password: ${ADMIN_PASSWORD:}
+    analista-password: ${ANALISTA_PASSWORD:}
+    cajero-password: ${CAJERO_PASSWORD:}
+    consulta-password: ${CONSULTA_PASSWORD:}
+  correlativos:
+    agencia: ${APP_CODIGO_AGENCIA:001}
+
+# spring.flyway.locations elige una de estas claves con el valor de app.datos-demo.
+migraciones:
+  locations-true: classpath:db/migration,classpath:db/demo
+  locations-false: classpath:db/migration
+
+---
+# Perfil test: pruebas unitarias y de slice sin base de datos.
+spring:
+  config:
+    activate:
+      on-profile: test
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration
+      - org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration
+  flyway:
+    enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+app:
+  seguridad:
+    jwt:
+      secreto: clave-de-pruebas-unicamente-no-produccion-0123456789
+      expiracion-minutos: 60
+      emisor: chn-prestamos
+    max-intentos-fallidos: 5
+    minutos-bloqueo: 15
+    login:
+      max-peticiones: 10
+      ventana-minutos: 5
+  cors:
+    origenes: http://localhost:8080
+  datos-demo: false
+  usuarios-iniciales:
+    admin-password: ""
+    analista-password: ""
+    cajero-password: ""
+    consulta-password: ""
+
+logging:
+  level:
+    root: WARN
+    gt.gob.chn.prestamos: INFO
