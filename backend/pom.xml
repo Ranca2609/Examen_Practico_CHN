@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <!--
+    Spring Boot como POM padre: centraliza la gestión de versiones de todas las
+    dependencias del ecosistema. La versión está fijada por el contrato del proyecto.
+  -->
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.4.1</version>
+    <relativePath/>
+  </parent>
+
+  <groupId>gt.gob.chn</groupId>
+  <artifactId>prestamos</artifactId>
+  <version>1.0.0</version>
+  <name>CHN Prestamos</name>
+  <description>Sistema de gestión de préstamos bancarios - Crédito Hipotecario Nacional de Guatemala</description>
+
+  <properties>
+    <java.version>21</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <!-- Versiones no gestionadas por el padre de Spring Boot -->
+    <jjwt.version>0.12.6</jjwt.version>
+    <springdoc.version>2.7.0</springdoc.version>
+    <archunit.version>1.3.0</archunit.version>
+    <!--
+      Generación de reportes descargables (plan de amortización e historial de pagos).
+      Se generan en el SERVIDOR y no en el navegador por tres razones: el encabezado y
+      el pie que se repiten en CADA página con su numeración se controlan aquí de forma
+      fiable; el archivo sale idéntico en cualquier navegador porque es un artefacto de
+      negocio auditable; y llevar las librerías equivalentes al cliente añadiría más de
+      1 MB a un paquete que hoy pesa 147 kB.
+    -->
+    <openpdf.version>2.2.5</openpdf.version>
+    <poi.version>5.5.1</poi.version>
+  </properties>
+
+  <dependencies>
+    <!-- ============ Núcleo web y validación ============ -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+
+    <!-- ============ Persistencia (ORM) ============ -->
+    <!-- Spring Data JPA + Hibernate: el ORM exigido por la prueba técnica. -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.microsoft.sqlserver</groupId>
+      <artifactId>mssql-jdbc</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- Flyway gobierna el esquema: Hibernate solo lo valida (ddl-auto=validate). -->
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-sqlserver</artifactId>
+    </dependency>
+
+    <!-- ============ Seguridad ============ -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    <!-- JWT firmado HS256. jjwt-impl y jjwt-jackson solo se necesitan en ejecución. -->
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt-api</artifactId>
+      <version>${jjwt.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt-impl</artifactId>
+      <version>${jjwt.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt-jackson</artifactId>
+      <version>${jjwt.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- ============ Generación de reportes (PDF y Excel) ============ -->
+    <!--
+      OpenPDF: bifurcación mantenida de iText 2 con licencia LGPL/MPL, apta para este uso
+      sin coste de licencia (iText 5+ pasó a AGPL). Se eligió la línea 2.x porque conserva
+      el paquete com.lowagie.text; la 3.x lo renombró a org.openpdf. Aporta
+      PdfPageEventHelper, que es lo que permite pintar el encabezado y el pie en TODAS las
+      páginas y resolver el "Página X de Y" con una plantilla rellenada al cerrar.
+    -->
+    <dependency>
+      <groupId>com.github.librepdf</groupId>
+      <artifactId>openpdf</artifactId>
+      <version>${openpdf.version}</version>
+    </dependency>
+    <!--
+      Apache POI (poi-ooxml): escribe libros .xlsx nativos. Se usa en lugar de volcar un
+      CSV porque el reporte necesita celdas con TIPO real (importes numéricos sumables con
+      formato de moneda, fechas como fechas), panel congelado, autofiltro y encabezado y
+      pie de impresión. Un CSV no puede llevar nada de eso.
+    -->
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>${poi.version}</version>
+    </dependency>
+
+    <!-- ============ Observabilidad y documentación ============ -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+      <version>${springdoc.version}</version>
+    </dependency>
+
+    <!--
+      NOTA SOBRE LOMBOK: se decidió deliberadamente NO usar Lombok.
+      1) El dominio se modela con records de Java y clases con fábricas estáticas e
+         invariantes validadas en el constructor; los @Data/@Builder de Lombok
+         empujan a setters públicos y objetos mutables, lo contrario a lo buscado.
+      2) Evita un procesador de anotaciones en la compilación y hace que el código
+         que un evaluador lee sea exactamente el que se ejecuta (sin generación oculta).
+      Por el mismo motivo tampoco se usa MapStruct: los mapeadores están escritos a mano.
+    -->
+
+    <!--
+      Genera spring-configuration-metadata.json a partir de PropiedadesAplicacion:
+      da autocompletado y documentación del bloque "app" del application.yml en el
+      IDE. Solo actúa en tiempo de compilación, no viaja en el jar.
+    -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <!-- ============ Pruebas ============ -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- ArchUnit vigila que la arquitectura hexagonal no se degrade con el tiempo. -->
+    <dependency>
+      <groupId>com.tngtech.archunit</groupId>
+      <artifactId>archunit-junit5</artifactId>
+      <version>${archunit.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>prestamos</finalName>
+
+    <!--
+      Los scripts SQL viven en la carpeta database/ de la raíz del repositorio, que es
+      la ÚNICA fuente de verdad: los usa Flyway al arrancar la aplicación y también el
+      DBA que quiera ejecutarlos a mano contra SQL Server. En lugar de duplicarlos
+      dentro de src/main/resources, se copian al classpath durante el empaquetado:
+        ../database/migration -> db/migration   (esquema, secuencias, vista y función)
+        ../database/demo      -> db/demo        (datos de prueba, opcionales)
+      Si una de las carpetas no existe, Maven simplemente la omite.
+      El filtrado queda desactivado para que los scripts T-SQL con ${...} o $ no se alteren.
+    -->
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+      </resource>
+      <resource>
+        <directory>${project.basedir}/../database/migration</directory>
+        <targetPath>db/migration</targetPath>
+        <filtering>false</filtering>
+      </resource>
+      <resource>
+        <directory>${project.basedir}/../database/demo</directory>
+        <targetPath>db/demo</targetPath>
+        <filtering>false</filtering>
+      </resource>
+    </resources>
+
+    <plugins>
+      <!-- Empaqueta el jar ejecutable (target/prestamos.jar) que consume el Dockerfile. -->
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <!-- El procesador de configuración solo sirve en tiempo de compilación. -->
+            <exclude>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-configuration-processor</artifactId>
+            </exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+
+      <!--
+        Las pruebas son unitarias y de slice: se ejecutan con el perfil "test", que
+        excluye la autoconfiguración de DataSource/JPA/Flyway. Así `mvn test` no
+        necesita una instancia de SQL Server levantada.
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <systemPropertyVariables>
+            <spring.profiles.active>test</spring.profiles.active>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <!-- -parameters permite a Spring enlazar por nombre los parámetros de los records. -->
+          <compilerArgs>
+            <arg>-parameters</arg>
+          </compilerArgs>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
