@@ -1,0 +1,141 @@
+# Los secretos por defecto son solo de demostración; fuera de ella se definen en .env (ver .env.example).
+
+name: chn-prestamos
+
+services:
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: chn-sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:-Chn#Sa2026Demo}
+      MSSQL_PID: Developer          # edición gratuita para desarrollo y pruebas
+      TZ: America/Guatemala
+    ports:
+      - "${DB_PUERTO_HOST:-1433}:1433"
+    volumes:
+      - sqlserver-datos:/var/opt/mssql
+    healthcheck:
+      # La imagen 2022 no trae sqlcmd: solo se comprueba el puerto; db-init espera a la base real.
+      test: ["CMD-SHELL", "timeout 1 bash -c '</dev/tcp/localhost/1433' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+    restart: unless-stopped
+    networks: [chn-red]
+
+  # Crea la base y el login de aplicación (requiere sa) y termina; el esquema lo aplica Flyway.
+  db-init:
+    image: mcr.microsoft.com/mssql-tools:latest
+    container_name: chn-db-init
+    depends_on:
+      sqlserver:
+        condition: service_started
+    environment:
+      DB_HOST: sqlserver
+      DB_NAME: ${DB_NAME:-CHN_Prestamos}
+      SA_PASSWORD: ${MSSQL_SA_PASSWORD:-Chn#Sa2026Demo}
+      APP_USER: ${DB_USER:-chn_app}
+      APP_PASSWORD: ${DB_PASSWORD:-Chn#App2026Demo}
+    volumes:
+      - ./database:/scripts:ro
+    entrypoint: ["/bin/bash", "/scripts/init/inicializar.sh"]
+    restart: "no"
+    networks: [chn-red]
+
+  backend:
+    # Contexto en la raíz: Maven empaqueta ./database como migraciones de Flyway.
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    image: chn-prestamos-backend:1.0.0
+    container_name: chn-backend
+    depends_on:
+      db-init:
+        condition: service_completed_successfully
+    environment:
+      SERVER_PORT: 8081
+      DB_HOST: sqlserver
+      DB_PORT: 1433
+      DB_NAME: ${DB_NAME:-CHN_Prestamos}
+      DB_USER: ${DB_USER:-chn_app}
+      DB_PASSWORD: ${DB_PASSWORD:-Chn#App2026Demo}
+      # Mínimo 32 caracteres.
+      JWT_SECRET: ${JWT_SECRET:-clave-demo-chn-prestamos-2026-cambiar-en-produccion}
+      JWT_EXPIRACION_MINUTOS: ${JWT_EXPIRACION_MINUTOS:-480}
+      CORS_ORIGENES: ${CORS_ORIGENES:-http://localhost:8080,http://localhost:5173}
+      APP_DATOS_DEMO: ${APP_DATOS_DEMO:-true}
+      # Tres dígitos que viajan dentro de cada número oficial (SC-001-2026-000001-3).
+      APP_CODIGO_AGENCIA: ${APP_CODIGO_AGENCIA:-001}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-Chn2026*Demo}
+      ANALISTA_PASSWORD: ${ANALISTA_PASSWORD:-Chn2026*Demo}
+      CAJERO_PASSWORD: ${CAJERO_PASSWORD:-Chn2026*Demo}
+      CONSULTA_PASSWORD: ${CONSULTA_PASSWORD:-Chn2026*Demo}
+      TZ: America/Guatemala
+    ports:
+      - "${API_PUERTO_HOST:-8081}:8081"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8081/actuator/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 20
+      start_period: 90s
+    restart: unless-stopped
+    networks: [chn-red]
+
+  # Nginx sirve el SPA y hace proxy de /api: el navegador ve un solo origen y no depende de CORS.
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: chn-prestamos-frontend:1.0.0
+    container_name: chn-frontend
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "${WEB_PUERTO_HOST:-8080}:80"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1/salud || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+    restart: unless-stopped
+    networks: [chn-red]
+
+  # Uso: docker compose --profile herramientas run --rm capturas
+  capturas:
+    image: mcr.microsoft.com/playwright:v1.49.1-jammy
+    container_name: chn-capturas
+    profiles: ["herramientas"]
+    working_dir: /trabajo
+    environment:
+      BASE_URL: http://frontend:80
+      USUARIO: ${CAPTURAS_USUARIO:-admin}
+      CONTRASENA: ${ADMIN_PASSWORD:-Chn2026*Demo}
+    volumes:
+      - ./tools/capturas:/trabajo
+      - ./docs/img:/salida
+    # La imagen trae los navegadores pero no el paquete npm, y NODE_PATH no aplica a módulos ES:
+    # se instala en /tmp para no tocar el repositorio y se reutilizan los navegadores ya presentes.
+    command:
+      - bash
+      - -lc
+      - >
+        mkdir -p /tmp/capturas && cp /trabajo/capturar.mjs /tmp/capturas/ &&
+        cd /tmp/capturas &&
+        PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm install --silent --no-audit --no-fund playwright@1.49.1 &&
+        node capturar.mjs
+    networks: [chn-red]
+
+volumes:
+  sqlserver-datos:
+    name: chn-sqlserver-datos
+
+networks:
+  chn-red:
+    name: chn-red
+    driver: bridge
