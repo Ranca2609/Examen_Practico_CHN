@@ -1,0 +1,4717 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-09-17T12:00:00.000Z",
+  "__export_source": "chn.prestamos:coleccion-api",
+  "resources": [
+    {
+      "_id": "wrk_chn_prestamos",
+      "_type": "workspace",
+      "parentId": null,
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "CHN - Sistema de Prestamos",
+      "description": "API REST del sistema de gestión de préstamos del Crédito Hipotecario Nacional de Guatemala. Ejecute primero la carpeta «00 - Autenticacion»: el login guarda el token que usan las demás peticiones. En Insomnia el token se guarda a mano en el entorno, copiándolo de la respuesta del login.",
+      "scope": "collection"
+    },
+    {
+      "_id": "env_chn_local",
+      "_type": "environment",
+      "parentId": "wrk_chn_prestamos",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "CHN - Local",
+      "data": {
+        "baseUrl": "http://localhost:8081/api/v1",
+        "usuario_admin": "admin",
+        "usuario_analista": "analista",
+        "usuario_cajero": "cajero",
+        "usuario_consulta": "consulta",
+        "contrasena": "Chn2026*Demo",
+        "token": "",
+        "token_analista": "",
+        "token_cajero": "",
+        "token_consulta": "",
+        "cliente_id": "1",
+        "cliente_dpi": "1985043210101",
+        "solicitud_en_proceso_id": "7",
+        "solicitud_resuelta_id": "1",
+        "prestamo_id": "1",
+        "prestamo_sin_pagos_id": "4",
+        "cliente_id_nuevo": "",
+        "solicitud_id_nueva": "",
+        "prestamo_id_nuevo": "",
+        "pago_id_nuevo": "",
+        "solicitud_id_rechazo": "",
+        "dpi_nuevo": "9993000010101",
+        "correo_nuevo": "andrea.quinonez.9993000@correo.gt",
+        "cliente_apellido": "Ramirez",
+        "cliente_dpi_parcial": "1985043",
+        "cliente_telefono": "55012345",
+        "solicitud_numero": "SC-001-2026-000003-9",
+        "prestamo_numero": "PR-001-2026-000001-9",
+        "recibo_numero": "RC-001-2026-000001-4",
+        "usuario_pagos": "cajero",
+        "nacimiento_desde": "1990-01-01",
+        "nacimiento_hasta": "1996-12-31",
+        "creacion_desde": "2026-01-01",
+        "creacion_hasta": "2026-01-31",
+        "fecha_desde": "2026-01-01",
+        "fecha_hasta": "2026-12-31",
+        "monto_minimo": "50000",
+        "monto_maximo": "200000",
+        "saldo_minimo": "60000",
+        "saldo_maximo": "130000"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "baseUrl",
+          "usuario_admin",
+          "usuario_analista",
+          "usuario_cajero",
+          "usuario_consulta",
+          "contrasena",
+          "token",
+          "token_analista",
+          "token_cajero",
+          "token_consulta",
+          "cliente_id",
+          "cliente_dpi",
+          "solicitud_en_proceso_id",
+          "solicitud_resuelta_id",
+          "prestamo_id",
+          "prestamo_sin_pagos_id",
+          "cliente_id_nuevo",
+          "solicitud_id_nueva",
+          "prestamo_id_nuevo",
+          "pago_id_nuevo",
+          "solicitud_id_rechazo",
+          "dpi_nuevo",
+          "correo_nuevo",
+          "cliente_apellido",
+          "cliente_dpi_parcial",
+          "cliente_telefono",
+          "solicitud_numero",
+          "prestamo_numero",
+          "recibo_numero",
+          "usuario_pagos",
+          "nacimiento_desde",
+          "nacimiento_hasta",
+          "creacion_desde",
+          "creacion_hasta",
+          "fecha_desde",
+          "fecha_hasta",
+          "monto_minimo",
+          "monto_maximo",
+          "saldo_minimo",
+          "saldo_maximo"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1789650000000
+    },
+    {
+      "_id": "fld_chn_00",
+      "_type": "request_group",
+      "parentId": "wrk_chn_prestamos",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "00 - Autenticacion",
+      "description": "Obtención del token JWT para las cuatro cuentas de demostración. **Ejecute esta carpeta primero**: cada login guarda su token en el entorno (`token`, `token_analista`, `token_cajero`, `token_consulta`) y el resto de la colección depende de esas variables.\n\nEl login es el único endpoint público; por eso estas peticiones llevan `auth: noauth` y no heredan el *bearer* de la colección. El token es HS256, lo emite `chn-prestamos` y vive 480 minutos.",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 0
+    },
+    {
+      "_id": "req_chn_00_00",
+      "_type": "request",
+      "parentId": "fld_chn_00",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Login ADMIN",
+      "description": "Autentica al **Administrador del Sistema**. Espera **200** con `{token, tipo, expiraEnSegundos, usuario}` y guarda el token en la variable de entorno `token`, que es la que usa el *bearer* de la colección.\n\nUn login correcto también reinicia el contador de intentos fallidos de la cuenta.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/auth/login",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"username\": \"{{ _.usuario_admin }}\",\n    \"contrasena\": \"{{ _.contrasena }}\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {},
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 0,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_00_01",
+      "_type": "request",
+      "parentId": "fld_chn_00",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Login ANALISTA",
+      "description": "Autentica al **Analista de crédito**. Espera **200** y guarda el token en `token_analista`, usado en la carpeta 07 para comprobar que el analista no puede registrar pagos.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/auth/login",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"username\": \"{{ _.usuario_analista }}\",\n    \"contrasena\": \"{{ _.contrasena }}\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {},
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 1,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_00_02",
+      "_type": "request",
+      "parentId": "fld_chn_00",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Login CAJERO",
+      "description": "Autentica al **Cajero**. Espera **200** y guarda el token en `token_cajero`, usado en la carpeta 07 para comprobar que sí registra pagos pero no crea clientes ni consulta la auditoría.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/auth/login",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"username\": \"{{ _.usuario_cajero }}\",\n    \"contrasena\": \"{{ _.contrasena }}\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {},
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 2,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_00_03",
+      "_type": "request",
+      "parentId": "fld_chn_00",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Login CONSULTA",
+      "description": "Autentica al usuario de **solo lectura**. Espera **200** y guarda el token en `token_consulta`, usado en la carpeta 07 para comprobar que no escribe nada.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/auth/login",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"username\": \"{{ _.usuario_consulta }}\",\n    \"contrasena\": \"{{ _.contrasena }}\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {},
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 3,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_00_04",
+      "_type": "request",
+      "parentId": "fld_chn_00",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Perfil del usuario autenticado",
+      "description": "Devuelve la identidad que el backend reconoce en el token enviado. Espera **200** con `{id, username, nombreCompleto, correo, rol}`. Sirve para confirmar que el *bearer* de la colección está resolviendo la variable `token`.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/auth/perfil",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 4,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_chn_01",
+      "_type": "request_group",
+      "parentId": "wrk_chn_prestamos",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "01 - Clientes",
+      "description": "Ciclo completo del maestro de clientes: listado paginado, búsqueda, alta, consulta, edición, sub-recursos y baja con borrado en cascada.\n\nEl alta crea un cliente **desechable** y guarda su id en `cliente_id_nuevo`; la última petición de la carpeta lo elimina, de modo que la carpeta se puede ejecutar tantas veces como haga falta sin dejar basura ni chocar con la restricción UNIQUE del DPI.\n\nLos sub-recursos (`/solicitudes` y `/prestamos` de un cliente) se consultan sobre el cliente de demostración `cliente_id` = 1, que sí tiene historial. Ojo: estos dos endpoints devuelven un **arreglo plano**, no una página.",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 1000
+    },
+    {
+      "_id": "req_chn_01_00",
+      "_type": "request",
+      "parentId": "fld_chn_01",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Listar clientes (paginado)",
+      "description": "Listado paginado y ordenado por apellido y nombre. Espera **200** con la estructura de página `{contenido, pagina, tamano, totalElementos, totalPaginas}`. Accesible a cualquier rol autenticado.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/clientes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "10",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 1000,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_01_01",
+      "_type": "request",
+      "parentId": "fld_chn_01",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Buscar clientes por texto",
+      "description": "Búsqueda por texto libre sobre nombre, apellido y número de identificación. Con los datos de demostración «Ramirez» localiza a María José Ramírez López. Espera **200** y al menos un resultado.\n\nLa consulta usa parámetros nombrados en JPA: no se concatena SQL en ningún punto.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/clientes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "busqueda",
+          "value": "Ramirez",
+          "description": "Texto libre: busca en nombre, apellido y DPI",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "10",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 1001,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_01_02",
+      "_type": "request",
+      "parentId": "fld_chn_01",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Crear cliente",
+      "description": "Alta de cliente. Requiere rol **ADMIN** o **ANALISTA**. Espera **201** con el cliente creado, incluida la `edad` calculada por el dominio, y guarda el id en `cliente_id_nuevo`.\n\nEl DPI y el correo son **UNIQUE** en la base, así que el script previo genera un par único antes de enviar la petición (`dpi_nuevo`, `correo_nuevo`). Sin eso, la segunda ejecución de la colección devolvería 409 DUPLICADO. El resto de los campos son literales y realistas.\n\nEl backend normaliza el correo a minúsculas y exige DPI de 13 dígitos, teléfono de 8 dígitos y mayoría de edad.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/clientes",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"nombre\": \"Andrea Beatriz\",\n    \"apellido\": \"Quinonez Lemus\",\n    \"numeroIdentificacion\": \"{{ _.dpi_nuevo }}\",\n    \"fechaNacimiento\": \"1994-07-22\",\n    \"direccion\": \"9a Avenida 4-18, Zona 14, Ciudad de Guatemala\",\n    \"correoElectronico\": \"{{ _.correo_nuevo }}\",\n    \"telefono\": \"55663344\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 1002,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_01_03",
+      "_type": "request",
+      "parentId": "fld_chn_01",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Obtener cliente por id",
+      "description": "Consulta el cliente recién creado. Espera **200** y que el id coincida con `cliente_id_nuevo`. Un id inexistente devolvería **404 NO_ENCONTRADO** (ver la carpeta 06).",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/clientes/{{ _.cliente_id_nuevo }}",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 1003,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_01_04",
+      "_type": "request",
+      "parentId": "fld_chn_01",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Actualizar cliente",
+      "description": "Edición de los datos modificables. Requiere rol **ADMIN** o **ANALISTA**. Espera **200** con la dirección y el teléfono nuevos.\n\nEl **DPI y la fecha de nacimiento no se envían**: son datos de identidad y el contrato no permite cambiarlos, porque su modificación exigiría un trámite con respaldo documental.",
+      "method": "PUT",
+      "url": "{{ _.baseUrl }}/clientes/{{ _.cliente_id_nuevo }}",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"nombre\": \"Andrea Beatriz\",\n    \"apellido\": \"Quinonez Lemus\",\n    \"direccion\": \"11 Calle 2-40, Zona 13, Ciudad de Guatemala\",\n    \"correoElectronico\": \"{{ _.correo_nuevo }}\",\n    \"telefono\": \"55887711\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 1004,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_01_05",
+      "_type": "request",
+      "parentId": "fld_chn_01",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Solicitudes del cliente",
+      "description": "Historial de solicitudes del cliente de demostración 1. Espera **200** con un **arreglo plano** (este sub-recurso no se pagina). Todas las solicitudes deben pertenecer al cliente consultado.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/clientes/{{ _.cliente_id }}/solicitudes",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 1005,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_01_06",
+      "_type": "request",
+      "parentId": "fld_chn_01",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Prestamos del cliente",
+      "description": "Préstamos vigentes y liquidados del cliente de demostración 1. Espera **200** con un **arreglo plano**. Se verifica la invariante `saldoPendiente = montoTotalAPagar - totalPagado`, que en la base es una columna calculada PERSISTED.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/clientes/{{ _.cliente_id }}/prestamos",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 1006,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_01_07",
+      "_type": "request",
+      "parentId": "fld_chn_01",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Eliminar cliente (borrado en cascada)",
+      "description": "**Solo ADMIN.** Espera **204 Sin contenido**.\n\n> **Aviso.** Esta operación **borra en cascada**: elimina los pagos, los préstamos y las solicitudes del cliente antes de borrarlo, todo en una sola transacción y en ese orden explícito (las llaves foráneas son ON DELETE NO ACTION porque SQL Server rechaza múltiples rutas de cascada).\n\nPor eso apunta **siempre** a `{{ _.cliente_id_nuevo }}`, el cliente desechable que creó esta misma carpeta, y **nunca** a un cliente de demostración. Va al final para que la carpeta quede idempotente.",
+      "method": "DELETE",
+      "url": "{{ _.baseUrl }}/clientes/{{ _.cliente_id_nuevo }}",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 1007,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_chn_02",
+      "_type": "request_group",
+      "parentId": "wrk_chn_prestamos",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "02 - Solicitudes de prestamo",
+      "description": "Alta y resolución de solicitudes de crédito, más el simulador.\n\nLa carpeta crea **dos** solicitudes nuevas sobre el cliente de demostración 1: una se aprueba (`solicitud_id_nueva`, que genera el préstamo que usarán las carpetas 03 y 04) y otra se rechaza (`solicitud_id_rechazo`). Se trabaja sobre solicitudes propias y no sobre las de demostración porque una solicitud ya resuelta devuelve **409** si se intenta resolver otra vez: así la colección se puede ejecutar muchas veces seguidas.\n\nToda solicitud nace **EN_PROCESO**. Al aprobar, los campos que el analista no modifique toman el valor solicitado, y el rechazo exige un motivo de 10 a 500 caracteres que queda auditado.",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 2000
+    },
+    {
+      "_id": "req_chn_02_00",
+      "_type": "request",
+      "parentId": "fld_chn_02",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Listar solicitudes (paginado)",
+      "description": "Listado paginado, la más reciente primero. Espera **200** con la estructura de página. Admite los filtros opcionales `clienteId` y `estado`.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/solicitudes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "10",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 2000,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_02_01",
+      "_type": "request",
+      "parentId": "fld_chn_02",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Filtrar solicitudes por estado EN_PROCESO",
+      "description": "Solicitudes pendientes de resolver, que son las únicas que el analista puede aprobar o rechazar. Espera **200** y que **todos** los elementos estén en EN_PROCESO. Un estado inexistente devuelve **400** (ver la carpeta 06).",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/solicitudes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "estado",
+          "value": "EN_PROCESO",
+          "description": "Valores admitidos: EN_PROCESO, APROBADA, RECHAZADA",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "10",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 2001,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_02_02",
+      "_type": "request",
+      "parentId": "fld_chn_02",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Simular prestamo",
+      "description": "Calcula el plan de amortización y evalúa la capacidad de pago **sin persistir nada**. Requiere rol **ADMIN** o **ANALISTA**. Espera **200** con `{evaluacion, plan}`.\n\nSe usan a propósito Q100,000.00 a 12 meses al 12% anual, el caso comprobado del sistema francés: `i = 12/100/12 = 0.01`, `cuota = 100000 * i / (1 - (1+i)^-12)` = **Q8,884.88**. La última cuota ajusta el residuo para que el saldo termine exactamente en 0.\n\nLa evaluación es informativa: recomienda si la cuota compromete ≤ 40% del ingreso declarado y el cliente tiene menos de 3 préstamos vigentes.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/solicitudes/simulacion",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"clienteId\": \"{{ _.cliente_id }}\",\n    \"monto\": 100000,\n    \"plazoMeses\": 12,\n    \"tasaInteresAnual\": 12,\n    \"ingresoMensual\": 30000\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 2002,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_02_03",
+      "_type": "request",
+      "parentId": "fld_chn_02",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Crear solicitud de prestamo",
+      "description": "Alta de solicitud para el cliente de demostración 1. Requiere rol **ADMIN** o **ANALISTA**. Espera **201**, estado inicial **EN_PROCESO** y un correlativo `SC-AAA-AAAA-NNNNNN-D` tomado de la secuencia `seq_solicitud`. Guarda el id en `solicitud_id_nueva`.\n\nRangos válidos: monto de Q1,000.00 a Q5,000,000.00, plazo de 6 a 360 meses, tasa de 0.01% a 100%, destino de 5 a 200 caracteres e ingreso declarado mayor a cero.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/solicitudes",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"clienteId\": \"{{ _.cliente_id }}\",\n    \"montoSolicitado\": 120000,\n    \"plazoMeses\": 24,\n    \"tasaInteresAnual\": 13.5,\n    \"tipoPrestamo\": \"PERSONAL\",\n    \"destino\": \"Remodelacion de vivienda familiar\",\n    \"ingresoMensualDeclarado\": 18000,\n    \"observaciones\": \"Solicitud capturada desde la coleccion de Postman\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 2003,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_02_04",
+      "_type": "request",
+      "parentId": "fld_chn_02",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Obtener solicitud por id",
+      "description": "Detalle de la solicitud recién creada, con los datos del cliente resueltos por el mapeador. Espera **200** y estado **EN_PROCESO**, es decir lista para resolverse.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/solicitudes/{{ _.solicitud_id_nueva }}",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 2004,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_02_05",
+      "_type": "request",
+      "parentId": "fld_chn_02",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Aprobar solicitud",
+      "description": "Aprueba la solicitud y **genera el préstamo** con la cuota del sistema francés. Requiere rol **ADMIN** o **ANALISTA**. Espera **200**, estado **APROBADA** y el bloque `resolucion` con quién resolvió, cuándo y con qué condiciones.\n\nTodos los campos del cuerpo son opcionales: los que se omitan toman el valor solicitado. Aquí se aprueba por un monto menor al pedido (Q100,000.00 de Q120,000.00) para dejar constancia de que el analista puede ajustar las condiciones.\n\nSolo una solicitud EN_PROCESO puede resolverse: repetir esta petición devuelve **409** (ver la carpeta 06).",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/solicitudes/{{ _.solicitud_id_nueva }}/aprobar",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"montoAprobado\": 100000,\n    \"plazoAprobadoMeses\": 24,\n    \"tasaAprobada\": 13.5,\n    \"motivo\": \"Capacidad de pago suficiente y documentacion de ingresos verificada\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 2005,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_02_06",
+      "_type": "request",
+      "parentId": "fld_chn_02",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Crear solicitud para rechazar",
+      "description": "Segunda solicitud, creada expresamente para ejercitar el rechazo sin gastar las solicitudes de demostración. Espera **201** y guarda el id en `solicitud_id_rechazo`.\n\nLas cifras describen un caso que un analista rechazaría: Q900,000.00 a 36 meses contra un ingreso declarado de Q6,500.00 mensuales, muy por encima del 40% de compromiso admitido.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/solicitudes",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"clienteId\": \"{{ _.cliente_id }}\",\n    \"montoSolicitado\": 900000,\n    \"plazoMeses\": 36,\n    \"tasaInteresAnual\": 15,\n    \"tipoPrestamo\": \"PERSONAL\",\n    \"destino\": \"Compra de vehiculo de trabajo\",\n    \"ingresoMensualDeclarado\": 6500,\n    \"observaciones\": \"Solicitud creada para ejercitar el rechazo\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 2006,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_02_07",
+      "_type": "request",
+      "parentId": "fld_chn_02",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Rechazar solicitud",
+      "description": "Rechaza la solicitud anterior. Requiere rol **ADMIN** o **ANALISTA**. Espera **200**, estado **RECHAZADA** y el motivo dentro de `resolucion`.\n\nEl motivo es obligatorio y debe medir entre 10 y 500 caracteres, porque queda como sustento auditable de la decisión. Un motivo más corto devuelve **400** (ver la carpeta 06). El rechazo **no** genera préstamo.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/solicitudes/{{ _.solicitud_id_rechazo }}/rechazar",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"motivo\": \"La cuota mensual excede el 40 por ciento del ingreso mensual declarado por el solicitante\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 2007,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_chn_03",
+      "_type": "request_group",
+      "parentId": "wrk_chn_prestamos",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "03 - Prestamos aprobados",
+      "description": "Consulta de los préstamos que nacieron de una solicitud aprobada: listado, filtros, detalle, plan de amortización y pagos aplicados. Es una carpeta de **solo lectura**, accesible a cualquier rol autenticado.\n\nLa tercera petición localiza el préstamo generado por la carpeta 02 (buscando el que apunta a `solicitud_id_nueva`) y guarda su id en `prestamo_id_nuevo`, que es el préstamo sobre el que la carpeta 04 registra el pago.\n\nLas cuatro últimas peticiones descargan los dos reportes del préstamo 1 —plan de amortización e historial de pagos— en **PDF** y en **Excel** (`amortizacion.pdf`, `amortizacion.xlsx`, `pagos.pdf` y `pagos.xlsx`). Sus tests comprueban el `Content-Type` exacto, que `Content-Disposition` entregue el archivo como adjunto con el nombre y la extensión correctos, que no se guarde en caché y la firma de los primeros bytes (`%PDF-` o `PK`). Cada descarga deja un registro `REPORTE_DESCARGADO` en la bitácora; los datos de negocio no cambian.",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 3000
+    },
+    {
+      "_id": "req_chn_03_00",
+      "_type": "request",
+      "parentId": "fld_chn_03",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Listar prestamos (paginado)",
+      "description": "Listado paginado, el más reciente primero. Espera **200** con la estructura de página. Admite los filtros opcionales `clienteId` y `estado`.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/prestamos",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "10",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 3000,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_03_01",
+      "_type": "request",
+      "parentId": "fld_chn_03",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Filtrar prestamos VIGENTE",
+      "description": "Préstamos con saldo por cobrar. Espera **200** y que todos los elementos estén **VIGENTE** con saldo pendiente mayor a cero. Un préstamo pasa a LIQUIDADO cuando su saldo llega exactamente a 0.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/prestamos",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "estado",
+          "value": "VIGENTE",
+          "description": "Valores admitidos: VIGENTE, LIQUIDADO",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "10",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 3001,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_03_02",
+      "_type": "request",
+      "parentId": "fld_chn_03",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Localizar el prestamo generado",
+      "description": "Recupera los préstamos del cliente de demostración 1 y localiza el que generó la aprobación de la carpeta 02, comparando `solicitudId` con `solicitud_id_nueva`. Guarda el id en `prestamo_id_nuevo`.\n\nSe busca por `solicitudId` en lugar de tomar el primero de la lista para que no dependa del orden del listado. La relación solicitud–préstamo es 1 a 1 (`solicitud_id` es UNIQUE en la tabla).",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/prestamos",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "clienteId",
+          "value": "{{ _.cliente_id }}",
+          "description": "Filtra por cliente",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "100",
+          "description": "Se pide el máximo permitido para no paginar la búsqueda",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 3002,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_03_03",
+      "_type": "request",
+      "parentId": "fld_chn_03",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Detalle del prestamo",
+      "description": "Detalle del préstamo de demostración PR-001-2026-000001-9, que ya tiene pagos aplicados. Espera **200** con los montos, el estado y el porcentaje pagado.\n\nSe comprueba la invariante `saldoPendiente = montoTotalAPagar - totalPagado`, que en SQL Server es una columna calculada PERSISTED, de modo que el saldo nunca puede quedar desalineado.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/prestamos/{{ _.prestamo_id }}",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 3003,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_03_04",
+      "_type": "request",
+      "parentId": "fld_chn_03",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Plan de amortizacion",
+      "description": "Plan de amortización completo del préstamo. Espera **200** con `{cuotaMensual, totalIntereses, montoTotal, cuotas[]}` y una cuota por cada mes del plazo.\n\nLa última cuota ajusta el residuo para que el saldo final quede exactamente en **0.00**: eso es lo que verifica el test, junto con que cada cuota reparta capital más intereses.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/prestamos/{{ _.prestamo_id }}/amortizacion",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 3004,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_03_05",
+      "_type": "request",
+      "parentId": "fld_chn_03",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Pagos del prestamo",
+      "description": "Historial de recibos aplicados al préstamo, el más reciente primero. Espera **200** con un **arreglo plano**.\n\nCada recibo guarda el saldo anterior y el posterior, así que la cadena de pagos es auditable recibo por recibo.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/prestamos/{{ _.prestamo_id }}/pagos",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 3005,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_03_06",
+      "_type": "request",
+      "parentId": "fld_chn_03",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Detalle de un prestamo sin pagos",
+      "description": "Préstamo de demostración PR-001-2026-000004-3, desembolsado y **sin ningún pago registrado**. Espera **200**, `totalPagado` en 0 y el saldo pendiente igual al monto total a pagar. Es el caso borde opuesto al préstamo 1.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/prestamos/{{ _.prestamo_sin_pagos_id }}",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 3006,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_03_07",
+      "_type": "request",
+      "parentId": "fld_chn_03",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Descargar plan de amortizacion en PDF",
+      "description": "Descarga del plan de amortización del préstamo como **PDF**, generado en el servidor con encabezado y pie en todas las páginas. La extensión viaja en la ruta (`amortizacion.pdf`), así que el nombre que propone el navegador ya trae el formato y la URL se puede compartir tal cual. Espera **200** con:\n\n- `Content-Type: application/pdf`, exacto.\n- `Content-Disposition: attachment` con el nombre `plan-amortizacion-<numeroPrestamo>.pdf` (para el préstamo 1, `plan-amortizacion-PR-001-2026-000001-9.pdf`). Sin `attachment` el navegador abriría el archivo en lugar de guardarlo.\n- `Cache-Control: no-store`: el archivo lleva datos personales del cliente y no debe quedar en la caché del navegador ni de un proxy.\n\nLos tests leen los primeros bytes del cuerpo y comprueban la firma `%PDF-`: es lo que distingue un PDF real de, por ejemplo, un JSON de error servido con el tipo equivocado. Cada descarga queda en la bitácora como `REPORTE_DESCARGADO`, con el usuario, el formato y el tamaño del archivo.\n\nEn Postman, **Save Response → Save to a file** guarda el archivo con ese nombre.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/prestamos/{{ _.prestamo_id }}/amortizacion.pdf",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 3007,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_03_08",
+      "_type": "request",
+      "parentId": "fld_chn_03",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Descargar plan de amortizacion en Excel",
+      "description": "El mismo plan de amortización como libro de **Excel** (`amortizacion.xlsx`), con las cuotas en celdas numéricas y la fila de totales, listo para filtrar o sumar. Espera **200** con:\n\n- `Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`, exacto.\n- `Content-Disposition: attachment` con el nombre `plan-amortizacion-<numeroPrestamo>.xlsx` (para el préstamo 1, `plan-amortizacion-PR-001-2026-000001-9.xlsx`). Sin `attachment` el navegador abriría el archivo en lugar de guardarlo.\n- `Cache-Control: no-store`: el archivo lleva datos personales del cliente y no debe quedar en la caché del navegador ni de un proxy.\n\nLos tests leen los primeros bytes del cuerpo y comprueban la firma `PK` (`50 4B 03 04`): un `.xlsx` es un paquete OOXML comprimido en ZIP, así que un libro válido siempre empieza así. Cada descarga queda en la bitácora como `REPORTE_DESCARGADO`, con el usuario, el formato y el tamaño del archivo.\n\nEn Postman, **Save Response → Save to a file** guarda el archivo con ese nombre.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/prestamos/{{ _.prestamo_id }}/amortizacion.xlsx",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 3008,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_03_09",
+      "_type": "request",
+      "parentId": "fld_chn_03",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Descargar historial de pagos en PDF",
+      "description": "Historial de pagos del préstamo como **PDF** (`pagos.pdf`), en orden cronológico como un estado de cuenta, con encabezado y pie en todas las páginas. Un préstamo sin pagos también produce el documento, con el encabezado y una nota que lo indica. Espera **200** con:\n\n- `Content-Type: application/pdf`, exacto.\n- `Content-Disposition: attachment` con el nombre `historial-pagos-<numeroPrestamo>.pdf` (para el préstamo 1, `historial-pagos-PR-001-2026-000001-9.pdf`). Sin `attachment` el navegador abriría el archivo en lugar de guardarlo.\n- `Cache-Control: no-store`: el archivo lleva datos personales del cliente y no debe quedar en la caché del navegador ni de un proxy.\n\nLos tests leen los primeros bytes del cuerpo y comprueban la firma `%PDF-`: es lo que distingue un PDF real de, por ejemplo, un JSON de error servido con el tipo equivocado. Cada descarga queda en la bitácora como `REPORTE_DESCARGADO`, con el usuario, el formato y el tamaño del archivo.\n\nEn Postman, **Save Response → Save to a file** guarda el archivo con ese nombre.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/prestamos/{{ _.prestamo_id }}/pagos.pdf",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 3009,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_03_10",
+      "_type": "request",
+      "parentId": "fld_chn_03",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Descargar historial de pagos en Excel",
+      "description": "El mismo historial de pagos como libro de **Excel** (`pagos.xlsx`): un recibo por fila con su fecha, monto, saldo anterior y posterior, forma de pago y usuario que lo registró. Espera **200** con:\n\n- `Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`, exacto.\n- `Content-Disposition: attachment` con el nombre `historial-pagos-<numeroPrestamo>.xlsx` (para el préstamo 1, `historial-pagos-PR-001-2026-000001-9.xlsx`). Sin `attachment` el navegador abriría el archivo en lugar de guardarlo.\n- `Cache-Control: no-store`: el archivo lleva datos personales del cliente y no debe quedar en la caché del navegador ni de un proxy.\n\nLos tests leen los primeros bytes del cuerpo y comprueban la firma `PK` (`50 4B 03 04`): un `.xlsx` es un paquete OOXML comprimido en ZIP, así que un libro válido siempre empieza así. Cada descarga queda en la bitácora como `REPORTE_DESCARGADO`, con el usuario, el formato y el tamaño del archivo.\n\nEn Postman, **Save Response → Save to a file** guarda el archivo con ese nombre.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/prestamos/{{ _.prestamo_id }}/pagos.xlsx",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 3010,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_chn_04",
+      "_type": "request_group",
+      "parentId": "wrk_chn_prestamos",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "04 - Pagos",
+      "description": "Registro de pagos en caja y sus consultas. El alta requiere rol **ADMIN** o **CAJERO**; las consultas, cualquier rol autenticado.\n\nEl pago se aplica sobre `prestamo_id_nuevo`, el préstamo que generó la carpeta 02, para no alterar los saldos de demostración. El monto debe ser mayor a cero y nunca mayor al saldo pendiente; sobre un préstamo **LIQUIDADO** se rechaza. Al llegar a saldo 0 el préstamo pasa a LIQUIDADO.\n\nEl sistema opera únicamente en **EFECTIVO**, por eso la forma de pago no se envía en el cuerpo.",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 4000
+    },
+    {
+      "_id": "req_chn_04_00",
+      "_type": "request",
+      "parentId": "fld_chn_04",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Listar pagos (paginado)",
+      "description": "Listado paginado de recibos, el más reciente primero. Espera **200** con la estructura de página. Admite los filtros opcionales `prestamoId` y `clienteId`.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/pagos",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "10",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 4000,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_04_01",
+      "_type": "request",
+      "parentId": "fld_chn_04",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Filtrar pagos por prestamo",
+      "description": "Recibos del préstamo de demostración 1. Espera **200** y que **todos** los recibos pertenezcan a ese préstamo y estén en EFECTIVO.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/pagos",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "prestamoId",
+          "value": "{{ _.prestamo_id }}",
+          "description": "Filtra los recibos de un préstamo",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "10",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 4001,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_04_02",
+      "_type": "request",
+      "parentId": "fld_chn_04",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Filtrar pagos por cliente",
+      "description": "Recibos de todos los préstamos del cliente de demostración 1: es el estado de cuenta consolidado. Espera **200** y que cada recibo registre el cajero que lo capturó.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/pagos",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "clienteId",
+          "value": "{{ _.cliente_id }}",
+          "description": "Filtra los recibos de todos los préstamos de un cliente",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "10",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 4002,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_04_03",
+      "_type": "request",
+      "parentId": "fld_chn_04",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Registrar pago",
+      "description": "Registra un pago sobre el préstamo creado por la carpeta 02. Requiere rol **ADMIN** o **CAJERO**. Espera **201** con el recibo `RC-AAA-AAAA-NNNNNN-D` tomado de la secuencia `seq_recibo`, y guarda el id en `pago_id_nuevo`.\n\nEl monto (Q4,800.00) es algo mayor a la cuota mensual y muy inferior al saldo, así que el pago es válido en cualquier ejecución. El test comprueba que `saldoPosterior = saldoAnterior - monto`.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/pagos",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"prestamoId\": \"{{ _.prestamo_id_nuevo }}\",\n    \"monto\": 4800,\n    \"observaciones\": \"Pago de la primera cuota, registrado desde la coleccion de Postman\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 4003,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_04_04",
+      "_type": "request",
+      "parentId": "fld_chn_04",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Verificar el pago registrado",
+      "description": "Confirma que el recibo quedó persistido y asociado al préstamo. Espera **200** y encontrar en el listado el id guardado en `pago_id_nuevo`.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/pagos",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "prestamoId",
+          "value": "{{ _.prestamo_id_nuevo }}",
+          "description": "Préstamo creado por la carpeta 02",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "10",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 4004,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_chn_05",
+      "_type": "request_group",
+      "parentId": "wrk_chn_prestamos",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "05 - Resumen y auditoria",
+      "description": "Indicadores del tablero y bitácora de operaciones sensibles.\n\nEl resumen lo alimentan la vista `dbo.vw_resumen_general` (totales) y las vistas `dbo.vw_cartera_por_tipo` y `dbo.vw_recaudacion_mensual` (series de las gráficas), y lo puede consultar cualquier rol autenticado. La auditoría está **restringida a ADMIN**: expone quién hizo qué, desde qué dirección IP y cuándo, así que es información sensible (la carpeta 07 comprueba que el cajero recibe 403).",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 5000
+    },
+    {
+      "_id": "req_chn_05_00",
+      "_type": "request",
+      "parentId": "fld_chn_05",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Indicadores del tablero",
+      "description": "Indicadores agregados del tablero. Espera **200** con los nueve totales (clientes, solicitudes por estado, préstamos por estado, monto aprobado, saldo pendiente y total recuperado) y las dos series de las gráficas:\n\n- `carteraPorTipo`: **siempre los 5 tipos** de préstamo en el orden del catálogo (`PERSONAL`, `HIPOTECARIO`, `VEHICULAR`, `EMPRESARIAL`, `EDUCATIVO`), con `cantidadPrestamos`, `montoAprobado`, `saldoPendiente` y `totalRecuperado`; un tipo sin préstamos viaja en ceros.\n- `recaudacionMensual`: **siempre 12 meses contiguos** en orden ascendente que terminan en el mes en curso (hora de Guatemala), con `periodo` (`AAAA-MM`), `anio`, `mes`, `cantidadPagos` y `monto`; un mes sin pagos viaja en ceros.\n\nQué revisar en la respuesta (la colección de Postman lo comprueba con sus tests): los préstamos vigentes más los liquidados no superan las solicitudes aprobadas; `carteraPorTipo` tiene 5 elementos en ese orden; `recaudacionMensual` tiene 12 periodos `AAAA-MM` contiguos y ascendentes; y todas las cantidades y montos son números mayores o iguales a cero.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/resumen",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 5000,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_05_01",
+      "_type": "request",
+      "parentId": "fld_chn_05",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Bitacora de auditoria (solo ADMIN)",
+      "description": "Bitácora paginada de operaciones sensibles, la más reciente primero. **Solo ADMIN**: espera **200** con el token de administrador y **403** con cualquier otro rol (ver la carpeta 07).\n\nCada registro guarda usuario, acción, entidad, detalle, dirección IP y fecha. Tras ejecutar las carpetas anteriores contiene los cuatro logins, el alta, la edición y la baja del cliente, la aprobación y el rechazo de las solicitudes, la creación del préstamo y los pagos.\n\nHay un caso particular: al eliminar un cliente aparecen **dos** registros, el de la aplicación (`CLIENTE_ELIMINADO`) y el del trigger `tr_clientes_auditoria_delete` (`CLIENTE_ELIMINADO_BD`, con usuario `trigger_bd`). El segundo lo escribe la base de datos, así que **no lleva dirección IP**: es la red de seguridad que deja rastro incluso si alguien borrara filas fuera de la aplicación. El test lo tiene en cuenta.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/auditoria",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "10",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 5001,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_chn_06",
+      "_type": "request_group",
+      "parentId": "wrk_chn_prestamos",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "06 - Casos de error y validaciones",
+      "description": "Los 19 casos negativos del contrato, uno por código y por regla. Ninguna de estas peticiones modifica datos: todas fallan antes de persistir, así que la carpeta se puede ejecutar cuantas veces se quiera.\n\nTodas las respuestas comparten el formato de error uniforme:\n\n```json\n{\"timestamp\":\"...\",\"estado\":409,\"codigo\":\"REGLA_NEGOCIO\",\"mensaje\":\"...\",\n \"ruta\":\"/api/v1/pagos\",\"errores\":[{\"campo\":\"monto\",\"mensaje\":\"...\"}]}\n```\n\nCódigos posibles: `VALIDACION` (400), `AUTENTICACION` (401), `ACCESO_DENEGADO` (403), `NO_ENCONTRADO` (404), `REGLA_NEGOCIO` (409), `DUPLICADO` (409), `LIMITE_PETICIONES` (429) y `ERROR_INTERNO` (500). Los 500 nunca revelan detalles internos ni traza.",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 6000
+    },
+    {
+      "_id": "req_chn_06_00",
+      "_type": "request",
+      "parentId": "fld_chn_06",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Login con contrasena incorrecta -> 401",
+      "description": "Credenciales que no corresponden. Espera **401 AUTENTICACION** con el mensaje genérico «Credenciales inválidas», **idéntico** para usuario inexistente, usuario inactivo y contraseña incorrecta: así la API no permite enumerar usuarios.\n\n> **Nota operativa 1 — bloqueo de cuenta.** La cuenta se bloquea 15 minutos tras 5 intentos fallidos, pero un login correcto reinicia el contador. Como la carpeta 00 se ejecuta antes y autentica bien, este único fallo por ejecución nunca llega a bloquear la cuenta. Ejecutar esta petición sola y en bucle sí la bloquea, y entonces la respuesta cambia de mensaje aunque siga siendo 401.\n\n> **Nota operativa 2 — limitador por IP.** `/auth/login` admite **10 peticiones por IP cada 5 minutos** (ventana deslizante). Una ejecución completa de la colección gasta 5 (los cuatro logins de la carpeta 00 más esta), así que **dos ejecuciones seguidas dentro de la misma ventana agotan el margen** y esta petición puede responder **429 LIMITE_PETICIONES** en lugar de 401. No es un fallo de la colección: es el limitador funcionando. Espere 5 minutos y vuelva a ejecutarla.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/auth/login",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"username\": \"{{ _.usuario_admin }}\",\n    \"contrasena\": \"ClaveIncorrecta123\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {},
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 6000,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_06_01",
+      "_type": "request",
+      "parentId": "fld_chn_06",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Peticion sin token -> 401",
+      "description": "Acceso a un recurso protegido sin cabecera `Authorization`. Espera **401 AUTENTICACION**. La sesión es **STATELESS**: no hay cookie de respaldo, el token es obligatorio en cada petición.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/clientes",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {},
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 6001,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_06_02",
+      "_type": "request",
+      "parentId": "fld_chn_06",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Token invalido -> 401",
+      "description": "Token con estructura de JWT pero firma que no verifica. Espera **401 AUTENTICACION**.\n\nEl filtro JWT valida la firma HS256 con el secreto del servidor, el emisor `chn-prestamos` y la vigencia; cualquier fallo corta la petición antes de llegar al controlador. Esta petición lleva su propio *bearer* con un token inválido literal, en lugar de heredar el de la colección.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/clientes",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "aaaa.bbbb.cccc",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 6002,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_06_03",
+      "_type": "request",
+      "parentId": "fld_chn_06",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "DPI de 12 digitos -> 400",
+      "description": "DPI de 12 dígitos: el de Guatemala tiene exactamente 13. Espera **400 VALIDACION** y que el arreglo `errores` señale el campo `numeroIdentificacion`.\n\nLa validación es de formato (Bean Validation en el DTO), así que la petición se rechaza antes de llegar al caso de uso y la respuesta detalla el error por campo.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/clientes",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"nombre\": \"Andrea Beatriz\",\n    \"apellido\": \"Quinonez Lemus\",\n    \"numeroIdentificacion\": \"198504321010\",\n    \"fechaNacimiento\": \"1994-07-22\",\n    \"direccion\": \"9a Avenida 4-18, Zona 14, Ciudad de Guatemala\",\n    \"correoElectronico\": \"andrea.quinonez@correo.gt\",\n    \"telefono\": \"55663344\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 6003,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_06_04",
+      "_type": "request",
+      "parentId": "fld_chn_06",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Cliente menor de edad -> 400",
+      "description": "Fecha de nacimiento de un menor de 18 años. Espera **400 VALIDACION**.\n\nLa fecha es pasada y con formato válido, así que Bean Validation la acepta: quien rechaza es la **regla del dominio** (mayoría de edad), que responde con un mensaje explicativo y sin arreglo `errores` por campo. Es el ejemplo de una validación de negocio, no de formato.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/clientes",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"nombre\": \"Pedro Antonio\",\n    \"apellido\": \"Menor Ramos\",\n    \"numeroIdentificacion\": \"2011052210101\",\n    \"fechaNacimiento\": \"2012-03-15\",\n    \"direccion\": \"9a Avenida 4-18, Zona 14, Ciudad de Guatemala\",\n    \"correoElectronico\": \"pedro.menor@correo.gt\",\n    \"telefono\": \"55663344\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 6004,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_06_05",
+      "_type": "request",
+      "parentId": "fld_chn_06",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Correo con formato invalido -> 400",
+      "description": "Correo sin arroba ni dominio. Espera **400 VALIDACION** y que `errores` señale el campo `correoElectronico`.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/clientes",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"nombre\": \"Andrea Beatriz\",\n    \"apellido\": \"Quinonez Lemus\",\n    \"numeroIdentificacion\": \"1122334455667\",\n    \"fechaNacimiento\": \"1994-07-22\",\n    \"direccion\": \"9a Avenida 4-18, Zona 14, Ciudad de Guatemala\",\n    \"correoElectronico\": \"correo-sin-arroba\",\n    \"telefono\": \"55663344\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 6005,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_06_06",
+      "_type": "request",
+      "parentId": "fld_chn_06",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "DPI duplicado -> 409",
+      "description": "Alta con el DPI **1985043210101**, que ya pertenece al cliente de demostración 1 (María José Ramírez López). Espera **409 DUPLICADO**.\n\nEl DPI tiene restricción **UNIQUE** en la base y el caso de uso lo verifica antes de insertar, de modo que el conflicto se reporta como regla de negocio y no como error de base de datos.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/clientes",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"nombre\": \"Homonimo\",\n    \"apellido\": \"De Prueba\",\n    \"numeroIdentificacion\": \"{{ _.cliente_dpi }}\",\n    \"fechaNacimiento\": \"1994-07-22\",\n    \"direccion\": \"9a Avenida 4-18, Zona 14, Ciudad de Guatemala\",\n    \"correoElectronico\": \"homonimo.prueba@correo.gt\",\n    \"telefono\": \"55663344\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 6006,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_06_07",
+      "_type": "request",
+      "parentId": "fld_chn_06",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Cliente inexistente -> 404",
+      "description": "Consulta del cliente 99999, que no existe. Espera **404 NO_ENCONTRADO**. El mismo código aparece al referenciar una solicitud o un préstamo inexistentes.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/clientes/99999",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 6007,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_06_08",
+      "_type": "request",
+      "parentId": "fld_chn_06",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Monto por debajo del minimo -> 400",
+      "description": "Solicitud por Q500.00 cuando el mínimo institucional es **Q1,000.00**. Espera **400 VALIDACION** y que `errores` señale el campo `montoSolicitado`. El máximo es Q5,000,000.00.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/solicitudes",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"clienteId\": \"{{ _.cliente_id }}\",\n    \"montoSolicitado\": 500,\n    \"plazoMeses\": 24,\n    \"tasaInteresAnual\": 13.5,\n    \"tipoPrestamo\": \"PERSONAL\",\n    \"destino\": \"Remodelacion de vivienda familiar\",\n    \"ingresoMensualDeclarado\": 18000,\n    \"observaciones\": \"Monto fuera del rango permitido\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 6008,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_06_09",
+      "_type": "request",
+      "parentId": "fld_chn_06",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Plazo de 3 meses -> 400",
+      "description": "Plazo de 3 meses cuando el mínimo es **6** y el máximo **360**. Espera **400 VALIDACION** y que `errores` señale el campo `plazoMeses`.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/solicitudes",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"clienteId\": \"{{ _.cliente_id }}\",\n    \"montoSolicitado\": 120000,\n    \"plazoMeses\": 3,\n    \"tasaInteresAnual\": 13.5,\n    \"tipoPrestamo\": \"PERSONAL\",\n    \"destino\": \"Remodelacion de vivienda familiar\",\n    \"ingresoMensualDeclarado\": 18000,\n    \"observaciones\": \"Plazo fuera del rango permitido\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 6009,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_06_10",
+      "_type": "request",
+      "parentId": "fld_chn_06",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Estado inexistente en el filtro -> 400",
+      "description": "Filtro con un estado que no existe en el enum. Espera **400 VALIDACION** y un mensaje que **enumera los valores permitidos** (EN_PROCESO, APROBADA, RECHAZADA).\n\nLa conversión del texto al enum se hace a mano precisamente para devolver esa ayuda, en lugar del mensaje opaco que produciría la conversión automática del framework.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/solicitudes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "estado",
+          "value": "INVENTADO",
+          "description": "Estado que no existe en el enum EstadoSolicitud",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 6010,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_06_11",
+      "_type": "request",
+      "parentId": "fld_chn_06",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Tamano de pagina 500 -> 400",
+      "description": "Página de 500 elementos cuando el máximo es **100**. Espera **400 VALIDACION**.\n\nEl tope protege al servidor de una petición capaz de traer toda la tabla de una sola vez. El mismo límite aplica a solicitudes, préstamos, pagos y auditoría.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/clientes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "500",
+          "description": "Fuera del rango admitido, que es de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 6011,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_06_12",
+      "_type": "request",
+      "parentId": "fld_chn_06",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Rechazo con motivo demasiado corto -> 400",
+      "description": "Rechazo con un motivo de 2 caracteres cuando el mínimo es **10** (máximo 500). Espera **400 VALIDACION** y que `errores` señale el campo `motivo`.\n\nSe envía sobre la solicitud de demostración 7, que está EN_PROCESO: como la validación falla antes de resolver nada, la solicitud **sigue EN_PROCESO** y la petición se puede repetir sin límite.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/solicitudes/{{ _.solicitud_en_proceso_id }}/rechazar",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"motivo\": \"no\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 6012,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_06_13",
+      "_type": "request",
+      "parentId": "fld_chn_06",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Aprobar una solicitud ya resuelta -> 409",
+      "description": "Segunda aprobación de la solicitud de demostración 1 (SC-001-2026-000001-3), que ya está **APROBADA** y generó su préstamo. Espera **409 REGLA_NEGOCIO**.\n\nSolo una solicitud EN_PROCESO puede aprobarse o rechazarse: es la regla que evita emitir dos préstamos por la misma solicitud (`solicitud_id` es además UNIQUE en la tabla de préstamos).",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/solicitudes/{{ _.solicitud_resuelta_id }}/aprobar",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"montoAprobado\": 50000,\n    \"motivo\": \"Intento de resolver una solicitud ya aprobada\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 6013,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_06_14",
+      "_type": "request",
+      "parentId": "fld_chn_06",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Pago de monto 0 -> 400",
+      "description": "Pago de Q0.00. Espera **400 VALIDACION** y que `errores` señale el campo `monto`: el mínimo aceptado es Q0.01, porque un recibo en cero no representa ningún cobro.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/pagos",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"prestamoId\": \"{{ _.prestamo_id }}\",\n    \"monto\": 0,\n    \"observaciones\": \"Monto no positivo\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 6014,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_06_15",
+      "_type": "request",
+      "parentId": "fld_chn_06",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Pago mayor al saldo pendiente -> 409",
+      "description": "Pago de Q99,999,999.00 sobre el préstamo de demostración 1, cuyo saldo es muy inferior. Espera **409 REGLA_NEGOCIO** y un mensaje que informa el **saldo disponible**.\n\nUn pago nunca puede exceder el saldo pendiente: eso impide dejar el préstamo con saldo negativo. El monto es válido en formato, así que la petición llega al dominio y es él quien la rechaza.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/pagos",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"prestamoId\": \"{{ _.prestamo_id }}\",\n    \"monto\": 99999999,\n    \"observaciones\": \"Monto superior al saldo pendiente del prestamo\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 6015,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_06_16",
+      "_type": "request",
+      "parentId": "fld_chn_06",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Pago sobre un prestamo inexistente -> 404",
+      "description": "Pago contra el préstamo 99999, que no existe. Espera **404 NO_ENCONTRADO**. El identificador es positivo y con formato válido, así que el 404 lo produce el caso de uso al no encontrar el préstamo, no la validación del DTO.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/pagos",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"prestamoId\": 99999,\n    \"monto\": 100,\n    \"observaciones\": \"El prestamo no existe\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 6016,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_06_17",
+      "_type": "request",
+      "parentId": "fld_chn_06",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Reporte con extension no soportada (.docx) -> 400",
+      "description": "Pide el plan de amortización del préstamo 1 como `.docx`, un formato que el sistema no genera. Espera **400 VALIDACION** con el formato de error uniforme, un mensaje que **enumera los formatos permitidos** (`pdf`, `xlsx`) y ningún archivo adjunto.\n\nEs un 400 y no un 404 a propósito: la ruta existe y lo inválido es el formato pedido. La extensión se resuelve en el borde, con `FormatoReporte.desdeExtension`, antes de buscar el préstamo, así que el caso de uso no llega a ejecutarse y no se escribe nada en la bitácora.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/prestamos/{{ _.prestamo_id }}/amortizacion.docx",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 6017,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_06_18",
+      "_type": "request",
+      "parentId": "fld_chn_06",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Reporte de un prestamo inexistente -> 404",
+      "description": "Historial de pagos en PDF del préstamo 99999, que no existe. Espera **404 NO_ENCONTRADO** en JSON, con el formato de error uniforme, y **ningún archivo**: la respuesta no lleva `Content-Disposition`.\n\nEl préstamo se busca antes de generar el documento, así que no se produce un PDF vacío ni queda registro de descarga en la bitácora.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/prestamos/99999/pagos.pdf",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 6018,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_chn_07",
+      "_type": "request_group",
+      "parentId": "wrk_chn_prestamos",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "07 - Autorizacion por rol",
+      "description": "Matriz de permisos. Cada petición lleva su **propio *bearer*** con el token del rol que se quiere probar (`token_cajero`, `token_consulta` o `token_analista`), en lugar de heredar el de administrador.\n\n| Rol | Puede |\n| --- | --- |\n| ADMIN | Todo, incluido eliminar clientes y ver la auditoría |\n| ANALISTA | Clientes y solicitudes; aprueba y rechaza. **No** registra pagos |\n| CAJERO | Registra pagos y consulta. **No** crea clientes ni resuelve solicitudes |\n| CONSULTA | Solo lectura |\n\nLa autorización se aplica con `@PreAuthorize` **antes** de entrar al método, así que un rol sin permiso recibe **403 ACCESO_DENEGADO** sin que la operación llegue a tocar la base. Por eso la prueba de borrado puede apuntar a un id inexistente sin riesgo alguno: devuelve 403, no 404.\n\nLa matriz comprueba también lo que **sí** está permitido: el cajero registra pagos y el usuario de consulta descarga reportes, que solo exigen estar autenticado.",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 7000
+    },
+    {
+      "_id": "req_chn_07_00",
+      "_type": "request",
+      "parentId": "fld_chn_07",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "CAJERO no puede crear clientes -> 403",
+      "description": "El cajero intenta dar de alta un cliente. Espera **403 ACCESO_DENEGADO**: el alta está reservada a **ADMIN** y **ANALISTA**.\n\nEl cuerpo es perfectamente válido, de modo que el 403 demuestra que lo que corta es la autorización y no la validación. Ningún cliente se crea.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/clientes",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"nombre\": \"Intento\",\n    \"apellido\": \"Sin Permiso\",\n    \"numeroIdentificacion\": \"1231231231231\",\n    \"fechaNacimiento\": \"1994-07-22\",\n    \"direccion\": \"9a Avenida 4-18, Zona 14, Ciudad de Guatemala\",\n    \"correoElectronico\": \"intento.sinpermiso@correo.gt\",\n    \"telefono\": \"55663344\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_cajero }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 7000,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_07_01",
+      "_type": "request",
+      "parentId": "fld_chn_07",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "CAJERO no puede ver la auditoria -> 403",
+      "description": "El cajero intenta leer la bitácora. Espera **403 ACCESO_DENEGADO**: la auditoría es exclusiva de **ADMIN** porque expone usuarios, direcciones IP y el detalle de cada operación sensible.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/auditoria",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "10",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_cajero }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 7001,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_07_02",
+      "_type": "request",
+      "parentId": "fld_chn_07",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "CAJERO si puede registrar un pago -> 201",
+      "description": "Caso **positivo** de la matriz: registrar pagos es justamente la función del cajero. Espera **201** con el recibo emitido y `usuarioRegistro` igual al cajero.\n\nSe aplica un abono pequeño (Q500.00) sobre el préstamo creado por la carpeta 02, no sobre los de demostración, para no alterar sus saldos.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/pagos",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"prestamoId\": \"{{ _.prestamo_id_nuevo }}\",\n    \"monto\": 500,\n    \"observaciones\": \"Abono recibido en caja por el cajero\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_cajero }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 7002,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_07_03",
+      "_type": "request",
+      "parentId": "fld_chn_07",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "CONSULTA no puede registrar pagos -> 403",
+      "description": "El usuario de solo lectura intenta registrar un cobro. Espera **403 ACCESO_DENEGADO**: el rol CONSULTA no escribe nada en el sistema. El saldo del préstamo no se toca.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/pagos",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"prestamoId\": \"{{ _.prestamo_id }}\",\n    \"monto\": 100,\n    \"observaciones\": \"Intento de cobro desde una cuenta de solo lectura\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_consulta }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 7003,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_07_04",
+      "_type": "request",
+      "parentId": "fld_chn_07",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "CONSULTA no puede eliminar clientes -> 403",
+      "description": "El usuario de solo lectura intenta eliminar un cliente. Espera **403 ACCESO_DENEGADO**: el borrado, que además es en cascada, está reservado a **ADMIN**.\n\nApunta al id **99999** a propósito: `@PreAuthorize` corta la petición antes de ejecutar el método, así que la respuesta es 403 y no 404, y la prueba no puede dañar ningún dato aunque la regla de autorización cambiara.",
+      "method": "DELETE",
+      "url": "{{ _.baseUrl }}/clientes/99999",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_consulta }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 7004,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_07_05",
+      "_type": "request",
+      "parentId": "fld_chn_07",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "ANALISTA no puede registrar pagos -> 403",
+      "description": "El analista, que sí aprueba y rechaza solicitudes, intenta registrar un pago. Espera **403 ACCESO_DENEGADO**.\n\nEs una **separación de funciones** deliberada: quien autoriza el crédito no es quien recibe el dinero en caja.",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/pagos",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"prestamoId\": \"{{ _.prestamo_id }}\",\n    \"monto\": 250,\n    \"observaciones\": \"Intento de cobro desde una cuenta de analista\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_analista }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 7005,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_07_06",
+      "_type": "request",
+      "parentId": "fld_chn_07",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "CONSULTA si puede descargar reportes -> 200",
+      "description": "Caso **positivo** de la matriz: las descargas de reportes solo exigen estar autenticado (`@PreAuthorize(\"isAuthenticated()\")`), así que hasta el rol de **solo lectura** puede obtenerlas. Espera **200** con el historial de pagos del préstamo 1 en PDF, como adjunto y con la firma `%PDF-`.\n\nLa descarga no modifica datos de negocio, pero sí deja un registro `REPORTE_DESCARGADO` en la bitácora a nombre de `consulta`: exportar datos de un cliente es una operación sensible y se audita sea cual sea el rol.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/prestamos/{{ _.prestamo_id }}/pagos.pdf",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_consulta }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 7006,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_chn_08",
+      "_type": "request_group",
+      "parentId": "wrk_chn_prestamos",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "08 - Filtros de busqueda",
+      "description": "Los filtros de búsqueda de los cinco listados: clientes, solicitudes, préstamos, pagos y auditoría.\n\nToda la carpeta es de **solo lectura y repetible**: ninguna petición crea, modifica ni borra nada, así que se puede ejecutar las veces que haga falta y en cualquier momento, incluso sin haber corrido las carpetas 01 a 04.\n\nCada criterio es **opcional** y se acumula con los demás mediante `AND`. El filtrado ocurre **siempre en la base de datos**, con parámetros nombrados y el patrón `:criterio IS NULL OR <condición>` en JPQL: así el conteo y la paginación siguen siendo exactos y no hay ni un punto donde se concatene SQL.\n\nTres reglas que se repiten en todos los listados:\n\n- Los **rangos son inclusivos en ambos extremos**. Sobre columnas `DATETIME2` (registro del cliente, fecha de solicitud, fecha de pago y fecha de la bitácora) el límite superior se traduce internamente a `< hasta + 1 día`, de modo que un registro de las 23:50 del último día queda dentro.\n- El texto libre `busqueda` es insensible a mayúsculas **y a tildes**, porque la base usa la colación `Modern_Spanish_CI_AI`: «ramirez» encuentra «Ramírez».\n- Un **rango invertido** o un mínimo mayor que el máximo responden **400** con un mensaje claro; no devuelven una lista vacía.\n\nLas pruebas comprueban el **contenido, no un total fijo**: verifican que todo elemento devuelto cumple el criterio pedido. Por eso la carpeta sigue en verde aunque las carpetas 02 a 04 ya hayan añadido datos en esta misma ejecución, o aunque el sistema lleve tiempo en uso.\n\nLas seis últimas peticiones son **casos negativos** y esperan **400 VALIDACION**.\n\nLa misma cobertura, desde la línea de comandos: `bash tools/pruebas/prueba-filtros.sh`.",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 8000
+    },
+    {
+      "_id": "req_chn_08_00",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Clientes por texto libre (apellido)",
+      "description": "Texto libre sobre los seis campos consultables del cliente: **nombre, apellido, nombre completo, DPI, correo y teléfono**. Espera **200** y al menos un resultado.\n\nLa comparación es insensible a mayúsculas **y a tildes**, porque la base usa la colación `Modern_Spanish_CI_AI`: «Ramirez» encuentra «Ramírez». El `LIKE` se arma con parámetros nombrados en JPQL, nunca concatenando SQL.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/clientes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "busqueda",
+          "value": "{{ _.cliente_apellido }}",
+          "description": "Texto libre: nombre, apellido, nombre completo, DPI, correo o teléfono",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8000,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_01",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Clientes por DPI parcial",
+      "description": "El mismo texto libre, esta vez con un **fragmento de DPI** (`1985043`). Es la búsqueda que hace el cajero cuando el cliente solo recuerda los primeros dígitos. Espera **200** y encontrar al cliente 1, cuyo DPI es `1985043210101`.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/clientes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "busqueda",
+          "value": "{{ _.cliente_dpi_parcial }}",
+          "description": "Fragmento del DPI; el texto libre también busca en el número de identificación",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8001,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_02",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Clientes por telefono",
+      "description": "Texto libre por **teléfono** (`55012345`). Espera **200** y al menos un resultado: es el número del cliente de demostración 1.\n\nQue el teléfono entre en la misma caja de búsqueda evita tener un filtro por campo en la interfaz y cubre el caso real de quien llama y solo da su número.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/clientes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "busqueda",
+          "value": "{{ _.cliente_telefono }}",
+          "description": "Teléfono completo; el texto libre también cubre este campo",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8002,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_03",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Clientes por rango de fecha de nacimiento",
+      "description": "Rango de **fecha de nacimiento**, inclusivo en ambos extremos. Con los datos de demostración, `1990-01-01` a `1996-12-31` deja fuera a los clientes nacidos en los ochenta. Espera **200**.\n\n`fecha_nacimiento` es una columna `DATE`, así que la comparación es directa: `>= desde` y `<= hasta`. Un rango invertido no devuelve una lista vacía, devuelve **400** (ver el caso de error de esta misma carpeta).",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/clientes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "nacimientoDesde",
+          "value": "{{ _.nacimiento_desde }}",
+          "description": "Nacidos desde esta fecha, inclusive (aaaa-MM-dd)",
+          "disabled": false
+        },
+        {
+          "name": "nacimientoHasta",
+          "value": "{{ _.nacimiento_hasta }}",
+          "description": "Nacidos hasta esta fecha, inclusive (aaaa-MM-dd)",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8003,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_04",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Clientes por rango de fecha de registro",
+      "description": "Rango de **fecha de alta** del expediente. Los ocho clientes de demostración se dieron de alta entre el 6 y el 13 de enero de 2026, así que enero entero los devuelve. Espera **200**.\n\n`fecha_creacion` es `DATETIME2`, no `DATE`: el límite superior se traduce internamente a `< hasta + 1 día`, de modo que un alta de las **23:50** del último día del rango queda **dentro**. Es el matiz que hace que el filtro se comporte como espera quien lo usa.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/clientes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "creacionDesde",
+          "value": "{{ _.creacion_desde }}",
+          "description": "Registrados desde esta fecha, inclusive (aaaa-MM-dd)",
+          "disabled": false
+        },
+        {
+          "name": "creacionHasta",
+          "value": "{{ _.creacion_hasta }}",
+          "description": "Registrados hasta esta fecha, inclusive (aaaa-MM-dd)",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8004,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_05",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Clientes solo activos",
+      "description": "Filtro por **estado del cliente**. Espera **200** y que todos los devueltos estén activos.\n\nEl criterio es un `Boolean` opcional con tres valores efectivos: `true`, `false` y **omitido**. Omitirlo no equivale a `true`: devuelve activos e inactivos.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/clientes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "activo",
+          "value": "true",
+          "description": "true, false, u omitirlo para traer ambos",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8005,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_06",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Clientes solo inactivos",
+      "description": "La otra cara del filtro anterior. Con los datos de demostración los ocho clientes están activos, así que el listado sale **vacío**: esa es la respuesta correcta, **200** con `totalElementos` en 0, no un 404.\n\nLa prueba no exige resultados; exige que **ninguno** de los devueltos esté activo, que es lo que se rompería si el criterio se ignorara.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/clientes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "activo",
+          "value": "false",
+          "description": "La otra cara del mismo criterio",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8006,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_07",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Clientes: combinacion de tres criterios",
+      "description": "Los tres criterios a la vez: **texto libre + rango de nacimiento + estado**. Espera **200** y que cada resultado cumpla **los tres**, porque se combinan con `AND`.\n\nUn rango cuenta como **un** criterio aunque viajen dos parámetros: así lo cuenta también el contador de «filtros aplicados» de la interfaz, y así se muestra en una sola pastilla.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/clientes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "busqueda",
+          "value": "{{ _.cliente_apellido }}",
+          "description": "Primer criterio: texto libre",
+          "disabled": false
+        },
+        {
+          "name": "nacimientoDesde",
+          "value": "1985-01-01",
+          "description": "Segundo criterio: rango de nacimiento, extremo inicial",
+          "disabled": false
+        },
+        {
+          "name": "nacimientoHasta",
+          "value": "1995-12-31",
+          "description": "Segundo criterio: rango de nacimiento, extremo final",
+          "disabled": false
+        },
+        {
+          "name": "activo",
+          "value": "true",
+          "description": "Tercer criterio: solo activos",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8007,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_08",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Solicitudes por numero",
+      "description": "Texto libre por el **correlativo** `SC-001-2026-000003-9`. Espera **200** y **exactamente un** resultado: el correlativo es único, así que este filtro es la forma de saltar a una solicitud concreta sin conocer su id interno.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/solicitudes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "busqueda",
+          "value": "{{ _.solicitud_numero }}",
+          "description": "Texto libre: número de solicitud, destino, o nombre o DPI del cliente",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8008,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_09",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Solicitudes por destino",
+      "description": "El mismo texto libre, ahora contra el **destino** del financiamiento: «vivienda» localiza la compra de vivienda, la remodelación y la construcción. Espera **200** y al menos un resultado.\n\nEs la búsqueda que usa el analista para revisar la cartera por finalidad sin necesidad de un campo de clasificación aparte.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/solicitudes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "busqueda",
+          "value": "vivienda",
+          "description": "Fragmento del destino del financiamiento",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8009,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_10",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Solicitudes por cliente",
+      "description": "Todas las solicitudes de un cliente, paginadas. Espera **200** y que todas pertenezcan al cliente pedido.\n\nNo confundir con `GET /clientes/{id}/solicitudes`, que devuelve el historial completo **sin paginar**: este filtro sirve para el listado general, donde la paginación importa.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/solicitudes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "clienteId",
+          "value": "{{ _.cliente_id }}",
+          "description": "Identificador del cliente solicitante",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8010,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_11",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Solicitudes por estado",
+      "description": "Las pendientes de resolver, que son las únicas que el analista puede aprobar o rechazar. Espera **200**, que **todas** estén EN_PROCESO y que ninguna traiga resolución.\n\nEn la pantalla de solicitudes los contadores por estado son pulsables y aplican exactamente este filtro. Un estado inexistente devuelve **400** (carpeta 06).",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/solicitudes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "estado",
+          "value": "EN_PROCESO",
+          "description": "Valores admitidos: EN_PROCESO, APROBADA, RECHAZADA",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8011,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_12",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Solicitudes por tipo de prestamo",
+      "description": "Filtro por **tipo de préstamo**. Espera **200** y que todas las devueltas sean HIPOTECARIO.\n\nEl valor llega como texto y lo convierte `ConversorEnumWeb.aTipoPrestamoOpcional`, que ante un valor desconocido responde **400** enumerando los admitidos, en vez del mensaje opaco de la conversión automática de Spring.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/solicitudes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "tipoPrestamo",
+          "value": "HIPOTECARIO",
+          "description": "PERSONAL, HIPOTECARIO, VEHICULAR, EMPRESARIAL o EDUCATIVO",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8012,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_13",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Solicitudes por rango de monto solicitado",
+      "description": "Banda de **monto solicitado**, inclusiva en ambos extremos. Espera **200** y que ningún resultado se salga de la banda.\n\nLos dos extremos son independientes: se puede enviar solo el mínimo («de Q50,000 en adelante») o solo el máximo. Un mínimo mayor que el máximo devuelve **400**, no una lista vacía.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/solicitudes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "montoMinimo",
+          "value": "{{ _.monto_minimo }}",
+          "description": "Monto solicitado mínimo, inclusive",
+          "disabled": false
+        },
+        {
+          "name": "montoMaximo",
+          "value": "{{ _.monto_maximo }}",
+          "description": "Monto solicitado máximo, inclusive",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8013,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_14",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Solicitudes por rango de plazo",
+      "description": "Banda de **plazo en meses**, inclusiva en ambos extremos: de 12 a 36 meses. Espera **200** y que todo plazo devuelto caiga dentro.\n\nEl plazo es entero, así que un valor no numérico devuelve **400** indicando que se espera un número entero.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/solicitudes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "plazoMinimo",
+          "value": "12",
+          "description": "Plazo mínimo en meses, inclusive",
+          "disabled": false
+        },
+        {
+          "name": "plazoMaximo",
+          "value": "36",
+          "description": "Plazo máximo en meses, inclusive",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8014,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_15",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Solicitudes por rango de fecha de solicitud",
+      "description": "Primer **semestre** de 2026. Espera **200** y que toda fecha devuelta caiga dentro del rango.\n\n`fecha_solicitud` es `DATETIME2`: el extremo superior se traduce a `< 2026-07-01`, así que una solicitud capturada a las 23:50 del 30 de junio **sí** entra. Sin esa traducción, el último día del rango se perdería.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/solicitudes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "fechaDesde",
+          "value": "2026-01-01",
+          "description": "Solicitudes desde esta fecha, inclusive (aaaa-MM-dd)",
+          "disabled": false
+        },
+        {
+          "name": "fechaHasta",
+          "value": "2026-06-30",
+          "description": "Solicitudes hasta esta fecha, inclusive (aaaa-MM-dd)",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8015,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_16",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Solicitudes: combinacion de estado, tipo y monto",
+      "description": "Tres criterios combinados sobre el mismo listado: **estado + tipo + monto mínimo**. Espera **200** y que cada resultado cumpla los tres.\n\nCada criterio omitido desaparece de la consulta por el patrón `:criterio IS NULL OR <condición>`, así que no hay una consulta distinta por combinación ni SQL armado a mano.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/solicitudes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "estado",
+          "value": "APROBADA",
+          "description": "Primer criterio: estado",
+          "disabled": false
+        },
+        {
+          "name": "tipoPrestamo",
+          "value": "PERSONAL",
+          "description": "Segundo criterio: tipo de préstamo",
+          "disabled": false
+        },
+        {
+          "name": "montoMinimo",
+          "value": "{{ _.monto_minimo }}",
+          "description": "Tercer criterio: monto solicitado mínimo",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8016,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_17",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Prestamos por numero de prestamo",
+      "description": "Texto libre por el **correlativo del préstamo** `PR-001-2026-000001-9`. Espera **200** y **exactamente un** resultado.\n\nLa prueba comprueba además la invariante del saldo, que se cumple en todo préstamo devuelto: `saldoPendiente = montoTotalAPagar - totalPagado`.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/prestamos",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "busqueda",
+          "value": "{{ _.prestamo_numero }}",
+          "description": "Texto libre: número de préstamo, número de solicitud, o nombre o DPI del cliente",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8017,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_18",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Prestamos por numero de la solicitud de origen",
+      "description": "El texto libre del listado de préstamos alcanza también el **número de la solicitud de origen**, que vive en otra tabla: la consulta une `prestamos` con `solicitudes_prestamo` y con `clientes` en una sola sentencia, así que buscar `SC-001-2026-000002-1` devuelve el préstamo que nació de esa solicitud. Espera **200** y **un** resultado.\n\nEs el camino natural cuando el expediente en papel trae el número de solicitud y no el de préstamo.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/prestamos",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "busqueda",
+          "value": "SC-001-2026-000002-1",
+          "description": "El texto libre alcanza también el correlativo de la solicitud que originó el préstamo",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8018,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_19",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Prestamos por estado",
+      "description": "Cartera **viva**. Espera **200**, que todos los devueltos estén VIGENTE y que ninguno tenga el saldo en cero: un préstamo con saldo 0 pasa a LIQUIDADO al aplicarse el último pago, así que las dos cosas van juntas.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/prestamos",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "estado",
+          "value": "VIGENTE",
+          "description": "Valores admitidos: VIGENTE y LIQUIDADO",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8019,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_20",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Prestamos por rango de monto aprobado",
+      "description": "Banda de **monto aprobado y desembolsado**, inclusiva en ambos extremos. Espera **200** y que ningún resultado se salga de la banda.\n\nOjo con la diferencia: aquí se filtra por lo **aprobado**, no por lo solicitado. En las solicitudes 1 a 4 de la demostración el analista ajustó el monto a la baja, así que las dos cifras no coinciden.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/prestamos",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "montoMinimo",
+          "value": "100000",
+          "description": "Monto aprobado mínimo, inclusive",
+          "disabled": false
+        },
+        {
+          "name": "montoMaximo",
+          "value": "500000",
+          "description": "Monto aprobado máximo, inclusive",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8020,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_21",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Prestamos por rango de saldo pendiente (gestion de cobro)",
+      "description": "**El filtro de gestión de cobro.** Localiza la cartera cuyo saldo vivo cae en una banda concreta, que es como se arman las campañas de recuperación: «los que deben entre Q60,000 y Q130,000». Espera **200** y que ningún saldo devuelto se salga de la banda.\n\nTiene una particularidad técnica que conviene conocer: `saldo_pendiente` es una **columna calculada PERSISTED** de la base (`monto_total_a_pagar - total_pagado`) y **no está mapeada en JPA**, porque es de solo lectura. El rango no puede compararse contra un atributo inexistente, así que la consulta lo resuelve con la **expresión** `(p.montoTotalAPagar - p.totalPagado)`, y lo hace **en la base de datos**: el conteo y la paginación siguen siendo exactos, cosa que se perdería filtrando en memoria después de paginar.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/prestamos",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "saldoMinimo",
+          "value": "{{ _.saldo_minimo }}",
+          "description": "Saldo pendiente mínimo, inclusive",
+          "disabled": false
+        },
+        {
+          "name": "saldoMaximo",
+          "value": "{{ _.saldo_maximo }}",
+          "description": "Saldo pendiente máximo, inclusive",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8021,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_22",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Prestamos por rango de fecha de desembolso",
+      "description": "Desembolsos del primer semestre de 2026. Espera **200** y que toda fecha devuelta caiga dentro del rango.\n\n`fecha_desembolso` es `DATE`, no `DATETIME2`: aquí la comparación es directa e inclusiva en ambos extremos, sin la traducción del límite superior que sí necesitan las columnas con hora.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/prestamos",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "desembolsoDesde",
+          "value": "2026-01-01",
+          "description": "Desembolsados desde esta fecha, inclusive (aaaa-MM-dd)",
+          "disabled": false
+        },
+        {
+          "name": "desembolsoHasta",
+          "value": "2026-06-30",
+          "description": "Desembolsados hasta esta fecha, inclusive (aaaa-MM-dd)",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8022,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_23",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Prestamos por rango de fecha de vencimiento",
+      "description": "Préstamos que **vencen** dentro de una ventana. Espera **200** y que toda fecha de vencimiento devuelta caiga dentro.\n\nEs el filtro con el que se prevé la liquidación de cartera de los próximos años. El vencimiento no se captura: lo calcula el dominio como desembolso más el plazo en meses, y la prueba lo verifica comprobando que siempre es posterior al desembolso.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/prestamos",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "vencimientoDesde",
+          "value": "2028-01-01",
+          "description": "Con vencimiento desde esta fecha, inclusive (aaaa-MM-dd)",
+          "disabled": false
+        },
+        {
+          "name": "vencimientoHasta",
+          "value": "2032-12-31",
+          "description": "Con vencimiento hasta esta fecha, inclusive (aaaa-MM-dd)",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8023,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_24",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Pagos por numero de recibo",
+      "description": "Texto libre por el **número de recibo** `RC-001-2026-000001-4`. Espera **200** y **exactamente un** resultado: es la consulta que se hace con el recibo en la mano, en ventanilla.\n\nLa prueba comprueba además la aritmética del recibo: `saldoPosterior = saldoAnterior - monto`.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/pagos",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "busqueda",
+          "value": "{{ _.recibo_numero }}",
+          "description": "Texto libre: número de recibo, número de préstamo, o nombre o DPI del cliente",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8024,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_25",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Pagos por cliente",
+      "description": "Todos los abonos de un cliente, de cualquiera de sus préstamos. Espera **200** y que todos pertenezcan al cliente pedido.\n\nEl pago no guarda el cliente: lo alcanza a través del préstamo, con un `JOIN` en la misma consulta. Por eso este filtro se resuelve también en la base y no reuniendo listas en memoria.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/pagos",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "clienteId",
+          "value": "{{ _.cliente_id }}",
+          "description": "Identificador del cliente que pagó",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8025,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_26",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Pagos por rango de monto",
+      "description": "Banda de **monto del abono**, inclusiva en ambos extremos. Espera **200** y que ningún monto devuelto se salga de ella.\n\nSirve para aislar los abonos extraordinarios de los pagos de cuota, y para revisar los movimientos por encima de un umbral de control.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/pagos",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "montoMinimo",
+          "value": "3000",
+          "description": "Monto del abono mínimo, inclusive",
+          "disabled": false
+        },
+        {
+          "name": "montoMaximo",
+          "value": "7000",
+          "description": "Monto del abono máximo, inclusive",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8026,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_27",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Pagos por rango de fecha de pago",
+      "description": "Los abonos del año en curso. Espera **200** y que toda fecha devuelta caiga dentro del rango.\n\n`fecha_pago` es `DATETIME2`, así que el extremo superior se traduce a `< hasta + 1 día`: un pago recibido a las 23:50 del 31 de diciembre entra en el cierre del año, que es justo lo que tiene que pasar para cuadrar caja.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/pagos",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "fechaDesde",
+          "value": "{{ _.fecha_desde }}",
+          "description": "Pagos desde esta fecha, inclusive (aaaa-MM-dd)",
+          "disabled": false
+        },
+        {
+          "name": "fechaHasta",
+          "value": "{{ _.fecha_hasta }}",
+          "description": "Pagos hasta esta fecha, inclusive (aaaa-MM-dd)",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8027,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_28",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Pagos por usuario que registro",
+      "description": "Los recibos emitidos por un **usuario de caja**, con coincidencia parcial. Espera **200** y que todos los devueltos lleven ese usuario.\n\nEs el cierre de caja por cajero y el punto donde la lista de pagos se cruza con la bitácora: el mismo nombre aparece en `GET /auditoria?usuario=...` junto a la acción `PAGO_REGISTRADO`.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/pagos",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "usuarioRegistro",
+          "value": "{{ _.usuario_pagos }}",
+          "description": "Usuario que registró el pago; coincidencia parcial",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8028,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_29",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Auditoria por accion",
+      "description": "Bitácora filtrada por **acción**, con valor **exacto**. Espera **200** y al menos un registro: los cuatro logins de la carpeta 00 acaban de dejarlos.\n\nLa acción y la entidad se comparan por valor exacto porque salen de un catálogo cerrado (`AccionesAuditoria`); el usuario y el texto libre, por coincidencia parcial. Solo el rol **ADMIN** puede consultar este endpoint.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/auditoria",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "accion",
+          "value": "LOGIN_EXITOSO",
+          "description": "Acción auditada; valor exacto del catálogo",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8029,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_30",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Auditoria por entidad",
+      "description": "Bitácora filtrada por **entidad afectada**, con valor exacto. Espera **200** y que todos los registros sean de esa entidad.\n\nQue la comparación sea exacta tiene una consecuencia visible: los registros que escribe el *trigger* `tr_clientes_auditoria_delete` guardan la entidad como `clientes` (el nombre de la tabla) y no como `CLIENTE`, así que no se mezclan con los de la aplicación.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/auditoria",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "entidad",
+          "value": "USUARIO",
+          "description": "Entidad afectada; valor exacto: CLIENTE, SOLICITUD, PRESTAMO, PAGO o USUARIO",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8030,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_31",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Auditoria por usuario",
+      "description": "Todo lo que hizo una persona: la pregunta con la que empieza cualquier revisión. Coincidencia **parcial**, para no depender de escribir el nombre de cuenta completo. Espera **200** y que todos los registros sean de ese usuario.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/auditoria",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "usuario",
+          "value": "{{ _.usuario_admin }}",
+          "description": "Usuario que ejecutó la operación; coincidencia parcial",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8031,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_32",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Auditoria por texto libre",
+      "description": "El texto libre de la bitácora recorre **usuario, detalle e identificador de la entidad afectada**, que es por donde se empieza a rastrear un movimiento reclamado. «rol» aparece en el detalle de los ingresos correctos («Ingreso correcto con rol ADMIN»). Espera **200** y al menos un registro.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/auditoria",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "busqueda",
+          "value": "rol",
+          "description": "Texto libre: usuario, detalle o identificador de la entidad afectada",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8032,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_33",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Auditoria por rango de fecha",
+      "description": "La ventana auditada. Espera **200**, que toda fecha caiga dentro del rango y que el orden siga siendo el de la bitácora: **más reciente primero**.\n\nEl `ORDER BY fecha DESC, id DESC` es obligatorio para paginar en SQL Server, y el desempate por id evita que dos registros del mismo instante aparezcan en dos páginas o en ninguna.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/auditoria",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "fechaDesde",
+          "value": "{{ _.fecha_desde }}",
+          "description": "Registros desde esta fecha, inclusive (aaaa-MM-dd)",
+          "disabled": false
+        },
+        {
+          "name": "fechaHasta",
+          "value": "{{ _.fecha_hasta }}",
+          "description": "Registros hasta esta fecha, inclusive (aaaa-MM-dd)",
+          "disabled": false
+        },
+        {
+          "name": "pagina",
+          "value": "0",
+          "description": "Índice de página, empieza en 0",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "50",
+          "description": "Elementos por página; admite de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8033,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_34",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Rango de fechas invertido -> 400",
+      "description": "Rango con el extremo inicial **posterior** al final. Espera **400 VALIDACION**.\n\nEs una decisión deliberada: un rango invertido es un **error de quien pregunta**, no una búsqueda sin resultados. Devolver una lista vacía y un 200 dejaría al usuario creyendo que no hay clientes en esas fechas. Desde la interfaz ni siquiera se puede construir, porque `CampoRangoFechas` impide elegir en el campo final una fecha anterior a la inicial.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/clientes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "nacimientoDesde",
+          "value": "1995-01-01",
+          "description": "Extremo inicial, posterior al final: el rango está invertido",
+          "disabled": false
+        },
+        {
+          "name": "nacimientoHasta",
+          "value": "1990-01-01",
+          "description": "Extremo final, anterior al inicial",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8034,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_35",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Monto minimo mayor que el maximo -> 400",
+      "description": "Banda de monto invertida. Espera **400 VALIDACION**, con el mismo criterio que el rango de fechas: la petición es incoherente y se dice en el mensaje, en lugar de devolver una página vacía.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/solicitudes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "montoMinimo",
+          "value": "200000",
+          "description": "Mínimo mayor que el máximo",
+          "disabled": false
+        },
+        {
+          "name": "montoMaximo",
+          "value": "50000",
+          "description": "Máximo menor que el mínimo",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8035,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_36",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Plazo minimo mayor que el maximo -> 400",
+      "description": "Banda de plazo invertida. Espera **400 VALIDACION**.\n\nLa comprobación no está escrita tres veces: `Validaciones.exigirOrdenDeRango` tiene una sobrecarga para enteros y otra para importes, y `exigirOrdenCronologico` cubre las fechas. Los cinco *records* de filtro las invocan desde su constructor compacto, así que ningún filtro puede construirse en estado inválido.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/solicitudes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "plazoMinimo",
+          "value": "36",
+          "description": "Mínimo mayor que el máximo",
+          "disabled": false
+        },
+        {
+          "name": "plazoMaximo",
+          "value": "12",
+          "description": "Máximo menor que el mínimo",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8036,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_37",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Fecha mal formada (31-01-2026) -> 400",
+      "description": "Fecha escrita como `31-01-2026` cuando el parámetro espera **`aaaa-MM-dd`**. Espera **400 VALIDACION** y, sobre todo, un mensaje que **diga cuál es el formato esperado** y a qué parámetro se refiere.\n\n`ManejadorExcepcionesGlobal` distingue el tipo del parámetro que falló (fecha, decimal, entero, booleano o *enum*) para redactar esa pista. En la interfaz este error no llega a producirse: `CampoFecha` envía siempre el valor en ISO aunque se escriba con la máscara `dd/mm/aaaa`.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/clientes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "nacimientoDesde",
+          "value": "31-01-2026",
+          "description": "Formato español dd-MM-aaaa; el parámetro espera aaaa-MM-dd",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8037,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_38",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Tipo de prestamo inexistente -> 400",
+      "description": "Tipo de préstamo que no existe en el catálogo. Espera **400 VALIDACION** y que el mensaje **enumere los valores permitidos**, para que quien integra no tenga que ir a buscarlos.\n\nLo resuelve `ConversorEnumWeb.aTipoPrestamoOpcional`, no la conversión automática de Spring: por eso el mensaje es útil en lugar de un genérico «failed to convert».",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/solicitudes",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "tipoPrestamo",
+          "value": "INVENTADO",
+          "description": "Valor fuera del catálogo de tipos",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8038,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_chn_08_39",
+      "_type": "request",
+      "parentId": "fld_chn_08",
+      "modified": 1789650000000,
+      "created": 1789650000000,
+      "name": "Tamano de pagina 500 con filtro -> 400",
+      "description": "Filtro válido con una página de 500 elementos, cuando el máximo es **100**. Espera **400 VALIDACION** con el arreglo `errores` señalando el campo `tamano`.\n\nEl tope se aplica **igual con filtros que sin ellos**, en los cinco listados: es lo que impide que un criterio muy amplio se convierta en una descarga de la tabla entera.",
+      "method": "GET",
+      "url": "{{ _.baseUrl }}/prestamos",
+      "body": {},
+      "headers": [],
+      "parameters": [
+        {
+          "name": "estado",
+          "value": "VIGENTE",
+          "description": "El filtro es válido; lo que no lo es, es el tamaño de página",
+          "disabled": false
+        },
+        {
+          "name": "tamano",
+          "value": "500",
+          "description": "Fuera del rango admitido, que es de 1 a 100",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer",
+        "disabled": false
+      },
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "metaSortKey": 8039,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    }
+  ]
+}
